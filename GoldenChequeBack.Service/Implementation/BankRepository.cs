@@ -1,6 +1,6 @@
 ﻿
 using GoldenChequeBack.Domain.Entities;
-using GoldenChequeBack.Persistence;
+ 
 using GoldenChequeBack.Service.Contract;
 using System;
 using System.Collections.Generic;

@@ -4,7 +4,7 @@ using GoldenChequeBack.Service.Contract;
 using System.Linq;
 using System.Threading.Tasks;
 using GoldenChequeBack.Domain.Entities;
-using GoldenChequeBack.Persistence;
+ 
 
 namespace GoldenChequeBack.Service.Implementation
 {
@@ -20,8 +20,8 @@ namespace GoldenChequeBack.Service.Implementation
         {
             try
             {
-                BaseInfo bsi = _ctx.BaseInfos.Where(p => p.Id == BaseInfoId).FirstOrDefault();
-                _ctx.BaseInfos.Remove(bsi);
+                BaseInfo bsi = _ctx.BaseInfoes.Where(p => p.Id == BaseInfoId).FirstOrDefault();
+                _ctx.BaseInfoes.Remove(bsi);
                 _ctx.SaveChanges();
                 return true;
             }
@@ -32,19 +32,19 @@ namespace GoldenChequeBack.Service.Implementation
         }
         public List<BaseInfo> GetAll()
         {
-            return _ctx.BaseInfos.ToList();
+            return _ctx.BaseInfoes.ToList();
         }
 
         public BaseInfo GetById(int id)
         {
-            return _ctx.BaseInfos.Where(p => p.Id == id).FirstOrDefault();
+            return _ctx.BaseInfoes.Where(p => p.Id == id).FirstOrDefault();
         }
 
         public bool Insert(BaseInfo baseInfo)
         {
             try
             {
-                _ctx.BaseInfos.Add(baseInfo);
+                _ctx.BaseInfoes.Add(baseInfo);
                 _ctx.SaveChanges();
                 return true;
             }
@@ -58,7 +58,7 @@ namespace GoldenChequeBack.Service.Implementation
         {
             try
             {
-                _ctx.BaseInfos.Attach(baseInfo);
+                _ctx.BaseInfoes.Attach(baseInfo);
                 _ctx.SaveChanges();
                 return true;
             }

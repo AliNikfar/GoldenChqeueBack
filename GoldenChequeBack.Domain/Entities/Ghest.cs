@@ -13,13 +13,6 @@ namespace GoldenChequeBack.Domain.Entities
         public bool Status { get; set; }
         public DateTime Date { get; set; }
         public DateTime PassDate { get; set; }
-        
-
-        public int LastHandleUser { get; set; }
-        public int Visable { get; set; }
-        public int CreateDate { get; set; }
-
-        public int LastEdit { get; set; }
         public Factor Factor;
 
     }

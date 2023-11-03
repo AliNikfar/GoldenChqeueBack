@@ -4,7 +4,7 @@ using GoldenChequeBack.Service.Contract;
 using System.Linq;
 using System.Threading.Tasks;
 using GoldenChequeBack.Domain.Entities;
-using GoldenChequeBack.Persistence;
+ 
 
 namespace GoldenChequeBack.Service.Implementation
 {
@@ -20,7 +20,7 @@ namespace GoldenChequeBack.Service.Implementation
         {
             try
             {
-                Units bsi = _ctx.Units.Where(p => p.Id == UnitId).FirstOrDefault();
+                Unit bsi = _ctx.Units.Where(p => p.Id == UnitId).FirstOrDefault();
                 _ctx.Units.Remove(bsi);
                 _ctx.SaveChanges();
                 return true;
@@ -30,18 +30,18 @@ namespace GoldenChequeBack.Service.Implementation
                 return false;
             }
         }
-        public List<Units> GetAll()
+        public List<Unit> GetAll()
         {
             return _ctx.Units.ToList();
         }
 
 
-        public Units GetById(int id)
+        public Unit GetById(int id)
         {
             return _ctx.Units.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public bool Insert(Units unit)
+        public bool Insert(Unit unit)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace GoldenChequeBack.Service.Implementation
             }
         }
 
-        public bool update(Units unit)
+        public bool update(Unit unit)
         {
             try
             {

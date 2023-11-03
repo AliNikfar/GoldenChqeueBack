@@ -12,7 +12,7 @@ namespace GoldenChequeBack.Domain.Entities
         public int Kind { get; set; }
         public int ShomareHesab { get; set; }
         public int ShomareChek { get; set; }
-        public Person SahabCheque { get; set; }
+        public Customer SahabCheque { get; set; }
         public Shobe  Shobe { get; set; }
         public DateTime ChequeDate { get; set; }
         public int ChequeStatus { get; set; }
@@ -20,10 +20,7 @@ namespace GoldenChequeBack.Domain.Entities
         public string Detail { get; set; }
         public Factor FactorID { get; set; }
         public bool Visable { get; set; }
-        public Int64 ChequePrice { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime LastEdit { get; set; }
-        public int LastHandleUser { get; set; }
+        public int ChequePrice { get; set; }
 
     }
 }
