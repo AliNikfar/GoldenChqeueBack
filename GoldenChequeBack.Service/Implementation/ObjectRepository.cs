@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GoldenChequeBack.Domain.Entities;
  
 using Object = GoldenChequeBack.Domain.Entities.Object;
+using GoldenChequeBack.Persistence;
 
 namespace GoldenChequeBack.Service.Implementation
 {

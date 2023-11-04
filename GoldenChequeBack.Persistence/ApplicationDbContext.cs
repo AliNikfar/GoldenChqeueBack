@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 
-namespace GoldenChequeBack
+namespace GoldenChequeBack.Persistence
 {
     public  class ApplicationDbContext  :DbContext
     {

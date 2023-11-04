@@ -4,7 +4,7 @@ using GoldenChequeBack.Service.Contract;
 using System.Linq;
 using System.Threading.Tasks;
 using GoldenChequeBack.Domain.Entities;
- 
+using GoldenChequeBack.Persistence;
 
 namespace GoldenChequeBack.Service.Implementation
 {
