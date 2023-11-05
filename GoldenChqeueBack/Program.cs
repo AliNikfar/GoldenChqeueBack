@@ -47,13 +47,17 @@ builder.Services.AddScoped<IBankRepository, BankRepository>();
 //builder.Services.AddScoped<ICustomService<Resultss>, ResultService>();
 //builder.Services.AddScoped<ICustomService<Departments>, DepartmentsService>();
 //builder.Services.AddScoped<ICustomService<SubjectGpas>, SubjectGpasService>();
+builder.Services.AddSwaggerGen();
 #endregion
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-   // app.UseSwagger();
-    //app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
+    });
 }
 //app.UseHttpsRedirection();
 //app.UseAuthorization();
