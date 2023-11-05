@@ -11,7 +11,7 @@ namespace GoldenChqeueBack.Controllers.Api
     public class BankApiController : ControllerBase
     {
         private readonly IBankRepository _bank;
-        BankApiController(IBankRepository bank)
+        public BankApiController(IBankRepository bank)
         {
             _bank = bank;
         }
@@ -25,16 +25,14 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // POST api/<BankApiController>
         [HttpPost]
-        public Bank Insert([FromBody] Bank bank) => _bank.Insert(bank);
+        public bool Post([FromBody] Bank bank) => _bank.Insert(bank);
 
         // PUT api/<BankApiController>/5
         [HttpPut("{id}")]
-        public Bank Edit([FromBody] Bank bank) => _bank.update(bank);
+        public bool Put([FromBody] Bank bank) => _bank.update(bank);
 
         // DELETE api/<BankApiController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        public bool Delete(int id) => _bank.delete(id);
     }
 }

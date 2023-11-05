@@ -9,44 +9,43 @@ using System.Threading.Tasks;
 
 namespace GoldenChequeBack.Service.Implementation
 {
-
-    public class BankRepository : IBankRepository
+    public class UserRepository : IUsersRepository
     {
         private readonly ApplicationDbContext _ctx;
-        public BankRepository(ApplicationDbContext ctx)
+        public UserRepository(ApplicationDbContext ctx)
         {
             _ctx = ctx;
         }
-        public bool delete(int bankId)
+        public bool delete(int userId)
         {
             try
             {
-                Bank bnk = _ctx.Banks.Where(p => p.Id == bankId).FirstOrDefault();
-                _ctx.Banks.Remove(bnk);
+                User bnk = _ctx.Users.Where(p => p.Id == userId).FirstOrDefault();
+                _ctx.Users.Remove(bnk);
                 _ctx.SaveChanges();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
         }
 
-        public List<Bank> GetAll()
+        public List<User> GetAll()
         {
-            return _ctx.Banks.ToList();
+            return _ctx.Users.ToList();
         }
 
-        public Bank GetById(int id)
+        public User GetById(int id)
         {
-            return _ctx.Banks.Where(p => p.Id == id).FirstOrDefault();
+            return _ctx.Users.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public bool Insert(Bank bank)
+        public bool Insert(User user)
         {
             try
             {
-                _ctx.Banks.Add(bank);
+                _ctx.Users.Add(user);
                 _ctx.SaveChanges();
                 return true;
             }
@@ -57,11 +56,11 @@ namespace GoldenChequeBack.Service.Implementation
         }
 
 
-        public bool update(Bank bank)
+        public bool update(User user)
         {
             try
             {
-                _ctx.Banks.Attach(bank);
+                _ctx.Users.Attach(user);
                 _ctx.SaveChanges();
                 return true;
             }

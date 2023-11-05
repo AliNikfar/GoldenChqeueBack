@@ -10,9 +10,9 @@ namespace GoldenChequeBack.Service.Contract
     public interface ICustomerRateRepository
     {
 
-        CustomerRate Insert(CustomerRate customerrate);
+        bool Insert(CustomerRate customerrate);
 
-        CustomerRate update(CustomerRate customerrate);
+        bool update(CustomerRate customerrate);
 
         bool delete(int customerrateId);
 

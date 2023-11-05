@@ -9,9 +9,9 @@ namespace GoldenChequeBack.Service.Contract
 {
     public interface ICustomerRepository
     {
-        Customer Insert(Customer customer);
+        bool Insert(Customer customer);
 
-        Customer update(Customer customer);
+        bool update(Customer customer);
 
         bool delete(int customerId);
 

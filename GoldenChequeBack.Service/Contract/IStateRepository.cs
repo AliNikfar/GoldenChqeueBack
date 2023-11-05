@@ -10,9 +10,9 @@ namespace GoldenChequeBack.Service.Contract
     public interface IStateRepository
     {
 
-        State Insert(State state);
+        bool Insert(State state);
 
-        State update(State state);
+        bool update(State state);
 
         bool delete(int stateId);
 

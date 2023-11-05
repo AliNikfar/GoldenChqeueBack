@@ -13,9 +13,9 @@ namespace GoldenChequeBack.Service.Contract
 
 
 
-        Bank Insert (Bank bank);
+        bool Insert (Bank bank);
 
-        Bank update (Bank bank);
+        bool update (Bank bank);
 
         bool delete(int bankId);
  

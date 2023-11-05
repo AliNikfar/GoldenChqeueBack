@@ -1,52 +1,51 @@
-﻿
-using GoldenChequeBack.Domain.Entities;
+﻿using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace GoldenChequeBack.Service.Implementation
 {
-
-    public class BankRepository : IBankRepository
+    public class StateRepository : IStateRepository
     {
         private readonly ApplicationDbContext _ctx;
-        public BankRepository(ApplicationDbContext ctx)
+        public StateRepository(ApplicationDbContext ctx)
         {
             _ctx = ctx;
         }
-        public bool delete(int bankId)
+        public bool delete(int StateId)
         {
             try
             {
-                Bank bnk = _ctx.Banks.Where(p => p.Id == bankId).FirstOrDefault();
-                _ctx.Banks.Remove(bnk);
+                State bnk = _ctx.States.Where(p => p.Id == StateId).FirstOrDefault();
+                _ctx.States.Remove(bnk);
                 _ctx.SaveChanges();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
         }
 
-        public List<Bank> GetAll()
+        public List<State> GetAll()
         {
-            return _ctx.Banks.ToList();
+            return _ctx.States.ToList();
         }
 
-        public Bank GetById(int id)
+        public State GetById(int id)
         {
-            return _ctx.Banks.Where(p => p.Id == id).FirstOrDefault();
+            return _ctx.States.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public bool Insert(Bank bank)
+        public bool Insert(State State)
         {
             try
             {
-                _ctx.Banks.Add(bank);
+                _ctx.States.Add(State);
                 _ctx.SaveChanges();
                 return true;
             }
@@ -57,11 +56,11 @@ namespace GoldenChequeBack.Service.Implementation
         }
 
 
-        public bool update(Bank bank)
+        public bool update(State State)
         {
             try
             {
-                _ctx.Banks.Attach(bank);
+                _ctx.States.Attach(State);
                 _ctx.SaveChanges();
                 return true;
             }

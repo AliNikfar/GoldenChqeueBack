@@ -9,14 +9,16 @@ namespace GoldenChequeBack.Service.Contract
 {
     public interface ICityRepository
     {
-        City Insert(City city);
+        bool Insert(City city);
 
-        City update(City city);
+        bool update(City city);
 
         bool delete(int cityId);
 
         List<City> GetAll();
 
         City GetById(int id);
+
+        List<City> GetByStateId(int CityId);
     }
 }

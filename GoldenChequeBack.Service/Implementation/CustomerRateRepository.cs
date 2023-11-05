@@ -1,5 +1,4 @@
-﻿
-using GoldenChequeBack.Domain.Entities;
+﻿using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
 using System;
@@ -9,44 +8,43 @@ using System.Threading.Tasks;
 
 namespace GoldenChequeBack.Service.Implementation
 {
-
-    public class BankRepository : IBankRepository
+    public class CustomerRateRepository : ICustomerRateRepository
     {
         private readonly ApplicationDbContext _ctx;
-        public BankRepository(ApplicationDbContext ctx)
+        public CustomerRateRepository(ApplicationDbContext ctx)
         {
             _ctx = ctx;
         }
-        public bool delete(int bankId)
+        public bool delete(int customerId)
         {
             try
             {
-                Bank bnk = _ctx.Banks.Where(p => p.Id == bankId).FirstOrDefault();
-                _ctx.Banks.Remove(bnk);
+                CustomerRate cus = _ctx.CustomerRates.Where(p => p.Id == customerId).FirstOrDefault();
+                _ctx.CustomerRates.Remove(cus);
                 _ctx.SaveChanges();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
         }
 
-        public List<Bank> GetAll()
+        public List<CustomerRate> GetAll()
         {
-            return _ctx.Banks.ToList();
+            return _ctx.CustomerRates.ToList();
         }
 
-        public Bank GetById(int id)
+        public CustomerRate GetById(int id)
         {
-            return _ctx.Banks.Where(p => p.Id == id).FirstOrDefault();
+            return _ctx.CustomerRates.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public bool Insert(Bank bank)
+        public bool Insert(CustomerRate cus)
         {
             try
             {
-                _ctx.Banks.Add(bank);
+                _ctx.CustomerRates.Add(cus);
                 _ctx.SaveChanges();
                 return true;
             }
@@ -57,11 +55,11 @@ namespace GoldenChequeBack.Service.Implementation
         }
 
 
-        public bool update(Bank bank)
+        public bool update(CustomerRate cus)
         {
             try
             {
-                _ctx.Banks.Attach(bank);
+                _ctx.CustomerRates.Attach(cus);
                 _ctx.SaveChanges();
                 return true;
             }
