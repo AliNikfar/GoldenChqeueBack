@@ -42,18 +42,19 @@ namespace GoldenChequeBack.Service.Implementation
             return _ctx.Banks.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public bool Insert(Bank bank)
+        public async Task<Bank> InsertAsync(Bank bank)
         {
-            try
-            {
-                _ctx.Banks.Add(bank);
-                _ctx.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            //try
+            //{
+
+                await _ctx.Banks.AddAsync(bank);
+                await _ctx.SaveChangesAsync();
+                return bank;
+            //}
+            //catch (Exception ex)
+            //{
+            //    return false;
+            //}
         }
 
 

@@ -13,7 +13,7 @@ namespace GoldenChequeBack.Service.Contract
 
 
 
-        bool Insert (Bank bank);
+        Task<Bank> InsertAsync (Bank bank);
 
         bool update (Bank bank);
 

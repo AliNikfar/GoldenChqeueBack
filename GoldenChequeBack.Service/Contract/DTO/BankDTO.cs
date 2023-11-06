@@ -10,6 +10,6 @@ namespace GoldenChequeBack.Service.Contract.DTO
     {
         public string Title { get; set; }
 
-        public List<ShobeDTO> ShobeList { get; set; }
+        //public List<ShobeDTO> ShobeList { get; set; }
     }
 }
