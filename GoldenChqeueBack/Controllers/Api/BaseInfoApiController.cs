@@ -1,5 +1,6 @@
 ﻿using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
+using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -27,7 +28,32 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // POST api/<BaseInfoApiController>
         [HttpPost]
-        public bool Post([FromBody] BaseInfo baseinfo) => _baseInfo.Insert(baseinfo);
+
+        public async Task<IActionResult> Post(BaseInfoDTO baseinfo)
+        {
+            //Map DTO
+            var bse = new BaseInfo
+            {
+                 Title= baseinfo.Title,
+                 StringValue = baseinfo.StringValue,
+                 IntValue = baseinfo.IntValue,
+                 LongValue = baseinfo.LongValue,
+                 Detail = baseinfo.Detail,
+                 BoolValue = baseinfo.BoolValue
+
+            };
+            await _baseInfo.InsertAsync(bse);
+            var response = new BaseInfoDTO
+            {
+                Title = bse.Title,
+                StringValue = bse.StringValue,
+                IntValue = bse.IntValue,
+                LongValue = bse.LongValue,
+                Detail = bse.Detail,
+                BoolValue = bse.BoolValue
+            };
+            return Ok(response);
+        }
 
         // PUT api/<BaseInfoApiController>/5
         [HttpPut("{id}")]

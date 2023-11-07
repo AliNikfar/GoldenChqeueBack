@@ -9,7 +9,8 @@ namespace GoldenChequeBack.Service.Contract
 {
     public interface IBaseInfoRepository
     {
-        bool Insert(BaseInfo baseInfo);
+
+        Task<BaseInfo> InsertAsync(BaseInfo baseInfo);
 
         bool update(BaseInfo baseInfo);
 

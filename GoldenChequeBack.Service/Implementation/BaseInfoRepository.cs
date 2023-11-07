@@ -40,18 +40,18 @@ namespace GoldenChequeBack.Service.Implementation
             return _ctx.BaseInfoes.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public bool Insert(BaseInfo baseInfo)
+        public async Task<BaseInfo> InsertAsync(BaseInfo baseInfo)
         {
-            try
-            {
-                _ctx.BaseInfoes.Add(baseInfo);
-                _ctx.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            //try
+            //{
+                _ctx.BaseInfoes.AddAsync(baseInfo);
+                _ctx.SaveChangesAsync();
+                return baseInfo;
+            //}
+            //catch (Exception ex)
+            //{
+            //    return false;
+            //}
         }
 
         public bool update(BaseInfo baseInfo)
