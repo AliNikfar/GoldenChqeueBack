@@ -9,7 +9,7 @@ namespace GoldenChequeBack.Service.Contract
     public interface IUsersRepository
     {
 
-        bool Insert(User user);
+        Task<User> InsertAsync(User user);
 
         bool update(User user);
 

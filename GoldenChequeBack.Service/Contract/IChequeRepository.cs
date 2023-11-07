@@ -10,7 +10,7 @@ namespace GoldenChequeBack.Service.Contract
     public interface IChequeRepository
     {
 
-        bool Insert(Cheque cheque);
+        Task<Cheque> InsertAsync(Cheque cheque);
 
         bool update(Cheque cheque);
 

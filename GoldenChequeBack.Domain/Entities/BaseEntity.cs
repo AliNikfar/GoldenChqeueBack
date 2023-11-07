@@ -12,6 +12,7 @@ namespace GoldenChequeBack.Domain.Entities
         public int RegisterUser { get; set; }
         public DateTime LastChangeDate { get; set; }
         public int LastChangeUser { get; set; }
+        public bool Visable { get; set; }
 
     }
 

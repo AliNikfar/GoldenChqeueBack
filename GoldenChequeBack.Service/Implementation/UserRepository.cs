@@ -41,18 +41,11 @@ namespace GoldenChequeBack.Service.Implementation
             return _ctx.Users.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public bool Insert(User user)
+        public async Task<User> InsertAsync(User user)
         {
-            try
-            {
-                _ctx.Users.Add(user);
-                _ctx.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            await _ctx.Users.AddAsync(user);
+            await _ctx.SaveChangesAsync();
+            return user;
         }
 
 

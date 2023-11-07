@@ -45,18 +45,11 @@ namespace GoldenChequeBack.Service.Implementation
             return _ctx.Shobes.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public bool Insert(Shobe shobe)
+        public async Task<Shobe> InsertAsync(Shobe shobe)
         {
-            try
-            {
-                _ctx.Shobes.Add(shobe);
-                _ctx.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            await _ctx.Shobes.AddAsync(shobe);
+            await _ctx.SaveChangesAsync();
+            return shobe;
         }
 
         public bool update(Shobe shobe)

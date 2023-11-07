@@ -1,6 +1,8 @@
 ﻿using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
+using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Object = GoldenChequeBack.Domain.Entities.Object;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,8 +28,29 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // POST api/<ObjectApiController>
         [HttpPost]
-        public bool Post([FromBody] GoldenChequeBack.Domain.Entities.Object obj) => _obj.Insert(obj);
+        public async Task<IActionResult> Post(ObjectDTO objct)
+        {
+            //Map DTO
+            var obj = new Object
+            {
+                Title = objct.Title,
+                Price = objct.Price,
+                BuyPrice = objct.BuyPrice,
+                //Unit = objct.Unit,
+                WareHouseStock = objct.WareHouseStock
 
+            };
+            await _obj.InsertAsync(obj);
+            var response = new ObjectDTO
+            {
+                Title = obj.Title,
+                Price = obj.Price,
+                BuyPrice = obj.BuyPrice,
+                //Unit = obj.Unit,
+                WareHouseStock = obj.WareHouseStock
+            };
+            return Ok(response);
+        }
         // PUT api/<ObjectApiController>/5
         [HttpPut("{id}")]
         public bool Put([FromBody] GoldenChequeBack.Domain.Entities.Object obj) => _obj.update(obj);

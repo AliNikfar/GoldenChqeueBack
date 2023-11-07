@@ -41,18 +41,11 @@ namespace GoldenChequeBack.Service.Implementation
             return _ctx.Units.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public bool Insert(Unit unit)
+        public async Task<Unit> InsertAsync(Unit unit)
         {
-            try
-            {
-                _ctx.Units.Add(unit);
-                _ctx.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            await _ctx.Units.AddAsync(unit);
+            await _ctx.SaveChangesAsync();
+            return unit;
         }
 
         public bool update(Unit unit)

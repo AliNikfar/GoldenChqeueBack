@@ -8,8 +8,7 @@ namespace GoldenChequeBack.Service.Contract
 {
     public interface IFactorObjectsRepository
     {
-        bool Insert(FactorObjects factorObjects);
-
+        Task<FactorObjects> InsertAsync(FactorObjects factorObjects);
         bool update(FactorObjects factorObjects);
 
         bool InsertList(List<FactorObjects> factorObjects);

@@ -9,8 +9,7 @@ namespace GoldenChequeBack.Service.Contract
 {
     public interface IStateRepository
     {
-
-        bool Insert(State state);
+        Task<State> InsertAsync(State state);
 
         bool update(State state);
 

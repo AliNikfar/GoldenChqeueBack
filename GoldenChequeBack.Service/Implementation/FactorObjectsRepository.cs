@@ -45,18 +45,11 @@ namespace GoldenChequeBack.Service.Implementation
             return _ctx.FactorObjects.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public bool Insert(FactorObjects factorObjects)
+        public async Task<FactorObjects> InsertAsync(FactorObjects factorObjects)
         {
-            try
-            {
-                _ctx.FactorObjects.Add(factorObjects);
-                _ctx.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            await _ctx.FactorObjects.AddAsync(factorObjects);
+            await _ctx.SaveChangesAsync();
+            return factorObjects;
         }
         public bool InsertList(List<FactorObjects> factorObjects)
         {

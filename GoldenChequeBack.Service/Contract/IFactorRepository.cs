@@ -9,7 +9,7 @@ namespace GoldenChequeBack.Service.Contract
 {
     public interface IFactorRepository
     {
-        bool Insert(Factor factor);
+        Task<Factor> InsertAsync(Factor factor);
 
         bool update(Factor factor);
 

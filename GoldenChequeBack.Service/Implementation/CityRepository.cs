@@ -43,22 +43,16 @@ namespace GoldenChequeBack.Service.Implementation
 
 
 
-    public bool Insert(City city)
-    {
-        try
+
+        public async Task<City> InsertAsync(City city)
         {
-            _ctx.Cities.Add(city);
-            _ctx.SaveChanges();
-            return true;
+            await _ctx.Cities.AddAsync(city);
+            await _ctx.SaveChangesAsync();
+            return city;
         }
-        catch (Exception ex)
-        {
-            return false;
-        }
-    }
 
 
-    public bool update(City city)
+        public bool update(City city)
     {
         try
         {

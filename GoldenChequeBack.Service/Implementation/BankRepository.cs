@@ -44,17 +44,9 @@ namespace GoldenChequeBack.Service.Implementation
 
         public async Task<Bank> InsertAsync(Bank bank)
         {
-            //try
-            //{
-
                 await _ctx.Banks.AddAsync(bank);
                 await _ctx.SaveChangesAsync();
                 return bank;
-            //}
-            //catch (Exception ex)
-            //{
-            //    return false;
-            //}
         }
 
 

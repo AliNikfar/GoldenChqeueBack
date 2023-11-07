@@ -28,7 +28,6 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // POST api/<BaseInfoApiController>
         [HttpPost]
-
         public async Task<IActionResult> Post(BaseInfoDTO baseinfo)
         {
             //Map DTO

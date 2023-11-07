@@ -10,7 +10,7 @@ namespace GoldenChequeBack.Service.Contract
 {
     public interface IObjectRepository
     {
-        bool Insert(Object objectt);
+        Task<Object> InsertAsync(Object objectt);
 
         bool update(Object objectt);
 

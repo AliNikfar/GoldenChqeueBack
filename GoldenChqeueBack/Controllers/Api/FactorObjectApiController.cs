@@ -1,5 +1,6 @@
 ﻿using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
+using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -27,7 +28,31 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // POST api/<FactorObjectApiController>
         [HttpPost]
-        public bool Post([FromBody] FactorObjects factorObject) => _factorObject.Insert(factorObject);
+        public async Task<IActionResult> Post(FactorObjectsDTO factorobject)
+        {
+            //Map DTO
+            var fctobj = new FactorObjects
+            {
+                Price = factorobject.Price,
+                Name = factorobject.Name,
+                Count = factorobject.Count,
+                Sum = factorobject.Sum,
+                //ObjectsList = factorobject.ObjectsList,
+                //Factor = factorobject.Factor
+
+            };
+            await _factorObject.InsertAsync(fctobj);
+            var response = new FactorObjectsDTO
+            {
+                Price = factorobject.Price,
+                Name = factorobject.Name,
+                Count = factorobject.Count,
+                Sum = factorobject.Sum,
+                //ObjectsList = factorobject.ObjectsList,
+                //Factor = factorobject.Factor
+            };
+            return Ok(response);
+        }
 
         // PUT api/<FactorObjectApiController>/5
         [HttpPut("{id}")]

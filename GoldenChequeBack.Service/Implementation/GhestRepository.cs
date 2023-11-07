@@ -58,6 +58,12 @@ namespace GoldenChequeBack.Service.Implementation
                 return false;
             }
         }
+        public async Task<Ghest> InsertAsync(Ghest ghest)
+        {
+            await _ctx.Ghests.AddAsync(ghest);
+            await _ctx.SaveChangesAsync();
+            return ghest;
+        }
 
         public bool update(Ghest ghest)
         {

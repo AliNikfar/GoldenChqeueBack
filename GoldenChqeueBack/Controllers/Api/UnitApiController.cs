@@ -1,5 +1,6 @@
 ﻿using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
+using GoldenChequeBack.Service.Contract.DTO;
 using GoldenChequeBack.Service.Implementation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,8 +28,23 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // POST api/<UnitApiController>
         [HttpPost]
-        public bool Post([FromBody] Unit unit) => _unit.Insert(unit);
+        public async Task<IActionResult> Post(UnitDTO state)
+        {
+            //Map DTO
+            var st = new Unit
+            {
+                Name = state.Name,
+                QuantityPerUnit = state.QuantityPerUnit
 
+            };
+            await _unit.InsertAsync(st);
+            var response = new UnitDTO
+            {
+                Name = st.Name,
+                QuantityPerUnit = st.QuantityPerUnit
+            };
+            return Ok(response);
+        }
         // PUT api/<UnitApiController>/5
         [HttpPut("{id}")]
         public bool Put([FromBody] Unit unit) => _unit.update(unit);
