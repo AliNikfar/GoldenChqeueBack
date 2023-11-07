@@ -60,7 +60,14 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
     });
 }
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
+app.UseCors(options =>
+{
+   options.AllowAnyHeader();
+   options.AllowAnyOrigin();
+   options.AllowAnyMethod();
+});
+
 //app.UseAuthorization();
 app.MapControllers();
 //app.MapControllerRoute(
