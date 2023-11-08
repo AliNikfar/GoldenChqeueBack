@@ -12,9 +12,14 @@ namespace GoldenChqeueBack.Controllers.Api
     public class ChequeApiController : ControllerBase
     {
         private readonly IChequeRepository _cheque;
-        public ChequeApiController( IChequeRepository cheque)
+
+        public IShobeRepository _ShobeRepository { get; }
+
+        public ChequeApiController(IChequeRepository cheque)
+            //, IShobeRepository shobeRepository)
         {
             _cheque = cheque;
+            //_ShobeRepository = shobeRepository;
         }
         // GET: api/<ChequeApiController>
         [HttpGet]
@@ -34,18 +39,21 @@ namespace GoldenChqeueBack.Controllers.Api
                 Kind = cheque.Kind,
                 ShomareHesab = cheque.ShomareHesab,
                 ShomareChek = cheque.ShomareChek,
-                //SahabCheque = cheque.SahabCheque,
-                //Shobe = cheque.Shobe,
+                SahabCheque = new Customer(),
+                Shobe = new Shobe(),
                 ChequeDate = cheque.ChequeDate,
                 ChequeStatus = cheque.ChequeStatus,
                 PassDate = cheque.PassDate,
                 Detail = cheque.Detail,
-                //FactorID = cheque.FactorID,
+                FactorID = new Factor(),
                 Visable = cheque.Visable,
                 ChequePrice = cheque.ChequePrice
-
-
             };
+            
+            //foreach(var item in cheque.Shobe)
+            //{
+                //var existing = await _ShobeRepository.GetById(cheque.Shobe);
+            //}
             await _cheque.InsertAsync(chq);
             var response = new ChequeDTO
             {

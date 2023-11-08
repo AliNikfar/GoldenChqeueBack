@@ -10,6 +10,6 @@ namespace GoldenChequeBack.Domain.Entities
     {
         public string Title { get; set; }
 
-        public List<Shobe> ShobeList {get; set;}
+        public ICollection<Shobe> ShobeList {get; set;}
     }
 }

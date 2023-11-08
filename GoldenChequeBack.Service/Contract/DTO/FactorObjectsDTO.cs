@@ -12,7 +12,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
         public string Name { get; set; }
         public int Count { get; set; }
         public Int64 Sum { get; set; }
-        public List<ObjectDTO> ObjectsList { get; set; }
+        public Guid[] ObjectsList { get; set; }
         public FactorDTO Factor;
     }
 }

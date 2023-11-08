@@ -21,7 +21,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
             set;
         }
 
-        public StateDTO Ostan
+        public Guid Ostan
         {
             get;
             set;

@@ -13,10 +13,13 @@ namespace GoldenChqeueBack.Controllers.Api
     public class FactorObjectApiController : ControllerBase
     {
         private readonly IFactorObjectsRepository _factorObject;
+       // private readonly IObjectRepository _objectRepository;
 
         public FactorObjectApiController(IFactorObjectsRepository factorObject)
+            //,IObjectRepository objectRepository)
         {
             _factorObject = factorObject;
+            //_objectRepository = objectRepository;
         }
         // GET: api/<FactorObjectApiController>
         [HttpGet]
@@ -37,10 +40,15 @@ namespace GoldenChqeueBack.Controllers.Api
                 Name = factorobject.Name,
                 Count = factorobject.Count,
                 Sum = factorobject.Sum,
-                //ObjectsList = factorobject.ObjectsList,
-                //Factor = factorobject.Factor
+                //ObjectsList = new List<GoldenChequeBack.Domain.Entities.Object>(),
+                //Factor = new Factor()
 
             };
+            //foreach (var factorObjectGuid in factorobject.ObjectsList)
+            //{
+            //    var existing = await _objectRepository.GetById(factorObjectGuid);
+            //}
+
             await _factorObject.InsertAsync(fctobj);
             var response = new FactorObjectsDTO
             {

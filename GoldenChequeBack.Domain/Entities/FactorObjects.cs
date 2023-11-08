@@ -13,7 +13,7 @@ namespace GoldenChequeBack.Domain.Entities
         public string Name { get; set; }
         public int Count { get; set; }
         public Int64 Sum { get; set; }
-        public List<Object> ObjectsList { get; set; }
+        public ICollection<Object> ObjectsList { get; set; }
         public Factor Factor;
 
     }

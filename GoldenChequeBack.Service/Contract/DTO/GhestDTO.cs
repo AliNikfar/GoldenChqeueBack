@@ -12,6 +12,6 @@ namespace GoldenChequeBack.Service.Contract.DTO
         public bool Status { get; set; }
         public DateTime Date { get; set; }
         public DateTime PassDate { get; set; }
-        public FactorDTO Factor;
+        public Guid Factor;
     }
 }

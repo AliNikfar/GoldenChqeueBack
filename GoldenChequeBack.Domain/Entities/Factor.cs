@@ -16,8 +16,8 @@ namespace GoldenChequeBack.Domain.Entities
         public Int64 FactorSumObjectsPrice { get; set; }
         public int Kind { get; set; }
         public Int64 FactorBeforePrice { get; set; }
-        public List<FactorObjects> FactorObjectList { get; set; }
-        public List<Ghest> GhestList { get; set; }
+        public ICollection<FactorObjects> FactorObjectList { get; set; }
+        public ICollection<Ghest> GhestList { get; set; }
 
     }
 }

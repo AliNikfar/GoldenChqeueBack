@@ -8,7 +8,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
 {
     public class FactorDTO
     {
-        public CustomerDTO PersonCode { get; set; }
+        public Guid PersonCode { get; set; }
         public Int64 FactorSumPrice { get; set; }
         public int FactorSodDarsad { get; set; }
         public bool Visable { get; set; }
@@ -19,7 +19,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
         public Int64 FactorSumObjectsPrice { get; set; }
         public int Kind { get; set; }
         public Int64 FactorBeforePrice { get; set; }
-        public List<FactorObjectsDTO> FactorObjectList { get; set; }
-        public List<GhestDTO> GhestList { get; set; }
+        public Guid[] FactorObjectList { get; set; }
+        public Guid GhestList { get; set; }
     }
 }

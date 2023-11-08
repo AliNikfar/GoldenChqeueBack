@@ -57,7 +57,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
             set;
         }
 
-        public CityDTO City
+        public Guid City
         {
             get;
             set;
@@ -94,7 +94,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
             set;
         }
 
-        public CustomerRateDTO CustomerRate
+        public Guid CustomerRate
         {
             get;
             set;

@@ -24,7 +24,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
             set;
         }
 
-        public UnitDTO Unit
+        public Guid Unit
         {
             get;
             set;
