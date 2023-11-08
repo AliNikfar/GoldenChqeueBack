@@ -13,12 +13,12 @@ namespace GoldenChequeBack.Service.Contract
 
         bool update(Ghest ghest);
 
-        bool delete(int ghestId);
+        bool delete(Guid ghestId);
 
         List<Ghest> GetAll();
 
-        Ghest GetById(int id);
+        Ghest GetById(Guid id);
 
-        List<Ghest> GetByFactorId(int Factorid);
+        List<Ghest> GetByFactorId(Guid Factorid);
     }
 }

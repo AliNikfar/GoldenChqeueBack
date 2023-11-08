@@ -2,6 +2,7 @@
 using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace GoldenChequeBack.Service.Implementation
         {
             _ctx = ctx;
         }
-        public bool delete(int bankId)
+        public bool delete(Guid bankId)
         {
             try
             {
@@ -32,12 +33,12 @@ namespace GoldenChequeBack.Service.Implementation
             }
         }
 
-        public List<Bank> GetAll()
+        public async Task<IEnumerable<Bank>> GetAllAsync()
         {
-            return _ctx.Banks.ToList();
+            return await _ctx.Banks.ToListAsync(); ;
         }
 
-        public Bank GetById(int id)
+        public Bank GetById(Guid id)
         {
             return _ctx.Banks.Where(p => p.Id == id).FirstOrDefault();
         }

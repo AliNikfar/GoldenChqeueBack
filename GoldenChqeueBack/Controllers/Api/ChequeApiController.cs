@@ -27,7 +27,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // GET api/<ChequeApiController>/5
         [HttpGet("{id}")]
-        public Cheque Get(int id) => _cheque.GetById(id);
+        public Cheque Get(Guid id) => _cheque.GetById(id);
 
         // POST api/<ChequeApiController>
         [HttpPost]
@@ -45,7 +45,7 @@ namespace GoldenChqeueBack.Controllers.Api
                 ChequeStatus = cheque.ChequeStatus,
                 PassDate = cheque.PassDate,
                 Detail = cheque.Detail,
-                FactorID = new Factor(),
+                Factor = new Factor(),
                 Visable = cheque.Visable,
                 ChequePrice = cheque.ChequePrice
             };
@@ -79,6 +79,6 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // DELETE api/<ChequeApiController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id) => _cheque.delete(id);
+        public void Delete(Guid id) => _cheque.delete(id);
     }
 }

@@ -18,11 +18,23 @@ namespace GoldenChqeueBack.Controllers.Api
         }
         // GET: api/<BankApiController>
         [HttpGet]
-        public List<Bank> GetAll() => _bank.GetAll();
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var banks = await _bank.GetAllAsync();
+
+
+            // Map to DTO
+            var response = new List<BankDTO>();
+            foreach(var crnt in banks)
+            {
+                response.Add(new BankDTO { Title = crnt.Title });
+            }
+            return Ok(response);
+        }
 
         // GET api/<BankApiController>/5
-        [HttpGet("{id}")]
-        public Bank Get(int id) => _bank.GetById(id);
+        [HttpGet("{id}")] 
+        public Bank Get(Guid id) => _bank.GetById(id);
 
         // POST api/<BankApiController>
         [HttpPost]
@@ -31,12 +43,17 @@ namespace GoldenChqeueBack.Controllers.Api
             //Map DTO
             var bnk = new Bank
             {
-                Title = bank.Title
+                Title = bank.Title,
+                RegisterDate = DateTime.Now,
+                LastChangeDate = DateTime.Now,
+                Visable = true
+
+
             };
             await _bank.InsertAsync(bnk);
             var response = new BankDTO
             {
-                Title = bank.Title
+                Title = bnk.Title
             };
             return Ok(response);
         }
@@ -47,6 +64,6 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // DELETE api/<BankApiController>/5
         [HttpDelete("{id}")]
-        public bool Delete(int id) => _bank.delete(id);
+        public bool Delete(Guid id) => _bank.delete(id);
     }
 }

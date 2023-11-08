@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GoldenChequeBack.Service.Contract.DTO
 {
-    public class BankDTO
+    public class BankDTO 
     {
         public string Title { get; set; }
 

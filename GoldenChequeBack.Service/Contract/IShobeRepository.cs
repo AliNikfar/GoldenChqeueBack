@@ -13,12 +13,12 @@ namespace GoldenChequeBack.Service.Contract
 
         bool update(Shobe shobe);
 
-        bool delete(int shobeId);
+        bool delete(Guid shobeId);
 
         List<Shobe> GetAll();
 
-        Shobe GetById(int id);
+        Shobe GetById(Guid id);
 
-        List<Shobe> GetByBankId(int bankId);
+        List<Shobe> GetByBankId(Guid bankId);
     }
 }

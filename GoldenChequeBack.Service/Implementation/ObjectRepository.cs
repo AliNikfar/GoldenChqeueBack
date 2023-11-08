@@ -18,7 +18,7 @@ namespace GoldenChequeBack.Service.Implementation
             _ctx = ctx;
         }
 
-        public bool delete(int ObjectId)
+        public bool delete(Guid ObjectId)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace GoldenChequeBack.Service.Implementation
             return _ctx.Objects.ToList();
         }
 
-        public Object GetById(int id)
+        public Object GetById(Guid id)
         {
             return _ctx.Objects.Where(p => p.Id == id).FirstOrDefault();
         }

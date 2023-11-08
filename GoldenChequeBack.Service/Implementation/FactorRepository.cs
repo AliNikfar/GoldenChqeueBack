@@ -16,12 +16,11 @@ namespace GoldenChequeBack.Service.Implementation
             _ctx = ctx;
         }
 
-        public bool delete(int FactorId)
+        public bool delete(Guid FactorId)
         {
             try
             {
                 Factor bsi = _ctx.Factors.Where(p => p.Id == FactorId).FirstOrDefault();
-                bsi.Visable = false;
                 _ctx.Factors.Attach(bsi);
                 _ctx.SaveChanges();
                 return true;
@@ -37,7 +36,7 @@ namespace GoldenChequeBack.Service.Implementation
             return _ctx.Factors.ToList();
         }
 
-        public Factor GetById(int id)
+        public Factor GetById(Guid id)
         {
             return _ctx.Factors.Where(p => p.Id == id).FirstOrDefault();
         }

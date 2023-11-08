@@ -23,7 +23,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // GET api/<UserApiController>/5
         [HttpGet("{id}")]
-        public User Get(int id) => _user.GetById(id);
+        public User Get(Guid id) => _user.GetById(id);
 
         // POST api/<UserApiController>
         [HttpPost]
@@ -51,6 +51,6 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // DELETE api/<UserApiController>/5
         [HttpDelete("{id}")]
-        public bool Delete(int id) => _user.delete(id);
+        public bool Delete(Guid id) => _user.delete(id);
     }
 }

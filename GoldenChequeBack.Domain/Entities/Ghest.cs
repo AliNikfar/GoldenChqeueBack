@@ -13,7 +13,7 @@ namespace GoldenChequeBack.Domain.Entities
         public bool Status { get; set; }
         public DateTime Date { get; set; }
         public DateTime PassDate { get; set; }
-        public Factor Factor;
+        public Factor Factor { get; set; }
 
     }
 }

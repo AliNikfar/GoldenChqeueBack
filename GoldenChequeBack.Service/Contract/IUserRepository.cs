@@ -13,10 +13,10 @@ namespace GoldenChequeBack.Service.Contract
 
         bool update(User user);
 
-        bool delete(int usersId);
+        bool delete(Guid usersId);
 
         List<User> GetAll();
 
-        User GetById(int id);
+        User GetById(Guid id);
     }
 }

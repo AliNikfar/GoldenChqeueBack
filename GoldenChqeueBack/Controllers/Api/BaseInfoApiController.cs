@@ -24,7 +24,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // GET api/<BaseInfoApiController>/5
         [HttpGet("{id}")]
-        public BaseInfo Get(int id) => _baseInfo.GetById(id);
+        public BaseInfo Get(Guid id) => _baseInfo.GetById(id);
 
         // POST api/<BaseInfoApiController>
         [HttpPost]
@@ -60,6 +60,6 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // DELETE api/<BaseInfoApiController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id) => _baseInfo.delete(id);
+        public void Delete(Guid id) => _baseInfo.delete(id);
     }
 }

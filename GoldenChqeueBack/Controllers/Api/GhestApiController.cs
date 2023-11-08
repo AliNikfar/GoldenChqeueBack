@@ -19,11 +19,11 @@ namespace GoldenChqeueBack.Controllers.Api
         }
         // GET: api/<GhestApiController>
         [HttpGet]
-        public List<Ghest> GetByFactorId(int factorId) => _ghest.GetByFactorId(factorId);
+        public List<Ghest> GetByFactorId(Guid factorId) => _ghest.GetByFactorId(factorId);
 
         // GET api/<GhestApiController>/5
         [HttpGet("{id}")]
-        public Ghest Get(int id) => _ghest.GetById(id);
+        public Ghest Get(Guid id) => _ghest.GetById(id);
 
         // POST api/<GhestApiController>
         [HttpPost]
@@ -56,7 +56,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // DELETE api/<GhestApiController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id) => _ghest.delete(id);
+        public void Delete(Guid id) => _ghest.delete(id);
     }
 }
 

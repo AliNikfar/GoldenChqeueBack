@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoldenChequeBack.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231104214913_First")]
-    partial class First
+    [Migration("20231108212828_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,11 +26,12 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Bank", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("LastChangeDate")
                         .HasColumnType("datetime2");
@@ -48,6 +49,9 @@ namespace GoldenChequeBack.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Banks");
@@ -55,11 +59,12 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.BaseInfo", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("BoolValue")
                         .HasColumnType("bit");
@@ -94,6 +99,9 @@ namespace GoldenChequeBack.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("BaseInfoes");
@@ -101,11 +109,12 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Cheque", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("ChequeDate")
                         .HasColumnType("datetime2");
@@ -120,8 +129,8 @@ namespace GoldenChequeBack.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FactorIDId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("FactorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Kind")
                         .HasColumnType("int");
@@ -141,11 +150,11 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Property<int>("RegisterUser")
                         .HasColumnType("int");
 
-                    b.Property<int>("SahabChequeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SahabChequeId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ShobeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ShobeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ShomareChek")
                         .HasColumnType("int");
@@ -158,7 +167,7 @@ namespace GoldenChequeBack.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FactorIDId");
+                    b.HasIndex("FactorId");
 
                     b.HasIndex("SahabChequeId");
 
@@ -169,11 +178,12 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.City", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
                     b.Property<string>("CityCode")
                         .IsRequired()
@@ -189,14 +199,17 @@ namespace GoldenChequeBack.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OstanId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OstanId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("RegisterUser")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -207,28 +220,29 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Customer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Code")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerRateId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CustomerRateId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Details")
                         .IsRequired()
@@ -290,6 +304,9 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Property<int>("RegisterUser")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
@@ -301,11 +318,12 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.CustomerRate", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("LastChangeDate")
                         .HasColumnType("datetime2");
@@ -324,6 +342,9 @@ namespace GoldenChequeBack.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("CustomerRates");
@@ -331,14 +352,15 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Factor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("FactorBeforePrice")
                         .HasColumnType("bigint");
@@ -364,15 +386,6 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Property<int>("LastChangeUser")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("LastEdit")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("LastHandleUser")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonCodeId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
@@ -384,24 +397,25 @@ namespace GoldenChequeBack.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonCodeId");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Factors");
                 });
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.FactorObjects", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FactorId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("FactorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastChangeDate")
                         .HasColumnType("datetime2");
@@ -425,6 +439,9 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Property<long>("Sum")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FactorId");
@@ -434,17 +451,18 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Ghest", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("FactorId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("FactorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastChangeDate")
                         .HasColumnType("datetime2");
@@ -467,6 +485,9 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FactorId");
@@ -476,17 +497,18 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Object", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
                     b.Property<int>("BuyPrice")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FactorObjectsId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("FactorObjectsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastChangeDate")
                         .HasColumnType("datetime2");
@@ -508,8 +530,11 @@ namespace GoldenChequeBack.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("UnitId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UnitId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
 
                     b.Property<int>("WareHouseStock")
                         .HasColumnType("int");
@@ -523,83 +548,17 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.ToTable("Objects");
                 });
 
-            modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Person", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ActivedMob")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Detail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Family")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FatherName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastChangeDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("LastChangeUser")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Mob1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mob2")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mob3")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PersonCode")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RegisterDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RegisterUser")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Person");
-                });
-
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Shobe", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
-                    b.Property<int?>("BankId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("BankId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastChangeDate")
                         .HasColumnType("datetime2");
@@ -616,6 +575,9 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Property<int>("RegisterUser")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
+
                     b.Property<int>("code")
                         .HasColumnType("int");
 
@@ -628,11 +590,12 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.State", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("LastChangeDate")
                         .HasColumnType("datetime2");
@@ -650,6 +613,9 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Property<int>("RegisterUser")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("States");
@@ -657,11 +623,12 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Unit", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("LastChangeDate")
                         .HasColumnType("datetime2");
@@ -682,6 +649,9 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Property<int>("RegisterUser")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Units");
@@ -689,11 +659,12 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("LastChangeDate")
                         .HasColumnType("datetime2");
@@ -713,6 +684,9 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Property<int>("UserName")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -720,11 +694,9 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Cheque", b =>
                 {
-                    b.HasOne("GoldenChequeBack.Domain.Entities.Factor", "FactorID")
+                    b.HasOne("GoldenChequeBack.Domain.Entities.Factor", "Factor")
                         .WithMany()
-                        .HasForeignKey("FactorIDId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FactorId");
 
                     b.HasOne("GoldenChequeBack.Domain.Entities.Customer", "SahabCheque")
                         .WithMany()
@@ -738,7 +710,7 @@ namespace GoldenChequeBack.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FactorID");
+                    b.Navigation("Factor");
 
                     b.Navigation("SahabCheque");
 
@@ -777,13 +749,13 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Factor", b =>
                 {
-                    b.HasOne("GoldenChequeBack.Domain.Entities.Person", "PersonCode")
+                    b.HasOne("GoldenChequeBack.Domain.Entities.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("PersonCodeId")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PersonCode");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.FactorObjects", b =>
@@ -795,9 +767,13 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Ghest", b =>
                 {
-                    b.HasOne("GoldenChequeBack.Domain.Entities.Factor", null)
+                    b.HasOne("GoldenChequeBack.Domain.Entities.Factor", "Factor")
                         .WithMany("GhestList")
-                        .HasForeignKey("FactorId");
+                        .HasForeignKey("FactorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Factor");
                 });
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Object", b =>

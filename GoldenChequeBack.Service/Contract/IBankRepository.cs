@@ -9,18 +9,15 @@ namespace GoldenChequeBack.Service.Contract
 {
     public interface IBankRepository
     {
-        //IEnumerable<Bank> Reservations { get; }
-
-
 
         Task<Bank> InsertAsync (Bank bank);
 
         bool update (Bank bank);
 
-        bool delete(int bankId);
- 
-        List<Bank> GetAll();
+        bool delete(Guid bankId);
 
-        Bank GetById(int id);
+        Task<IEnumerable<Bank>> GetAllAsync();
+
+        Bank GetById(Guid id);
     }
 }

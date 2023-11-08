@@ -24,7 +24,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // GET api/<ObjectApiController>/5
         [HttpGet("{id}")]
-        public GoldenChequeBack.Domain.Entities.Object Get(int id) => _obj.GetById(id);
+        public GoldenChequeBack.Domain.Entities.Object Get(Guid id) => _obj.GetById(id);
 
         // POST api/<ObjectApiController>
         [HttpPost]
@@ -57,6 +57,6 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // DELETE api/<ObjectApiController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id) => _obj.delete(id);
+        public void Delete(Guid id) => _obj.delete(id);
     }
 }

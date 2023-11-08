@@ -18,11 +18,11 @@ namespace GoldenChqeueBack.Controllers.Api
         }
         // GET: api/<CityApiController>
         [HttpGet]
-        public List<City> GetByStateId(int stateId)=> _city.GetByStateId(stateId);
+        public List<City> GetByStateId(Guid stateId)=> _city.GetByStateId(stateId);
 
         // GET api/<CityApiController>/5
         [HttpGet("{id}")]
-        public City Get(int id) => _city.GetById(id);
+        public City Get(Guid id) => _city.GetById(id);
 
         // POST api/<CityApiController>
         [HttpPost]
@@ -52,6 +52,6 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // DELETE api/<CityApiController>/5
         [HttpDelete("{id}")]
-        public bool Delete(int id)=> _city.delete(id);
+        public bool Delete(Guid id)=> _city.delete(id);
     }
 }

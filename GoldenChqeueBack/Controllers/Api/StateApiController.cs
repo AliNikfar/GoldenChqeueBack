@@ -24,7 +24,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // GET api/<StateApiController>/5
         [HttpGet("{id}")]
-        public State Get(int id) => _state.GetById(id);
+        public State Get(Guid id) => _state.GetById(id);
 
         // POST api/<StateApiController>
         [HttpPost]
@@ -50,6 +50,6 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // DELETE api/<StateApiController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id) => _state.delete(id);
+        public void Delete(Guid id) => _state.delete(id);
     }
 }

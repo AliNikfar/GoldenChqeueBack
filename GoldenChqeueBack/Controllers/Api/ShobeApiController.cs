@@ -17,11 +17,11 @@ namespace GoldenChqeueBack.Controllers.Api
         }
         // GET: api/<ShobeApiController>
         [HttpGet]
-        public List<Shobe> GetByBankId(int BankId) => _shobe.GetByBankId(BankId);
+        public List<Shobe> GetByBankId(Guid BankId) => _shobe.GetByBankId(BankId);
 
         // GET api/<ShobeApiController>/5
         [HttpGet("{id}")]
-        public Shobe Get(int id) => _shobe.GetById(id);
+        public Shobe Get(Guid id) => _shobe.GetById(id);
 
         // POST api/<ShobeApiController>
         [HttpPost]
@@ -48,6 +48,6 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // DELETE api/<ShobeApiController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id) => _shobe.delete(id);
+        public void Delete(Guid id) => _shobe.delete(id);
     }
 }

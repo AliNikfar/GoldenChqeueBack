@@ -17,8 +17,7 @@ namespace GoldenChqeueBack.Controllers
 
         public IActionResult Index()
         {
-            var a = _bank.GetAll().ToList();
-            return View(a);
+            return View();
         }
 
         public IActionResult Privacy()

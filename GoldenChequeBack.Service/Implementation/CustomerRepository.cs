@@ -15,7 +15,7 @@ namespace GoldenChequeBack.Service.Implementation
     {
         _ctx = ctx;
     }
-    public bool delete(int customerId)
+    public bool delete(Guid customerId)
     {
         try
         {
@@ -35,7 +35,7 @@ namespace GoldenChequeBack.Service.Implementation
         return _ctx.Customers.ToList();
     }
 
-    public Customer GetById(int id)
+    public Customer GetById(Guid id)
     {
         return _ctx.Customers.Where(p => p.Id == id).FirstOrDefault();
     }

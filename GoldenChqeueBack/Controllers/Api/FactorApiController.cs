@@ -24,7 +24,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // GET api/<FactorApiController>/5
         [HttpGet("{id}")]
-        public Factor Get(int id) => _factor.GetById(id);
+        public Factor Get(Guid id) => _factor.GetById(id);
 
         // POST api/<FactorApiController>
         [HttpPost]
@@ -66,6 +66,6 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // DELETE api/<FactorApiController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id) => _factor.delete(id);
+        public void Delete(Guid id) => _factor.delete(id);
     }
 }

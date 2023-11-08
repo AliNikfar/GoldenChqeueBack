@@ -1,19 +1,20 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace GoldenChequeBack.Domain.Entities
+namespace GoldenChequeBack.Service.Contract.DTO
 {
-    public class BaseEntity
+    public class BaseEntityDTO
     {
-        [Key]
         public Guid Id { get; set; }
+
         public DateTime RegisterDate { get; set; }
         public int RegisterUser { get; set; }
         public DateTime LastChangeDate { get; set; }
         public int LastChangeUser { get; set; }
         public bool Visable { get; set; }
         public bool Author { get; set; }
-
     }
-
 }

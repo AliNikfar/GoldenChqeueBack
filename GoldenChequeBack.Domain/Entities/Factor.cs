@@ -9,7 +9,7 @@ namespace GoldenChequeBack.Domain.Entities
 {
     public class Factor : BaseEntity
     {
-        public Customer CustomerId { get; set; }
+        public Customer Customer { get; set; }
         public Int64 FactorSumPrice { get; set; }
         public int FactorSodDarsad { get; set; }
         public DateTime FactorKharidDate { get; set; }

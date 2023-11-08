@@ -18,8 +18,7 @@ namespace GoldenChequeBack.Domain.Entities
         public int ChequeStatus { get; set; }
         public DateTime PassDate { get; set; }
         public string Detail { get; set; }
-        public Factor FactorID { get; set; }
-        public bool Visable { get; set; }
+        public Factor? Factor { get; set; }
         public int ChequePrice { get; set; }
 
     }

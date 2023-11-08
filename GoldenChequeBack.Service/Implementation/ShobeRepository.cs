@@ -16,7 +16,7 @@ namespace GoldenChequeBack.Service.Implementation
             _ctx = ctx;
         }
 
-        public bool delete(int shobeId)
+        public bool delete(Guid shobeId)
         {
             try
             {
@@ -35,12 +35,12 @@ namespace GoldenChequeBack.Service.Implementation
             return _ctx.Shobes.ToList();
         }
 
-        public List<Shobe> GetByBankId(int bankId)
+        public List<Shobe> GetByBankId(Guid bankId)
         {
             return _ctx.Shobes.ToList();
         }
 
-        public Shobe GetById(int id)
+        public Shobe GetById(Guid id)
         {
             return _ctx.Shobes.Where(p => p.Id == id).FirstOrDefault();
         }

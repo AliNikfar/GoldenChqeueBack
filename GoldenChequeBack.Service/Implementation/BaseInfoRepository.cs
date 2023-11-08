@@ -16,7 +16,7 @@ namespace GoldenChequeBack.Service.Implementation
             _ctx = ctx;
         }
 
-        public bool delete(int BaseInfoId)
+        public bool delete(Guid BaseInfoId)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace GoldenChequeBack.Service.Implementation
             return _ctx.BaseInfoes.ToList();
         }
 
-        public BaseInfo GetById(int id)
+        public BaseInfo GetById(Guid id)
         {
             return _ctx.BaseInfoes.Where(p => p.Id == id).FirstOrDefault();
         }
