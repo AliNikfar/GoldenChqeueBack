@@ -20,11 +20,43 @@ namespace GoldenChqeueBack.Controllers.Api
         }
         // GET: api/<UnitApiController>
         [HttpGet]
-        public List<Unit> GetAll() => _unit.GetAll();
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var unit = await _unit.GetAllAsync();
+
+
+            // Map to DTO
+            var response = new List<UnitDTO>();
+            foreach (var crnt in unit)
+            {
+                response.Add(new UnitDTO
+                {
+                    Id = crnt.Id,
+                    Name = crnt.Name,
+                    QuantityPerUnit = crnt.QuantityPerUnit
+                });
+            }
+            return Ok(response);
+        }
 
         // GET api/<UnitApiController>/5
-        [HttpGet("{id}")]
-        public Unit Get(Guid id) => _unit.GetById(id);
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var existingstate = await _unit.GetById(id);
+            if (existingstate is null)
+            {
+                return NotFound();
+            }
+            var response = new UnitDTO
+            {
+                Id = existingstate.Id,
+                Name = existingstate.Name,
+                QuantityPerUnit = existingstate.QuantityPerUnit
+            };
+            return Ok(response);
+        }
 
         // POST api/<UnitApiController>
         [HttpPost]

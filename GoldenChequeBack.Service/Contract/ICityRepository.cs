@@ -15,10 +15,10 @@ namespace GoldenChequeBack.Service.Contract
 
         bool delete(Guid cityId);
 
-        List<City> GetAll();
+        Task<IEnumerable<City>> GetAllAsync();
 
-        City GetById(Guid id);
+        Task<City> GetById(Guid id);
 
-        List<City> GetByStateId(Guid CityId);
+        Task<IEnumerable<City>> GetByStateIdAsync(Guid stateId);
     }
 }

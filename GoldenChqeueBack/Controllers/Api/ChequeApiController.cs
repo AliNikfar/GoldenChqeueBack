@@ -16,18 +16,66 @@ namespace GoldenChqeueBack.Controllers.Api
         public IShobeRepository _ShobeRepository { get; }
 
         public ChequeApiController(IChequeRepository cheque)
-            //, IShobeRepository shobeRepository)
         {
             _cheque = cheque;
-            //_ShobeRepository = shobeRepository;
         }
         // GET: api/<ChequeApiController>
         [HttpGet]
-        public List<Cheque> Get() => _cheque.GetAll();
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var cheque = await _cheque.GetAllAsync();
+
+
+            // Map to DTO
+            var response = new List<ChequeDTO>();
+            foreach (var crnt in cheque)
+            {
+                response.Add(new ChequeDTO
+                {
+                    Id = crnt.Id,   
+                    ChequeDate = crnt.ChequeDate,
+                    ChequePrice = crnt.ChequePrice,
+                    ChequeStatus =  crnt.ChequeStatus,
+                    Detail = crnt.Detail,
+                    FactorID = crnt.Factor.Id,
+                    Kind = crnt.Kind,   
+                    PassDate = crnt.PassDate,
+                    SahabCheque = crnt.SahabCheque.Id,
+                    Shobe = crnt.Shobe.Id,
+                    ShomareChek = crnt.ShomareChek,
+                    ShomareHesab = crnt.ShomareHesab
+                });
+            }
+            return Ok(response);
+        }
 
         // GET api/<ChequeApiController>/5
-        [HttpGet("{id}")]
-        public Cheque Get(Guid id) => _cheque.GetById(id);
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var existingCheque = await _cheque.GetById(id);
+            if (existingCheque is null)
+            {
+                return NotFound();
+            }
+            var response = new ChequeDTO
+            {
+                Id = existingCheque.Id,
+                ChequeDate = existingCheque.ChequeDate,
+                ChequePrice = existingCheque.ChequePrice,
+                ChequeStatus = existingCheque.ChequeStatus,
+                Detail = existingCheque.Detail,
+                FactorID = existingCheque.Factor.Id,
+                Kind = existingCheque.Kind,
+                PassDate = existingCheque.PassDate,
+                SahabCheque = existingCheque.SahabCheque.Id,
+                Shobe = existingCheque.Shobe.Id,
+                ShomareChek = existingCheque.ShomareChek,
+                ShomareHesab = existingCheque.ShomareHesab
+            };
+            return Ok(response);
+        }
 
         // POST api/<ChequeApiController>
         [HttpPost]
@@ -60,13 +108,13 @@ namespace GoldenChqeueBack.Controllers.Api
                 Kind = chq.Kind,
                 ShomareHesab = chq.ShomareHesab,
                 ShomareChek = chq.ShomareChek,
-                //SahabCheque = chq.SahabCheque,
-                //Shobe = chq.Shobe,
+                SahabCheque = chq.SahabCheque.Id,
+                Shobe = chq.Shobe.Id,
                 ChequeDate = chq.ChequeDate,
                 ChequeStatus = chq.ChequeStatus,
                 PassDate = chq.PassDate,
                 Detail = chq.Detail,
-                //FactorID = chq.FactorID,
+                FactorID = chq.Factor.Id,
                 Visable = chq.Visable,
                 ChequePrice = chq.ChequePrice
             };

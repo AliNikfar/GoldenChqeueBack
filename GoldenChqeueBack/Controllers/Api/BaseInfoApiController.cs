@@ -20,11 +20,50 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // GET: api/<BaseInfoApiController>
         [HttpGet]
-        public List<BaseInfo> Getall() => _baseInfo.GetAll();
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var baseInfo = await _baseInfo.GetAllAsync();
+
+
+            // Map to DTO
+            var response = new List<BaseInfoDTO>();
+            foreach (var crnt in baseInfo)
+            {
+                response.Add(new BaseInfoDTO {
+                    Id = crnt.Id,
+                    Title = crnt.Title ,
+                    BoolValue =crnt.BoolValue,
+                    Detail = crnt.Detail,
+                    IntValue = crnt.IntValue,
+                    LongValue = crnt.LongValue,
+                    StringValue =   crnt.StringValue
+                });
+            }
+            return Ok(response);
+        }
 
         // GET api/<BaseInfoApiController>/5
-        [HttpGet("{id}")]
-        public BaseInfo Get(Guid id) => _baseInfo.GetById(id);
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var existingBaseInfo = await _baseInfo.GetById(id);
+            if (existingBaseInfo is null)
+            {
+                return NotFound();
+            }
+            var response = new BaseInfoDTO
+            {
+                Id = existingBaseInfo.Id,
+                Title = existingBaseInfo.Title,
+                BoolValue = existingBaseInfo.BoolValue,
+                Detail = existingBaseInfo.Detail,
+                IntValue = existingBaseInfo.IntValue,
+                LongValue = existingBaseInfo.LongValue,
+                StringValue = existingBaseInfo.StringValue
+            };
+            return Ok(response);
+        }
 
         // POST api/<BaseInfoApiController>
         [HttpPost]

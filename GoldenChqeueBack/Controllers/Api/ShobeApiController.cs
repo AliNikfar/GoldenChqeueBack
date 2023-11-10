@@ -16,31 +16,67 @@ namespace GoldenChqeueBack.Controllers.Api
             _shobe = shobe;
         }
         // GET: api/<ShobeApiController>
-        [HttpGet]
-        public List<Shobe> GetByBankId(Guid BankId) => _shobe.GetByBankId(BankId);
+            [HttpGet]
+            [Route("{factorId:Guid}")]
+            public async Task<IActionResult> GetByBankId(Guid BankId)
+            {
+                var shobe = await _shobe.GetByBankId(BankId);
+
+                // Map to DTO
+                var response = new List<ShobeDTO>();
+                foreach (var crnt in shobe)
+                {
+                    response.Add(new ShobeDTO
+                    {
+                        Name = crnt.Name,
+                        code = crnt.code
+                    });
+                }
+                return Ok(response);
+            }
 
         // GET api/<ShobeApiController>/5
-        [HttpGet("{id}")]
-        public Shobe Get(Guid id) => _shobe.GetById(id);
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var existingShobe = await _shobe.GetById(id);
+            if (existingShobe is null)
+            {
+                return NotFound();
+            }
+            var response = new ShobeDTO
+            {
+                Name = existingShobe.Name,
+                code = existingShobe.code
+            };
+            return Ok(response);
+        }
 
         // POST api/<ShobeApiController>
         [HttpPost]
         public async Task<IActionResult> Post(ShobeDTO shobe)
         {
             //Map DTO
-            var sh = new Shobe
+            var shbe = new Shobe
             {
                 Name = shobe.Name,
                 code = shobe.code
-    };
-            await _shobe.InsertAsync(sh);
+            };
+
+            //foreach(var item in cheque.Shobe)
+            //{
+            //var existing = await _ShobeRepository.GetById(cheque.Shobe);
+            //}
+            await _shobe.InsertAsync(shbe);
             var response = new ShobeDTO
             {
-                Name = sh.Name,
-                code = sh.code
+                Name = shbe.Name,
+                code = shbe.code
             };
             return Ok(response);
         }
+
 
         // PUT api/<ShobeApiController>/5
         [HttpPut("{id}")]

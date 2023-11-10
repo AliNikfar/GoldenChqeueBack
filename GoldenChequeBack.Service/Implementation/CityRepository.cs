@@ -1,6 +1,7 @@
 ﻿using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,14 +32,14 @@ namespace GoldenChequeBack.Service.Implementation
         }
     }
 
-    public List<City> GetAll()
-    {
-        return _ctx.Cities.ToList();
-    }
-
-        public City GetById(Guid id)
+        public async Task<IEnumerable<City>> GetAllAsync()
         {
-            return _ctx.Cities.Where(p => p.Id == id).FirstOrDefault();
+            return await _ctx.Cities.ToListAsync(); ;
+        }
+
+        public async Task<City> GetById(Guid id)
+        {
+            return await _ctx.Cities.Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
 
@@ -66,9 +67,10 @@ namespace GoldenChequeBack.Service.Implementation
         }
     }
 
-        public List<City> GetByStateId(Guid id)
+
+        public async Task<IEnumerable<City>> GetByStateIdAsync(Guid stateId)
         {
-            return _ctx.Cities.Where(p => p.Ostan.Id == id).ToList();
+            return await _ctx.Cities.Where(p => p.Ostan.Id == stateId).ToListAsync();
         }
     }
 }

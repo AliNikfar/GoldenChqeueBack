@@ -16,8 +16,8 @@ namespace GoldenChequeBack.Service.Contract
 
         bool delete(Guid baseInfoId);
 
-        List<BaseInfo> GetAll();
+        Task<IEnumerable<BaseInfo>> GetAllAsync();
 
-        BaseInfo GetById(Guid id);
+        Task<BaseInfo?> GetById(Guid id);
     }
 }

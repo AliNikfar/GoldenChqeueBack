@@ -15,8 +15,8 @@ namespace GoldenChequeBack.Service.Contract
 
         bool delete(Guid factorId);
 
-        List<Factor> GetAll();
+        Task<IEnumerable<Factor>> GetAllAsync();
 
-        Factor GetById(Guid id);
+        Task<Factor?> GetById(Guid id);
     }
 }

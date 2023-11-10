@@ -20,24 +20,60 @@ namespace GoldenChqeueBack.Controllers.Api
         }
         // GET: api/<ObjectApiController>
         [HttpGet]
-        public List<GoldenChequeBack.Domain.Entities.Object> Getall() => _obj.GetAll();
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var objectt = await _obj.GetAllAsync();
+
+
+            // Map to DTO
+            var response = new List<ObjectDTO>();
+            foreach (var crnt in objectt)
+            {
+                response.Add(new ObjectDTO
+                {
+                    Title = crnt.Title,
+                    Price = crnt.Price,
+                    BuyPrice = crnt.BuyPrice,
+                    Unit = crnt.Unit.Id,
+                    WareHouseStock = crnt.WareHouseStock
+                });
+            }
+            return Ok(response);
+        }
 
         // GET api/<ObjectApiController>/5
-        [HttpGet("{id}")]
-        public GoldenChequeBack.Domain.Entities.Object Get(Guid id) => _obj.GetById(id);
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var existingObject = await _obj.GetById(id);
+            if (existingObject is null)
+            {
+                return NotFound();
+            }
+            var response = new ObjectDTO
+            {
+                Title = existingObject.Title,
+                Price = existingObject.Price,
+                BuyPrice = existingObject.BuyPrice,
+                Unit = existingObject.Unit.Id,
+                WareHouseStock = existingObject.WareHouseStock
+            };
+            return Ok(response);
+        }
 
         // POST api/<ObjectApiController>
         [HttpPost]
-        public async Task<IActionResult> Post(ObjectDTO objct)
+        public async Task<IActionResult> Post(Object objectt)
         {
             //Map DTO
             var obj = new Object
             {
-                Title = objct.Title,
-                Price = objct.Price,
-                BuyPrice = objct.BuyPrice,
-                //Unit = objct.Unit,
-                WareHouseStock = objct.WareHouseStock
+                Title = objectt.Title,
+                Price = objectt.Price,
+                BuyPrice = objectt.BuyPrice,
+                //Unit = objectt.Unit.Id,
+                WareHouseStock = objectt.WareHouseStock
 
             };
             await _obj.InsertAsync(obj);
@@ -46,7 +82,7 @@ namespace GoldenChqeueBack.Controllers.Api
                 Title = obj.Title,
                 Price = obj.Price,
                 BuyPrice = obj.BuyPrice,
-                //Unit = obj.Unit,
+                Unit = obj.Unit.Id,
                 WareHouseStock = obj.WareHouseStock
             };
             return Ok(response);

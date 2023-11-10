@@ -8,6 +8,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
 {
     public class ChequeDTO
     {
+        public Guid Id { get; set; }
         public int Kind { get; set; }
         public int ShomareHesab { get; set; }
         public int ShomareChek { get; set; }

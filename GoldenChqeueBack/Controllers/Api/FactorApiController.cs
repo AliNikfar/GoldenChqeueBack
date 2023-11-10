@@ -20,11 +20,57 @@ namespace GoldenChqeueBack.Controllers.Api
         }
         // GET: api/<FactorApiController>
         [HttpGet]
-        public List<Factor> Getall() => _factor.GetAll();
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var factor = await _factor.GetAllAsync();
+
+
+            // Map to DTO
+            var response = new List<FactorDTO>();
+            foreach (var crnt in factor)
+            {
+                response.Add(new FactorDTO
+                {
+                    Id = crnt.Id,
+                    PersonCode = crnt.Customer.Id,
+                    FactorSumPrice = crnt.FactorSumPrice,
+                    FactorSodDarsad = crnt.FactorSodDarsad,
+                    FactorKharidDate = crnt.FactorKharidDate,
+                    FactorSumObjectsPrice = crnt.FactorSumObjectsPrice,
+                    Kind = crnt.Kind,
+                    FactorBeforePrice = crnt.FactorBeforePrice
+                    //FactorObjectList = crnt.FactorObjectList.ToList(),
+                    //GhestList = crnt.GhestList
+                });
+            }
+            return Ok(response);
+        }
 
         // GET api/<FactorApiController>/5
-        [HttpGet("{id}")]
-        public Factor Get(Guid id) => _factor.GetById(id);
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var existingfactor = await _factor.GetById(id);
+            if (existingfactor is null)
+            {
+                return NotFound();
+            }
+            var response = new FactorDTO
+            {
+                Id = existingfactor.Id,
+                PersonCode = existingfactor.Customer.Id,
+                FactorSumPrice = existingfactor.FactorSumPrice,
+                FactorSodDarsad = existingfactor.FactorSodDarsad,
+                FactorKharidDate = existingfactor.FactorKharidDate,
+                FactorSumObjectsPrice = existingfactor.FactorSumObjectsPrice,
+                Kind = existingfactor.Kind,
+                FactorBeforePrice = existingfactor.FactorBeforePrice
+                //FactorObjectList = crnt.FactorObjectList.ToList(),
+                //GhestList = crnt.GhestList
+            };
+            return Ok(response);
+        }
 
         // POST api/<FactorApiController>
         [HttpPost]

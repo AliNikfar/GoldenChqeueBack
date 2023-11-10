@@ -7,6 +7,7 @@ using GoldenChequeBack.Domain.Entities;
  
 using Object = GoldenChequeBack.Domain.Entities.Object;
 using GoldenChequeBack.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoldenChequeBack.Service.Implementation
 {
@@ -32,14 +33,14 @@ namespace GoldenChequeBack.Service.Implementation
                 return false;
             }
         }
-        public List<Object> GetAll()
+        public async Task<IEnumerable<Object>> GetAllAsync()
         {
-            return _ctx.Objects.ToList();
+            return await _ctx.Objects.ToListAsync(); ;
         }
 
-        public Object GetById(Guid id)
+        public async Task<Object> GetById(Guid id)
         {
-            return _ctx.Objects.Where(p => p.Id == id).FirstOrDefault();
+            return await _ctx.Objects.Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<Object> InsertAsync(Object objectt)

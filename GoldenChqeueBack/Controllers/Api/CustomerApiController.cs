@@ -19,11 +19,69 @@ namespace GoldenChqeueBack.Controllers.Api
         }
         // GET: api/<CustomerApiController>
         [HttpGet]
-        public   List<Customer> Getall() => _customer.GetAll(); 
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var customer = await _customer.GetAllAsync();
+
+
+            // Map to DTO
+            var response = new List<CustomerDTO>();
+            foreach (var crnt in customer)
+            {
+                response.Add(new CustomerDTO
+                {
+                    Id = crnt.Id,
+                    Name = crnt.Name,
+                    Address = crnt.Address,
+                    BirthDate = crnt.BirthDate,
+                    City = crnt.City.Id,
+                    Code = crnt.Code,
+                    CustomerRate = crnt.CustomerRate.Id,
+                    Details = crnt.Details,
+                    FatherName = crnt.Details,
+                    LastName = crnt.LastName,
+                    MaxBuyPrice = crnt.MaxBuyPrice,
+                    Mob1 = crnt.Mob1 , 
+                    Mob2= crnt.Mob2,
+                    Mob3 = crnt.Mob3,
+                    PhoneNum = crnt.PhoneNum,
+                    PostalCode = crnt.PostalCode
+                });
+            }
+            return Ok(response);
+        }
 
         // GET api/<CustomerApiController>/5
-        [HttpGet("{id}")]
-        public Customer Get(Guid id) => _customer.GetById(id);   
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var existingcustomer = await _customer.GetById(id);
+            if (existingcustomer is null)
+            {
+                return NotFound();
+            }
+            var response = new CustomerDTO
+            {
+                Id = existingcustomer.Id,
+                Name = existingcustomer.Name,
+                Address = existingcustomer.Address,
+                BirthDate = existingcustomer.BirthDate,
+                City = existingcustomer.City.Id,
+                Code = existingcustomer.Code,
+                CustomerRate = existingcustomer.CustomerRate.Id,
+                Details = existingcustomer.Details,
+                FatherName = existingcustomer.Details,
+                LastName = existingcustomer.LastName,
+                MaxBuyPrice = existingcustomer.MaxBuyPrice,
+                Mob1 = existingcustomer.Mob1,
+                Mob2 = existingcustomer.Mob2,
+                Mob3 = existingcustomer.Mob3,
+                PhoneNum = existingcustomer.PhoneNum,
+                PostalCode = existingcustomer.PostalCode
+            };
+            return Ok(response);
+        }
 
         // POST api/<CustomerApiController>
         [HttpPost]

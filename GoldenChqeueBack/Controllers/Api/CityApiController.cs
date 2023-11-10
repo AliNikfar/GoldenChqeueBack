@@ -18,11 +18,42 @@ namespace GoldenChqeueBack.Controllers.Api
         }
         // GET: api/<CityApiController>
         [HttpGet]
-        public List<City> GetByStateId(Guid stateId)=> _city.GetByStateId(stateId);
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var city = await _city.GetAllAsync();
+
+
+            // Map to DTO
+            var response = new List<CityDTO>();
+            foreach (var crnt in city)
+            {
+                response.Add(new CityDTO
+                {
+                    CityCode = crnt.CityCode,
+                    Name = crnt.Name
+                    
+                });
+            }
+            return Ok(response);
+        }
 
         // GET api/<CityApiController>/5
         [HttpGet("{id}")]
-        public City Get(Guid id) => _city.GetById(id);
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var existingcity = await _city.GetById(id);
+            if (existingcity is null)
+            {
+                return NotFound();
+            }
+            var response = new CityDTO
+            {
+                CityCode = existingcity.CityCode,
+                Name = existingcity.Name
+            };
+            return Ok(response);
+        }
+
 
         // POST api/<CityApiController>
         [HttpPost]

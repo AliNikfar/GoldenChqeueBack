@@ -21,13 +21,70 @@ namespace GoldenChqeueBack.Controllers.Api
             _factorObject = factorObject;
             //_objectRepository = objectRepository;
         }
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var factorObjects = await _factorObject.GetAllAsync();
+
+
+            // Map to DTO
+            var response = new List<FactorObjectsDTO>();
+            foreach (var crnt in factorObjects)
+            {
+                response.Add(new FactorObjectsDTO
+                {
+                    Id = crnt.Id,
+                    Price = crnt.Price,
+                    Name = crnt.Name,
+                    Count = crnt.Count,
+                    Sum = crnt.Sum,
+                });
+            }
+            return Ok(response);
+        }
+
         // GET: api/<FactorObjectApiController>
         [HttpGet]
-        public List<FactorObjects> GetByFactorId(Guid factorId) => _factorObject.GetByFactorId(factorId);
+        [Route("{factorId:Guid}")]
+        public async Task<IActionResult> GetByFactorId(Guid factorId) 
+        {
+            var factorObjects = await _factorObject.GetByFactorId(factorId);
+
+            // Map to DTO
+            var response = new List<FactorObjectsDTO>();
+            foreach (var crnt in factorObjects)
+            {
+                response.Add(new FactorObjectsDTO
+                {
+                    Id = crnt.Id,
+                    Price = crnt.Price,
+                    Name = crnt.Name,
+                    Count = crnt.Count,
+                    Sum = crnt.Sum,
+                });
+            }
+            return Ok(response);
+        }
 
         // GET api/<FactorObjectApiController>/5
-        [HttpGet("{id}")]
-        public FactorObjects Get(Guid id) => _factorObject.GetById(id);
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var existingfactorObject = await _factorObject.GetById(id);
+            if (existingfactorObject is null)
+            {
+                return NotFound();
+            }
+            var response = new FactorObjectsDTO
+            {
+                Id = existingfactorObject.Id,
+                Price = existingfactorObject.Price,
+                Name = existingfactorObject.Name,
+                Count = existingfactorObject.Count,
+                Sum = existingfactorObject.Sum,
+            };
+            return Ok(response);
+        }
 
         // POST api/<FactorObjectApiController>
         [HttpPost]

@@ -20,11 +20,42 @@ namespace GoldenChqeueBack.Controllers.Api
         }
         // GET: api/<StateApiController>
         [HttpGet]
-        public List<State> Getall() => _state.GetAll();
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var state = await _state.GetAllAsync();
+
+
+            // Map to DTO
+            var response = new List<StateDTO>();
+            foreach (var crnt in state)
+            {
+                response.Add(new StateDTO
+                {
+                    Id = crnt.Id,
+                    Name = crnt.Name,
+                });
+            }
+            return Ok(response);
+        }
+
 
         // GET api/<StateApiController>/5
-        [HttpGet("{id}")]
-        public State Get(Guid id) => _state.GetById(id);
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var existingstate = await _state.GetById(id);
+            if (existingstate is null)
+            {
+                return NotFound();
+            }
+            var response = new StateDTO
+            {
+                Id = existingstate.Id,
+                Name = existingstate.Name
+            };
+            return Ok(response);
+        }
 
         // POST api/<StateApiController>
         [HttpPost]

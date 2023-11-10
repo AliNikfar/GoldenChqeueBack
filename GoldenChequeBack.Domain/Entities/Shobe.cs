@@ -11,6 +11,7 @@ namespace GoldenChequeBack.Domain.Entities
     {
         public int Name { get; set; }
         public int code { get; set; }
+        public Guid BankId { get; set; }
 
     }
 }

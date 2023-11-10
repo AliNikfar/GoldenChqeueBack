@@ -19,11 +19,41 @@ namespace GoldenChqeueBack.Controllers.Api
         }
         // GET: api/<UserApiController>
         [HttpGet]
-        public List<User> GetAll() => _user.GetAll();
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var user = await _user.GetAllAsync();
+
+
+            // Map to DTO
+            var response = new List<UserDTO>();
+            foreach (var crnt in user)
+            {
+                response.Add(new UserDTO
+                {
+                    UserId = crnt.UserId,
+                    UserName = crnt.UserId,
+                });
+            }
+            return Ok(response);
+        }
 
         // GET api/<UserApiController>/5
-        [HttpGet("{id}")]
-        public User Get(Guid id) => _user.GetById(id);
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var existingUser = await _user.GetById(id);
+            if (existingUser is null)
+            {
+                return NotFound();
+            }
+            var response = new UserDTO
+            {
+                UserId = existingUser.UserId,
+                UserName = existingUser.UserName
+            };
+            return Ok(response);
+        }
 
         // POST api/<UserApiController>
         [HttpPost]

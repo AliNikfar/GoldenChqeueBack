@@ -19,11 +19,47 @@ namespace GoldenChqeueBack.Controllers.Api
         }
         // GET: api/<GhestApiController>
         [HttpGet]
-        public List<Ghest> GetByFactorId(Guid factorId) => _ghest.GetByFactorId(factorId);
+        [Route("{factorId:Guid}")]
+        public async Task<IActionResult> GetByFactorId(Guid factorId)
+        {
+            var ghest = await _ghest.GetByFactorId(factorId);
+
+            // Map to DTO
+            var response = new List<GhestDTO>();
+            foreach (var crnt in ghest)
+            {
+                response.Add(new GhestDTO
+                {
+                    Price = crnt.Price,
+                    Status = crnt.Status,
+                    Date = crnt.Date,
+                    PassDate = crnt.PassDate,
+                     Factor = crnt.Factor.Id
+                });
+            }
+            return Ok(response);
+        }
 
         // GET api/<GhestApiController>/5
-        [HttpGet("{id}")]
-        public Ghest Get(Guid id) => _ghest.GetById(id);
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var existingGhest = await _ghest.GetById(id);
+            if (existingGhest is null)
+            {
+                return NotFound();
+            }
+            var response = new GhestDTO
+            {
+                Price = existingGhest.Price,
+                Status = existingGhest.Status,
+                Date = existingGhest.Date,
+                PassDate = existingGhest.PassDate,
+                Factor = existingGhest.Factor.Id
+            };
+            return Ok(response);
+        }
 
         // POST api/<GhestApiController>
         [HttpPost]

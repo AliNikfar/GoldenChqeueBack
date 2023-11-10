@@ -8,6 +8,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
 {
     public class FactorDTO
     {
+        public Guid Id { get; set; }
         public Guid PersonCode { get; set; }
         public Int64 FactorSumPrice { get; set; }
         public int FactorSodDarsad { get; set; }

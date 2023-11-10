@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoldenChequeBack.Service.Implementation
 {
@@ -31,14 +32,14 @@ namespace GoldenChequeBack.Service.Implementation
                 return false;
             }
         }
-        public List<Cheque> GetAll()
+        public async Task<IEnumerable<Cheque>> GetAllAsync()
         {
-            return _ctx.Cheques.ToList();
+            return await _ctx.Cheques.ToListAsync(); ;
         }
 
-        public Cheque GetById(Guid id)
+        public async Task<Cheque> GetById(Guid id)
         {
-            return _ctx.Cheques.Where(p => p.Id == id).FirstOrDefault();
+            return await _ctx.Cheques.Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<Cheque> InsertAsync(Cheque cheque)

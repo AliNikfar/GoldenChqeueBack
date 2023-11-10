@@ -15,8 +15,8 @@ namespace GoldenChequeBack.Service.Contract
 
         bool delete(Guid stateId);
 
-        List<State> GetAll();
+        Task<IEnumerable<State>> GetAllAsync();
 
-        State GetById(Guid id);
+        Task<State?> GetById(Guid id);
     }
 }

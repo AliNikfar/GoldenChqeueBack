@@ -16,8 +16,9 @@ namespace GoldenChequeBack.Service.Contract
 
         bool delete(Guid customerrateId);
 
-        List<CustomerRate> GetAll();
 
-        CustomerRate GetById(Guid id);
+        Task<IEnumerable<CustomerRate>> GetAllAsync();
+
+        Task<CustomerRate?> GetById(Guid id);
     }
 }
