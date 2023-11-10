@@ -8,6 +8,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
 {
     public class BankDTO 
     {
+        public Guid Id { get; set; }
         public string Title { get; set; }
 
         public Guid[] ShobeList { get; set; }

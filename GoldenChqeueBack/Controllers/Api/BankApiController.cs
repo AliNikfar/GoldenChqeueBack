@@ -27,14 +27,28 @@ namespace GoldenChqeueBack.Controllers.Api
             var response = new List<BankDTO>();
             foreach(var crnt in banks)
             {
-                response.Add(new BankDTO { Title = crnt.Title });
+                response.Add(new BankDTO { Id = crnt.Id ,  Title = crnt.Title  });
             }
             return Ok(response);
         }
 
         // GET api/<BankApiController>/5
-        [HttpGet("{id}")] 
-        public Bank Get(Guid id) => _bank.GetById(id);
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        { 
+            var existingBank =  await _bank.GetById(id);
+            if(existingBank is null)
+            {
+                return NotFound();
+            }
+            var response = new BankDTO
+            {
+                Id = existingBank.Id,
+                Title = existingBank.Title
+            };
+            return Ok(response);
+        }
 
         // POST api/<BankApiController>
         [HttpPost]

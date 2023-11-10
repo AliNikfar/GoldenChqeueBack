@@ -38,9 +38,9 @@ namespace GoldenChequeBack.Service.Implementation
             return await _ctx.Banks.ToListAsync(); ;
         }
 
-        public Bank GetById(Guid id)
+        public async Task<Bank> GetById(Guid id)
         {
-            return _ctx.Banks.Where(p => p.Id == id).FirstOrDefault();
+            return await _ctx.Banks.Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<Bank> InsertAsync(Bank bank)

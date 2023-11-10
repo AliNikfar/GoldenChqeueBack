@@ -18,6 +18,6 @@ namespace GoldenChequeBack.Service.Contract
 
         Task<IEnumerable<Bank>> GetAllAsync();
 
-        Bank GetById(Guid id);
+        Task<Bank?> GetById(Guid id);
     }
 }
