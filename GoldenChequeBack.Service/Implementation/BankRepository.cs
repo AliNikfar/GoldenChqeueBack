@@ -51,18 +51,19 @@ namespace GoldenChequeBack.Service.Implementation
         }
 
 
-        public bool update(Bank bank)
+        public async Task<Bank> UpdateAsync(Bank bank)
         {
-            try
+            var existingBank = await _ctx.Banks.FirstOrDefaultAsync(p => p.Id == bank.Id);
+            if(existingBank != null)
             {
-                _ctx.Banks.Attach(bank);
-                _ctx.SaveChanges();
-                return true;
+            
+                _ctx.Entry(existingBank).CurrentValues.SetValues(bank);
+                _ctx.SaveChangesAsync();
+                return bank;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            return null;
+
+
         }
 
 

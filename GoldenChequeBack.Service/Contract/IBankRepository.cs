@@ -12,7 +12,7 @@ namespace GoldenChequeBack.Service.Contract
 
         Task<Bank> InsertAsync (Bank bank);
 
-        bool update (Bank bank);
+        Task<Bank?> UpdateAsync(Bank bank);
 
         bool delete(Guid bankId);
 

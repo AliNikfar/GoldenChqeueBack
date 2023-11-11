@@ -73,8 +73,32 @@ namespace GoldenChqeueBack.Controllers.Api
         }
 
         // PUT api/<BankApiController>/5
-        [HttpPut("{id}")]
-        public bool Put([FromBody] Bank bank) => _bank.update(bank);
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id,UpdateBankRequestDTO request)
+        {
+            //convert DTO to Domain Model
+            var bank = new Bank
+            {
+                Id = id,
+                Title = request.Title
+            };
+            bank = await _bank.UpdateAsync(bank);
+            if (bank == null)
+            {
+                return NotFound();
+            }
+            
+            var response = new BankDTO {
+                Id = bank.Id,
+                Title= bank.Title
+            };
+
+            return Ok(response);
+
+
+        }
 
         // DELETE api/<BankApiController>/5
         [HttpDelete("{id}")]
