@@ -8,17 +8,17 @@ namespace GoldenChequeBack.Service.Contract
 {
     public interface IFactorObjectsRepository
     {
-        Task<FactorObjects> InsertAsync(FactorObjects factorObjects);
-        bool update(FactorObjects factorObjects);
+        //Task<FactorObjects> InsertAsync(FactorObjects factorObjects);
+        //bool update(FactorObjects factorObjects);
 
-        bool InsertList(List<FactorObjects> factorObjects);
+        //bool InsertList(List<FactorObjects> factorObjects);
 
-        bool delete(Guid factorObjectsId);
+        //bool delete(Guid factorObjectsId);
 
-        Task<IEnumerable<FactorObjects>> GetAllAsync();
+        //Task<IEnumerable<FactorObjects>> GetAllAsync();
 
-        Task<FactorObjects?> GetById(Guid id);
+        //Task<FactorObjects?> GetById(Guid id);
 
-        Task<IEnumerable<FactorObjects>> GetByFactorId(Guid Factorid);
+        //Task<IEnumerable<FactorObjects>> GetByFactorId(Guid Factorid);
     }
 }
