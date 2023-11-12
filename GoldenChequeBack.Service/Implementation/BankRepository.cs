@@ -18,19 +18,16 @@ namespace GoldenChequeBack.Service.Implementation
         {
             _ctx = ctx;
         }
-        public bool delete(Guid bankId)
+        public async Task<Bank> DeleteAsync(Guid Id)
         {
-            try
+            var existingBank = await _ctx.Banks.FirstOrDefaultAsync(p => p.Id == Id);
+            if (existingBank == null)
             {
-                Bank bnk = _ctx.Banks.Where(p => p.Id == bankId).FirstOrDefault();
-                _ctx.Banks.Remove(bnk);
-                _ctx.SaveChanges();
-                return true;
+                return null;
             }
-            catch(Exception ex)
-            {
-                return false;
-            }
+            _ctx.Banks.Remove(existingBank);
+            await _ctx.SaveChangesAsync();
+            return existingBank;
         }
 
         public async Task<IEnumerable<Bank>> GetAllAsync()

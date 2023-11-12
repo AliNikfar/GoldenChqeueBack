@@ -101,7 +101,23 @@ namespace GoldenChqeueBack.Controllers.Api
         }
 
         // DELETE api/<BankApiController>/5
-        [HttpDelete("{id}")]
-        public bool Delete(Guid id) => _bank.delete(id);
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var bank = await _bank.DeleteAsync(id);
+            if (bank == null)
+            {
+                return NotFound();
+            }
+            var response = new BankDTO
+            {
+                Id = bank.Id,
+                Title = bank.Title
+            };
+            return Ok(response);
+        }
+
+        }
     }
-}
+

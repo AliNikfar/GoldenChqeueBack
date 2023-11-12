@@ -14,7 +14,7 @@ namespace GoldenChequeBack.Service.Contract
 
         Task<Bank?> UpdateAsync(Bank bank);
 
-        bool delete(Guid bankId);
+        Task<Bank?> DeleteAsync (Guid Id);
 
         Task<IEnumerable<Bank>> GetAllAsync();
 
