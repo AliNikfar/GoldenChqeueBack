@@ -17,20 +17,17 @@ namespace GoldenChequeBack.Service.Implementation
     {
         _ctx = ctx;
     }
-    public bool delete(Guid cityId)
-    {
-        try
+        public async Task<City> DeleteAsync(Guid Id)
         {
-            City ct = _ctx.Cities.Where(p => p.Id == cityId).FirstOrDefault();
-            _ctx.Cities.Remove(ct);
-            _ctx.SaveChanges();
-            return true;
+            var existingCity = await _ctx.Cities.FirstOrDefaultAsync(p => p.Id == Id);
+            if (existingCity == null)
+            {
+                return null;
+            }
+            _ctx.Cities.Remove(existingCity);
+            await _ctx.SaveChangesAsync();
+            return existingCity;
         }
-        catch (Exception ex)
-        {
-            return false;
-        }
-    }
 
         public async Task<IEnumerable<City>> GetAllAsync()
         {
@@ -53,19 +50,20 @@ namespace GoldenChequeBack.Service.Implementation
         }
 
 
-        public bool update(City city)
-    {
-        try
+        public async Task<City> UpdateAsync(City ct)
         {
-            _ctx.Cities.Attach(city);
-            _ctx.SaveChanges();
-            return true;
+            var existingct = await _ctx.Cities.FirstOrDefaultAsync(p => p.Id == ct.Id);
+            if (existingct != null)
+            {
+
+                _ctx.Entry(existingct).CurrentValues.SetValues(ct);
+                _ctx.SaveChangesAsync();
+                return ct;
+            }
+            return null;
+
+
         }
-        catch (Exception ex)
-        {
-            return false;
-        }
-    }
 
 
         public async Task<IEnumerable<City>> GetByStateIdAsync(Guid stateId)

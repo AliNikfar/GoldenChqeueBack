@@ -9,11 +9,11 @@ namespace GoldenChequeBack.Service.Contract
     public interface IFactorObjectsRepository
     {
         //Task<FactorObjects> InsertAsync(FactorObjects factorObjects);
-        //bool update(FactorObjects factorObjects);
+        //Task<FactorObjects> InsertAsync(FactorObjects bank);
 
-        //bool InsertList(List<FactorObjects> factorObjects);
+        //Task<FactorObjects?> UpdateAsync(FactorObjects bank);
 
-        //bool delete(Guid factorObjectsId);
+        //Task<FactorObjects?> DeleteAsync(Guid Id);
 
         //Task<IEnumerable<FactorObjects>> GetAllAsync();
 

@@ -122,11 +122,80 @@ namespace GoldenChqeueBack.Controllers.Api
         }
 
         // PUT api/<ChequeApiController>/5
-        [HttpPut("{id}")]
-        public bool Update([FromBody] Cheque cheque)=> _cheque.update(cheque);
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateChequeRequestDTO request)
+        {
+            //convert DTO to Domain Model
+            var chq = new Cheque
+            {
+                Id = id,
+                Kind = request.Kind,
+                ShomareHesab = request.ShomareHesab,
+                ShomareChek = request.ShomareChek,
+                //SahabCheque = request.SahabCheque.Id,
+                //Shobe = request.Shobe.Id,
+                ChequeDate = request.ChequeDate,
+                ChequeStatus = request.ChequeStatus,
+                PassDate = request.PassDate,
+                Detail = request.Detail,
+                //FactorID = chq.Factor.Id,
+                Visable = request.Visable,
+                ChequePrice = request.ChequePrice
+            };
+            chq = await _cheque.UpdateAsync(chq);
+            if (chq == null)
+            {
+                return NotFound();
+            }
+
+            var response = new ChequeDTO
+            {
+                Id = id,
+                Kind = chq.Kind,
+                ShomareHesab = chq.ShomareHesab,
+                ShomareChek = chq.ShomareChek,
+                SahabCheque = chq.SahabCheque.Id,
+                Shobe = chq.Shobe.Id,
+                ChequeDate = chq.ChequeDate,
+                ChequeStatus = chq.ChequeStatus,
+                PassDate = chq.PassDate,
+                Detail = chq.Detail,
+                FactorID = chq.Factor.Id,
+                Visable = chq.Visable,
+                ChequePrice = chq.ChequePrice
+            };
+
+            return Ok(response);
+        }
 
         // DELETE api/<ChequeApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(Guid id) => _cheque.delete(id);
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var chq = await _cheque.DeleteAsync(id);
+            if (chq == null)
+            {
+                return NotFound();
+            }
+            var response = new ChequeDTO
+            {
+                Id = id,
+                Kind = chq.Kind,
+                ShomareHesab = chq.ShomareHesab,
+                ShomareChek = chq.ShomareChek,
+                SahabCheque = chq.SahabCheque.Id,
+                Shobe = chq.Shobe.Id,
+                ChequeDate = chq.ChequeDate,
+                ChequeStatus = chq.ChequeStatus,
+                PassDate = chq.PassDate,
+                Detail = chq.Detail,
+                FactorID = chq.Factor.Id,
+                Visable = chq.Visable,
+                ChequePrice = chq.ChequePrice
+            };
+            return Ok(response);
+        }
     }
 }

@@ -107,11 +107,69 @@ namespace GoldenChqeueBack.Controllers.Api
         }
 
         // PUT api/<FactorApiController>/5
-        [HttpPut("{id}")]
-        public bool Put([FromBody] Factor factor) => _factor.update(factor);
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateFactorRequestDTO request)
+        {
+            //convert DTO to Domain Model
+            var factor = new Factor
+            {
+                Id = id,
+                FactorSumPrice = request.FactorSumPrice,
+                FactorSodDarsad = request.FactorSodDarsad,
+                FactorKharidDate = request.FactorKharidDate,
+                FactorSumObjectsPrice = request.FactorSumObjectsPrice,
+                Kind = request.Kind,
+                FactorBeforePrice = request.FactorBeforePrice,
+                //FactorObjectList = request.FactorObjectList
+                //GhestList = request.GhestList
+            };
+            factor = await _factor.UpdateAsync(factor);
+            if (factor == null)
+            {
+                return NotFound();
+            }
+
+            var response = new FactorDTO
+            {
+                //CustomerId = fct.CustomerId,
+                FactorSumPrice = factor.FactorSumPrice,
+                FactorSodDarsad = factor.FactorSodDarsad,
+                FactorKharidDate = factor.FactorKharidDate,
+                FactorSumObjectsPrice = factor.FactorSumObjectsPrice,
+                Kind = factor.Kind,
+                FactorBeforePrice = factor.FactorBeforePrice,
+                //FactorObjectList = factor.FactorObjectList
+                //GhestList = factor.GhestList
+            };
+
+            return Ok(response);
+        }
 
         // DELETE api/<FactorApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(Guid id) => _factor.delete(id);
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var factor = await _factor.DeleteAsync(id);
+            if (factor == null)
+            {
+                return NotFound();
+            }
+            var response = new FactorDTO
+            {
+                Id = factor.Id,
+                //CustomerId = factor.CustomerId,
+                FactorSumPrice = factor.FactorSumPrice,
+                FactorSodDarsad = factor.FactorSodDarsad,
+                FactorKharidDate = factor.FactorKharidDate,
+                FactorSumObjectsPrice = factor.FactorSumObjectsPrice,
+                Kind = factor.Kind,
+                FactorBeforePrice = factor.FactorBeforePrice,
+                //FactorObjectList = factor.FactorObjectList,
+                //GhestList = factor.GhestList
+            };
+            return Ok(response);
+        }
     }
 }

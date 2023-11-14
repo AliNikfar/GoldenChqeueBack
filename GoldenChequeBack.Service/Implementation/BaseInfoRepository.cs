@@ -55,18 +55,17 @@ namespace GoldenChequeBack.Service.Implementation
             //}
         }
 
-        public bool update(BaseInfo baseInfo)
+        public async Task<BaseInfo> UpdateAsync(BaseInfo basinfo)
         {
-            try
+            var existingbasinfo = await _ctx.BaseInfoes.FirstOrDefaultAsync(p => p.Id == basinfo.Id);
+            if (existingbasinfo != null)
             {
-                _ctx.BaseInfoes.Attach(baseInfo);
-                _ctx.SaveChanges();
-                return true;
+
+                _ctx.Entry(existingbasinfo).CurrentValues.SetValues(basinfo);
+                _ctx.SaveChangesAsync();
+                return basinfo;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            return null;
         }
     }
 }

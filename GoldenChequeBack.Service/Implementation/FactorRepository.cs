@@ -17,19 +17,16 @@ namespace GoldenChequeBack.Service.Implementation
             _ctx = ctx;
         }
 
-        public bool delete(Guid FactorId)
+        public async Task<Factor> DeleteAsync(Guid Id)
         {
-            try
+            var existingFactor = await _ctx.Factors.FirstOrDefaultAsync(p => p.Id == Id);
+            if (existingFactor == null)
             {
-                Factor bsi = _ctx.Factors.Where(p => p.Id == FactorId).FirstOrDefault();
-                _ctx.Factors.Attach(bsi);
-                _ctx.SaveChanges();
-                return true;
+                return null;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            _ctx.Factors.Remove(existingFactor);
+            await _ctx.SaveChangesAsync();
+            return existingFactor;
         }
 
         public async Task<IEnumerable<Factor>> GetAllAsync()
@@ -49,18 +46,19 @@ namespace GoldenChequeBack.Service.Implementation
             return factor;
         }
 
-        public bool update(Factor factor)
+        public async Task<Factor> UpdateAsync(Factor fctr)
         {
-            try
+            var existingFactor = await _ctx.Factors.FirstOrDefaultAsync(p => p.Id == fctr.Id);
+            if (existingFactor != null)
             {
-                _ctx.Factors.Attach(factor);
-                _ctx.SaveChanges();
-                return true;
+
+                _ctx.Entry(existingFactor).CurrentValues.SetValues(fctr);
+                _ctx.SaveChangesAsync();
+                return fctr;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            return null;
+
+
         }
     }
 }

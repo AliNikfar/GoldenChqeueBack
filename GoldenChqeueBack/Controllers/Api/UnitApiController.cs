@@ -78,11 +78,50 @@ namespace GoldenChqeueBack.Controllers.Api
             return Ok(response);
         }
         // PUT api/<UnitApiController>/5
-        [HttpPut("{id}")]
-        public bool Put([FromBody] Unit unit) => _unit.update(unit);
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateUnitRequestDTO request)
+        {
+            //convert DTO to Domain Model
+            var unit = new Unit
+            {
+                Id = id,
+                Name = request.Name,
+                QuantityPerUnit = request.QuantityPerUnit
+            };
+            unit = await _unit.UpdateAsync(unit);
+            if (unit == null)
+            {
+                return NotFound();
+            }
+
+            var response = new UnitDTO
+            {
+                Id = unit.Id,
+                Name = unit.Name,
+                QuantityPerUnit = unit.QuantityPerUnit
+            };
+
+            return Ok(response);
+        }
 
         // DELETE api/<UnitApiController>/5
-        [HttpDelete("{id}")]
-        public bool Delete(Guid id) => _unit.delete(id);
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var unit = await _unit.DeleteAsync(id);
+            if (unit == null)
+            {
+                return NotFound();
+            }
+            var response = new UnitDTO
+            {
+                Id = unit.Id,
+                Name = unit.Name,
+                QuantityPerUnit = unit.QuantityPerUnit
+            };
+            return Ok(response);
+        }
     }
 }

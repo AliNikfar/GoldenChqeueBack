@@ -79,11 +79,50 @@ namespace GoldenChqeueBack.Controllers.Api
 
 
         // PUT api/<ShobeApiController>/5
-        [HttpPut("{id}")]
-        public bool Put([FromBody] Shobe shobe) => _shobe.update(shobe);
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateShobeRequestDTO request)
+        {
+            //convert DTO to Domain Model
+            var shobe = new Shobe
+            {
+                Id = id,
+                Name = request.Name,
+                code = request.code
+            };
+            shobe = await _shobe.UpdateAsync(shobe);
+            if (shobe == null)
+            {
+                return NotFound();
+            }
+
+            var response = new ShobeDTO
+            {
+                Id = id,
+                Name = request.Name,
+                code = request.code
+            };
+
+            return Ok(response);
+        }
 
         // DELETE api/<ShobeApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(Guid id) => _shobe.delete(id);
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var shobe = await _shobe.DeleteAsync(id);
+            if (shobe == null)
+            {
+                return NotFound();
+            }
+            var response = new ShobeDTO
+            {
+                Id = shobe.Id,
+                Name = shobe.Name,
+                code = shobe.code
+            };
+            return Ok(response);
+        }
     }
 }

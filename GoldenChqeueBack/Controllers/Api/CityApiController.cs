@@ -78,11 +78,53 @@ namespace GoldenChqeueBack.Controllers.Api
         }
 
         // PUT api/<CityApiController>/5
-        [HttpPut("{id}")]
-        public bool Put([FromBody] City ct) => _city.update(ct);
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateCityRequestDTO request)
+        {
+            //convert DTO to Domain Model
+            var city = new City
+            {
+                CityCode = request.CityCode,
+                Name = request.Name
+            };
+            city = await _city.UpdateAsync(city);
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            var response = new CityDTO
+            {
+                Id = city.Id,
+                CityCode = city.CityCode,
+                Name = city.Name,
+                Ostan = city.Ostan.Id
+            };
+
+            return Ok(response);
+
+
+        }
 
         // DELETE api/<CityApiController>/5
-        [HttpDelete("{id}")]
-        public bool Delete(Guid id)=> _city.delete(id);
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var city = await _city.DeleteAsync(id);
+            if (city == null)
+            {
+                return NotFound();
+            }
+            var response = new CityDTO
+            {
+                Id = city.Id,
+                CityCode = city.CityCode,
+                Name = city.Name,
+                Ostan = city.Ostan.Id
+            };
+            return Ok(response);
+        }
     }
 }

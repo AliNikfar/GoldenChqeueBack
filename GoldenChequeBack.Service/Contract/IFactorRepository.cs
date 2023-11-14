@@ -11,9 +11,9 @@ namespace GoldenChequeBack.Service.Contract
     {
         Task<Factor> InsertAsync(Factor factor);
 
-        bool update(Factor factor);
+        Task<Factor> UpdateAsync(Factor factor);
 
-        bool delete(Guid factorId);
+        Task<Factor?> DeleteAsync(Guid Id);
 
         Task<IEnumerable<Factor>> GetAllAsync();
 

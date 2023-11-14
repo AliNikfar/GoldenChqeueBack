@@ -9,7 +9,6 @@ namespace GoldenChequeBack.Service.Contract
 {
     public interface IBankRepository
     {
-
         Task<Bank> InsertAsync (Bank bank);
 
         Task<Bank?> UpdateAsync(Bank bank);

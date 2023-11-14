@@ -12,7 +12,7 @@ namespace GoldenChequeBack.Service.Contract
 
         Task<BaseInfo> InsertAsync(BaseInfo baseInfo);
 
-        bool update(BaseInfo baseInfo);
+        Task<BaseInfo?> UpdateAsync(BaseInfo baseInfo);
 
         bool delete(Guid baseInfoId);
 

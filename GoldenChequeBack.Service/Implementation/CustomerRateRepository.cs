@@ -16,19 +16,16 @@ namespace GoldenChequeBack.Service.Implementation
         {
             _ctx = ctx;
         }
-        public bool delete(Guid customerId)
+        public async Task<CustomerRate> DeleteAsync(Guid Id)
         {
-            try
+            var existingCustomerRate = await _ctx.CustomerRates.FirstOrDefaultAsync(p => p.Id == Id);
+            if (existingCustomerRate == null)
             {
-                CustomerRate cus = _ctx.CustomerRates.Where(p => p.Id == customerId).FirstOrDefault();
-                _ctx.CustomerRates.Remove(cus);
-                _ctx.SaveChanges();
-                return true;
+                return null;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            _ctx.CustomerRates.Remove(existingCustomerRate);
+            await _ctx.SaveChangesAsync();
+            return existingCustomerRate;
         }
 
         public async Task<IEnumerable<CustomerRate>> GetAllAsync()
@@ -40,30 +37,6 @@ namespace GoldenChequeBack.Service.Implementation
         {
             return await _ctx.CustomerRates.Where(p => p.Id == id).FirstOrDefaultAsync();
         }
-
-        public async Task<CustomerRate> InsertAsync(CustomerRate cus)
-        {
-            await _ctx.CustomerRates.AddAsync(cus);
-            await _ctx.SaveChangesAsync();
-            return cus;
-        }
-
-
-        public bool update(CustomerRate cus)
-        {
-            try
-            {
-                _ctx.CustomerRates.Attach(cus);
-                _ctx.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
-
 
     }
 }

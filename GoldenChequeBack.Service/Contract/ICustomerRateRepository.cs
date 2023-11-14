@@ -10,12 +10,6 @@ namespace GoldenChequeBack.Service.Contract
     public interface ICustomerRateRepository
     {
 
-        Task<CustomerRate> InsertAsync(CustomerRate customerrate);
-
-        bool update(CustomerRate customerrate);
-
-        bool delete(Guid customerrateId);
-
 
         Task<IEnumerable<CustomerRate>> GetAllAsync();
 

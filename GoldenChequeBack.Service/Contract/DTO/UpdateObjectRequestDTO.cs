@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace GoldenChequeBack.Service.Contract.DTO
 {
-    public class ObjectDTO
+    public  class UpdateObjectRequestDTO
     {
-        public Guid Id { get; set; }
         public string Title
         {
             get;

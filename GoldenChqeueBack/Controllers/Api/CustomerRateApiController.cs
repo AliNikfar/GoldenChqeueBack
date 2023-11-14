@@ -55,32 +55,6 @@ namespace GoldenChqeueBack.Controllers.Api
             return Ok(response);
         }
 
-        // POST api/<CustomerRateApiController>
-        [HttpPost]
-        public async Task<IActionResult> Post(CustomerRateDTO customRate)
-        {
-            //Map DTO
-            var cr = new CustomerRate
-            {
-                Title = customRate.Title
-
-            };
-            await _customerRate.InsertAsync(cr);
-            var response = new CustomerRateDTO
-            {
-                Title = cr.Title
-                //Ostan = ct.Ostan
-            };
-            return Ok(response);
-        }
-
-        // PUT api/<CustomerRateApiController>/5
-        [HttpPut("{id}")]
-        public bool Put([FromBody] CustomerRate cust) => _customerRate.update(cust);
-
-        // DELETE api/<CustomerRateApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(Guid id) => _customerRate.delete(id);
     }
 }
 

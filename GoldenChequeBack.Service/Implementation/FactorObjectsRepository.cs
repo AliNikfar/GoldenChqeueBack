@@ -17,19 +17,16 @@ namespace GoldenChequeBack.Service.Implementation
             _ctx = ctx;
         }
 
-        //public bool delete(Guid FactorObjectId)
+        //public async Task<FactorObjects> DeleteAsync(Guid Id)
         //{
-        //    try
+        //    var existingFactorObjects = await _ctx.FactorObjects.FirstOrDefaultAsync(p => p.Id == Id);
+        //    if (existingFactorObjects == null)
         //    {
-        //        FactorObjects bsi = _ctx.FactorObjects.Where(p => p.Id == FactorObjectId).FirstOrDefault();
-        //        _ctx.FactorObjects.Remove(bsi);
-        //        _ctx.SaveChanges();
-        //        return true;
+        //        return null;
         //    }
-        //    catch (Exception ex)
-        //    {
-        //        return false;
-        //    }
+        //    _ctx.FactorObjects.Remove(existingFactorObjects);
+        //    await _ctx.SaveChangesAsync();
+        //    return existingFactorObjects;
         //}
         //public async Task<IEnumerable<FactorObjects>> GetAllAsync()
         //{
@@ -66,18 +63,19 @@ namespace GoldenChequeBack.Service.Implementation
         //    }
         //}
 
-        //public bool update(FactorObjects factorObjects)
+        //public async Task<FactorObjects> UpdateAsync(FactorObjects fctObj)
         //{
-        //    try
+        //    var existingfctObj = await _ctx.FactorObjects.FirstOrDefaultAsync(p => p.Id == fctObj.Id);
+        //    if(existingfctObj != null)
         //    {
-        //        _ctx.FactorObjects.Attach(factorObjects);
-        //        _ctx.SaveChanges();
-        //        return true;
+
+        //        _ctx.Entry(existingfctObj).CurrentValues.SetValues(fctObj);
+        //        _ctx.SaveChangesAsync();
+        //        return fctObj;
         //    }
-        //    catch (Exception ex)
-        //    {
-        //        return false;
-        //    }
+        //    return null;
+
+
         //}
     }
 }

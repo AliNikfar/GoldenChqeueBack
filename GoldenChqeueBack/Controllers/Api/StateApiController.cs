@@ -32,7 +32,8 @@ namespace GoldenChqeueBack.Controllers.Api
                 response.Add(new StateDTO
                 {
                     Id = crnt.Id,
-                    Name = crnt.Name,
+                    Name = crnt.Name
+                    
                 });
             }
             return Ok(response);
@@ -76,11 +77,47 @@ namespace GoldenChqeueBack.Controllers.Api
         }
 
         // PUT api/<StateApiController>/5
-        [HttpPut("{id}")]
-        public bool Put([FromBody] State state) => _state.update(state);
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateStateRequestDTO request)
+        {
+            //convert DTO to Domain Model
+            var state = new State
+            {
+                Id = id,
+                Name = request.Name
+            };
+            state = await _state.UpdateAsync(state);
+            if (state == null)
+            {
+                return NotFound();
+            }
+
+            var response = new StateDTO
+            {
+                Id = state.Id,
+                Name = state.Name
+            };
+
+            return Ok(response);
+        }
 
         // DELETE api/<StateApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(Guid id) => _state.delete(id);
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var state = await _state.DeleteAsync(id);
+            if (state == null)
+            {
+                return NotFound();
+            }
+            var response = new StateDTO
+            {
+                Id = state.Id,
+                Name = state.Name
+            };
+            return Ok(response);
+        }
     }
 }

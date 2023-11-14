@@ -12,9 +12,9 @@ namespace GoldenChequeBack.Service.Contract
     {
         Task<Object> InsertAsync(Object objectt);
 
-        bool update(Object objectt);
+        Task<Object?> UpdateAsync(Object bank);
 
-        bool delete(Guid objectId);
+        Task<Object?> DeleteAsync(Guid Id);
 
         Task<IEnumerable<Object>> GetAllAsync();
 

@@ -17,19 +17,16 @@ namespace GoldenChequeBack.Service.Implementation
         {
             _ctx = ctx;
         }
-        public bool delete(Guid userId)
+        public async Task<User> DeleteAsync(Guid Id)
         {
-            try
+            var existingUser = await _ctx.Users.FirstOrDefaultAsync(p => p.Id == Id);
+            if (existingUser == null)
             {
-                User bnk = _ctx.Users.Where(p => p.Id == userId).FirstOrDefault();
-                _ctx.Users.Remove(bnk);
-                _ctx.SaveChanges();
-                return true;
+                return null;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            _ctx.Users.Remove(existingUser);
+            await _ctx.SaveChangesAsync();
+            return existingUser;
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
@@ -50,18 +47,17 @@ namespace GoldenChequeBack.Service.Implementation
         }
 
 
-        public bool update(User user)
+        public async Task<User> UpdateAsync(User user)
         {
-            try
+            var existingBank = await _ctx.Users.FirstOrDefaultAsync(p => p.Id == user.Id);
+            if (existingBank != null)
             {
-                _ctx.Users.Attach(user);
-                _ctx.SaveChanges();
-                return true;
+
+                _ctx.Entry(existingBank).CurrentValues.SetValues(user);
+                _ctx.SaveChangesAsync();
+                return user;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            return null;
         }
 
 

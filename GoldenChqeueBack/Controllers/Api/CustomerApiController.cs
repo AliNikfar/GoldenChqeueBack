@@ -130,11 +130,89 @@ namespace GoldenChqeueBack.Controllers.Api
         }
 
         // PUT api/<CustomerApiController>/5
-        [HttpPut("{id}")]
-        public bool Put( [FromBody] Customer cust) => _customer.update(cust);
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateCustomerRequestDTO request)
+        {
+            //convert DTO to Domain Model
+            var cust = new Customer
+            {
+                Id = id,
+                Code = request.Code,
+                Name = request.Name,
+                LastName = request.LastName,
+                FatherName = request.FatherName,
+                PhoneNum = request.PhoneNum,
+                Mob1 = request.Mob1,
+                Mob2 = request.Mob2,
+                Mob3 = request.Mob3,
+                //City = request.City.Id,
+                Address = request.Address,
+                PostalCode = request.PostalCode,
+                Details = request.Details,
+                MaxBuyPrice = request.MaxBuyPrice,
+                BirthDate = request.BirthDate,
+                //CustomerRate = request.CustomerRate.Id
+            };
+            cust = await _customer.UpdateAsync(cust);
+            if (cust == null)
+            {
+                return NotFound();
+            }
+
+            var response = new CustomerDTO
+            {
+                Id = id,
+                Code = cust.Code,
+                Name = cust.Name,
+                LastName = cust.LastName,
+                FatherName = cust.FatherName,
+                PhoneNum = cust.PhoneNum,
+                Mob1 = cust.Mob1,
+                Mob2 = cust.Mob2,
+                Mob3 = cust.Mob3,
+                City = cust.City.Id,
+                Address = cust.Address,
+                PostalCode = cust.PostalCode,
+                Details = cust.Details,
+                MaxBuyPrice = cust.MaxBuyPrice,
+                BirthDate = cust.BirthDate,
+                CustomerRate = cust.CustomerRate.Id
+            };
+
+            return Ok(response);
+        }
 
         // DELETE api/<CustomerApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(Guid id) => _customer.delete(id);
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var cust = await _customer.DeleteAsync(id);
+            if (cust == null)
+            {
+                return NotFound();
+            }
+            var response = new CustomerDTO
+            {
+                Id = id,
+                Code = cust.Code,
+                Name = cust.Name,
+                LastName = cust.LastName,
+                FatherName = cust.FatherName,
+                PhoneNum = cust.PhoneNum,
+                Mob1 = cust.Mob1,
+                Mob2 = cust.Mob2,
+                Mob3 = cust.Mob3,
+                City = cust.City.Id,
+                Address = cust.Address,
+                PostalCode = cust.PostalCode,
+                Details = cust.Details,
+                MaxBuyPrice = cust.MaxBuyPrice,
+                BirthDate = cust.BirthDate,
+                CustomerRate = cust.CustomerRate.Id
+            };
+            return Ok(response);
+        }
     }
 }

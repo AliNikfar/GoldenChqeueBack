@@ -17,19 +17,16 @@ namespace GoldenChequeBack.Service.Implementation
             _ctx = ctx;
         }
 
-        public bool delete(Guid shobeId)
+        public async Task<Shobe> DeleteAsync(Guid Id)
         {
-            try
+            var existingShobe = await _ctx.Shobes.FirstOrDefaultAsync(p => p.Id == Id);
+            if (existingShobe == null)
             {
-                Shobe bsi = _ctx.Shobes.Where(p => p.Id == shobeId).FirstOrDefault();
-                _ctx.Shobes.Remove(bsi);
-                _ctx.SaveChanges();
-                return true;
+                return null;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            _ctx.Shobes.Remove(existingShobe);
+            await _ctx.SaveChangesAsync();
+            return existingShobe;
         }
         public async Task<IEnumerable<Shobe>> GetAllAsync()
         {
@@ -53,18 +50,17 @@ namespace GoldenChequeBack.Service.Implementation
             return shobe;
         }
 
-        public bool update(Shobe shobe)
+        public async Task<Shobe> UpdateAsync(Shobe shobe)
         {
-            try
+            var existingShobe = await _ctx.Shobes.FirstOrDefaultAsync(p => p.Id == shobe.Id);
+            if (existingShobe != null)
             {
-                _ctx.Shobes.Attach(shobe);
-                _ctx.SaveChanges();
-                return true;
+
+                _ctx.Entry(existingShobe).CurrentValues.SetValues(shobe);
+                _ctx.SaveChangesAsync();
+                return shobe;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            return null;
         }
     }
 }

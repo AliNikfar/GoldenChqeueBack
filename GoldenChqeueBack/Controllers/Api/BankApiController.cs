@@ -96,8 +96,6 @@ namespace GoldenChqeueBack.Controllers.Api
             };
 
             return Ok(response);
-
-
         }
 
         // DELETE api/<BankApiController>/5

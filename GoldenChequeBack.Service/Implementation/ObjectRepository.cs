@@ -19,20 +19,18 @@ namespace GoldenChequeBack.Service.Implementation
             _ctx = ctx;
         }
 
-        public bool delete(Guid ObjectId)
+        public async Task<Object> DeleteAsync(Guid Id)
         {
-            try
+            var existingObject = await _ctx.Objects.FirstOrDefaultAsync(p => p.Id == Id);
+            if (existingObject == null)
             {
-                Object bsi = _ctx.Objects.Where(p => p.Id == ObjectId).FirstOrDefault();
-                _ctx.Objects.Remove(bsi);
-                _ctx.SaveChanges();
-                return true;
+                return null;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            _ctx.Objects.Remove(existingObject);
+            await _ctx.SaveChangesAsync();
+            return existingObject;
         }
+
         public async Task<IEnumerable<Object>> GetAllAsync()
         {
             return await _ctx.Objects.ToListAsync(); ;
@@ -50,18 +48,18 @@ namespace GoldenChequeBack.Service.Implementation
             return objectt;
         }
 
-        public bool update(Object objectt)
+        public async Task<Object> UpdateAsync(Object obj)
         {
-            try
+            var existingObject = await _ctx.Objects.FirstOrDefaultAsync(p => p.Id == obj.Id);
+            if (existingObject != null)
             {
-                _ctx.Objects.Attach(objectt);
-                _ctx.SaveChanges();
-                return true;
+
+                _ctx.Entry(existingObject).CurrentValues.SetValues(obj);
+                _ctx.SaveChangesAsync();
+                return obj;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            return null;
+
+        }
         }
     }
-}

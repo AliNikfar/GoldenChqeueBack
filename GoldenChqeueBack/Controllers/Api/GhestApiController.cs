@@ -87,12 +87,59 @@ namespace GoldenChqeueBack.Controllers.Api
             return Ok(response);
         }
         // PUT api/<GhestApiController>/5
-        [HttpPut("{id}")]
-        public bool Put([FromBody] Ghest ghest) => _ghest.update(ghest);
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateGhestRequestDTO request)
+        {
+            //convert DTO to Domain Model
+            var ghest = new Ghest
+            {
+                Id = id,
+                Price = request.Price,
+                Status = request.Status,
+                Date = request.Date,
+                PassDate = request.PassDate,
+                // Factor = gst.Factor
+            };
+            ghest = await _ghest.UpdateAsync(ghest);
+            if (ghest == null)
+            {
+                return NotFound();
+            }
+
+            var response = new GhestDTO
+            {
+                Id = ghest.Id,
+                Price = ghest.Price,
+                Status = ghest.Status,
+                Date = ghest.Date,
+                PassDate = ghest.PassDate,
+            };
+
+            return Ok(response);
+        }
 
         // DELETE api/<GhestApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(Guid id) => _ghest.delete(id);
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var ghest = await _ghest.DeleteAsync(id);
+            if (ghest == null)
+            {
+                return NotFound();
+            }
+            var response = new GhestDTO
+            {
+                Id = ghest.Id,
+                Price = ghest.Price,
+                Status = ghest.Status,
+                Date = ghest.Date,
+                PassDate = ghest.PassDate,
+                // Factor = gst.Factor
+            };
+            return Ok(response);
+        }
     }
 }
 

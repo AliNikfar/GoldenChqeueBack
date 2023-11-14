@@ -59,8 +59,6 @@ namespace GoldenChequeBack.Service.Implementation
                 return bank;
             }
             return null;
-
-
         }
 
 

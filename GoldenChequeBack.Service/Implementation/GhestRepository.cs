@@ -17,19 +17,16 @@ namespace GoldenChequeBack.Service.Implementation
             _ctx = ctx;
         }
 
-        public bool delete(Guid GhestId)
+        public async Task<Ghest> DeleteAsync(Guid Id)
         {
-            try
+            var existingGhest = await _ctx.Ghests.FirstOrDefaultAsync(p => p.Id == Id);
+            if (existingGhest == null)
             {
-                Ghest bsi = _ctx.Ghests.Where(p => p.Id == GhestId).FirstOrDefault();
-                _ctx.Ghests.Remove(bsi);
-                _ctx.SaveChanges();
-                return true;
+                return null;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            _ctx.Ghests.Remove(existingGhest);
+            await _ctx.SaveChangesAsync();
+            return existingGhest;
         }
         public async Task<IEnumerable<Ghest>> GetAllAsync()
         {
@@ -53,7 +50,7 @@ namespace GoldenChequeBack.Service.Implementation
                 _ctx.SaveChanges();
                 return true;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return false;
             }
@@ -65,18 +62,19 @@ namespace GoldenChequeBack.Service.Implementation
             return ghest;
         }
 
-        public bool update(Ghest ghest)
+        public async Task<Ghest> UpdateAsync(Ghest ghest)
         {
-            try
+            var existingGhest = await _ctx.Banks.FirstOrDefaultAsync(p => p.Id == ghest.Id);
+            if (existingGhest != null)
             {
-                _ctx.Ghests.Attach(ghest);
-                _ctx.SaveChanges();
-                return true;
+
+                _ctx.Entry(existingGhest).CurrentValues.SetValues(ghest);
+                _ctx.SaveChangesAsync();
+                return ghest;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            return null;
+
+
         }
     }
 }

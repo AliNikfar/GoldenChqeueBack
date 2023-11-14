@@ -17,21 +17,18 @@ namespace GoldenChequeBack.Service.Implementation
             _ctx = ctx;
         }
 
-        public bool delete(Guid chequeId)
+        public async Task<Cheque> DeleteAsync(Guid Id)
         {
-            try
+            var existingCheuqe = await _ctx.Cheques.FirstOrDefaultAsync(p => p.Id == Id);
+            if (existingCheuqe == null)
             {
-                Cheque bsi = _ctx.Cheques.Where(p => p.Id == chequeId).FirstOrDefault();
-                bsi.Visable = false;
-                _ctx.Cheques.Attach(bsi);
-                _ctx.SaveChanges();
-                return true;
+                return null;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            _ctx.Cheques.Remove(existingCheuqe);
+            await _ctx.SaveChangesAsync();
+            return existingCheuqe;
         }
+
         public async Task<IEnumerable<Cheque>> GetAllAsync()
         {
             return await _ctx.Cheques.ToListAsync(); ;
@@ -42,25 +39,27 @@ namespace GoldenChequeBack.Service.Implementation
             return await _ctx.Cheques.Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<Cheque> InsertAsync(Cheque cheque)
+        public async Task<Cheque> InsertAsync(Cheque chq)
         {
-            await _ctx.Cheques.AddAsync(cheque);
+            await _ctx.Cheques.AddAsync(chq);
             await _ctx.SaveChangesAsync();
-            return cheque;
+            return chq;
         }
 
-        public bool update(Cheque cheque)
+
+        public async Task<Cheque> UpdateAsync(Cheque chq)
         {
-            try
+            var existingBank = await _ctx.Cheques.FirstOrDefaultAsync(p => p.Id == chq.Id);
+            if (existingBank != null)
             {
-                _ctx.Cheques.Attach(cheque);
-                _ctx.SaveChanges();
-                return true;
+
+                _ctx.Entry(existingBank).CurrentValues.SetValues(chq);
+                _ctx.SaveChangesAsync();
+                return chq;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            return null;
+
+
         }
     }
 }

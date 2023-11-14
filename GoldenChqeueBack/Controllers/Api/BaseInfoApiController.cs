@@ -94,8 +94,33 @@ namespace GoldenChqeueBack.Controllers.Api
         }
 
         // PUT api/<BaseInfoApiController>/5
-        [HttpPut("{id}")]
-        public bool Put([FromBody] BaseInfo baseinfo) => _baseInfo.update(baseinfo);
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateBaseInfoRequestDTO request)
+        {
+            //convert DTO to Domain Model
+            var baseinf = new BaseInfo
+            {
+                Id = id,
+                Title = request.Title
+            };
+            baseinf = await _baseInfo.UpdateAsync(baseinf);
+            if (baseinf == null)
+            {
+                return NotFound();
+            }
+
+            var response = new BankDTO
+            {
+                Id = baseinf.Id,
+                Title = baseinf.Title
+            };
+
+            return Ok(response);
+
+
+        }
+        
 
         // DELETE api/<BaseInfoApiController>/5
         [HttpDelete("{id}")]

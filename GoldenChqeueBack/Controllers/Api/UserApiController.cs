@@ -76,11 +76,48 @@ namespace GoldenChqeueBack.Controllers.Api
         }
 
         // PUT api/<UserApiController>/5
-        [HttpPut("{id}")]
-        public bool Put([FromBody] User user) => _user.update(user);
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateUserRequestDTO request)
+        {
+            //convert DTO to Domain Model
+            var user = new User
+            {
+                Id = id,
+                UserId = request.UserId,
+                UserName = request.UserName
+            };
+            user = await _user.UpdateAsync(user);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var response = new UserDTO
+            {
+                UserId = user.UserId,
+                UserName = user.UserName
+            };
+
+            return Ok(response);
+        }
 
         // DELETE api/<UserApiController>/5
-        [HttpDelete("{id}")]
-        public bool Delete(Guid id) => _user.delete(id);
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var user = await _user.DeleteAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var response = new UserDTO
+            {
+                UserId = user.UserId,
+                UserName = user.UserName
+            };
+            return Ok(response);
+        }
     }
 }

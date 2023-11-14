@@ -21,7 +21,7 @@ namespace GoldenChqeueBack.Controllers.Api
             _factorObject = factorObject;
             //_objectRepository = objectRepository;
         }
-        //public async Task<IActionResult> GetAllAsync()
+        //public async Task<IActionResult> GetAllAsync()                                               
         //{
         //    var factorObjects = await _factorObject.GetAllAsync();
 

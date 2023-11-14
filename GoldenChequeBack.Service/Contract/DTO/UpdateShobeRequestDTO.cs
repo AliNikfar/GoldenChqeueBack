@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GoldenChequeBack.Service.Contract.DTO
 {
-    public class ShobeDTO
+    public  class UpdateShobeRequestDTO
     {
-        public Guid Id { get; set; }
         public int Name { get; set; }
         public int code { get; set; }
+
     }
 }

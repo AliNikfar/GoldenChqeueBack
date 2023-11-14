@@ -11,14 +11,14 @@ namespace GoldenChequeBack.Service.Contract
     {
         Task<City> InsertAsync(City city);
 
-        bool update(City city);
+        Task<City?> UpdateAsync(City city);
 
-        bool delete(Guid cityId);
+        Task<City?> DeleteAsync(Guid cityId);
 
         Task<IEnumerable<City>> GetAllAsync();
 
         Task<City> GetById(Guid id);
 
-        Task<IEnumerable<City>> GetByStateIdAsync(Guid stateId);
+        Task<IEnumerable<City?>> GetByStateIdAsync(Guid stateId);
     }
 }

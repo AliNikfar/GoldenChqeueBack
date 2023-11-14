@@ -12,12 +12,12 @@ namespace GoldenChequeBack.Service.Contract
 
         Task<Cheque> InsertAsync(Cheque cheque);
 
-        bool update(Cheque cheque);
+        Task<Cheque?>  UpdateAsync(Cheque cheque);
 
-        bool delete(Guid chequeId);
+        Task<Cheque?> DeleteAsync(Guid chequeId);
 
         Task<IEnumerable<Cheque>> GetAllAsync();
 
-        Task<Cheque> GetById(Guid id);
+        Task<Cheque?> GetById(Guid id);
     }
 }

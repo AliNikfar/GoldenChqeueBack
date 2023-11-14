@@ -6,23 +6,16 @@ using System.Threading.Tasks;
 
 namespace GoldenChequeBack.Service.Contract.DTO
 {
-    public class CityDTO
+    public class UpdateUserRequestDTO
     {
-        public Guid Id { get; set; }
-
-        public string Name
+        Guid Id { get; set; }
+        public int UserId
         {
             get;
             set;
         }
 
-        public string CityCode
-        {
-            get;
-            set;
-        }
-
-        public Guid Ostan
+        public int UserName
         {
             get;
             set;

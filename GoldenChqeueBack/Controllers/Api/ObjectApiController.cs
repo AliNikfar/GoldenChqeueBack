@@ -88,11 +88,58 @@ namespace GoldenChqeueBack.Controllers.Api
             return Ok(response);
         }
         // PUT api/<ObjectApiController>/5
-        [HttpPut("{id}")]
-        public bool Put([FromBody] GoldenChequeBack.Domain.Entities.Object obj) => _obj.update(obj);
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateObjectRequestDTO request)
+        {
+            //convert DTO to Domain Model
+            var obj = new Object
+            {
+                Id = id,
+                Title = request.Title,
+                Price = request.Price,
+                BuyPrice = request.BuyPrice,
+                //Unit = request.Unit.Id,
+                WareHouseStock = request.WareHouseStock
+            };
+            obj = await _obj.UpdateAsync(obj);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            var response = new ObjectDTO
+            {
+                Id = obj.Id,
+                Title = obj.Title,
+                Price = obj.Price,
+                BuyPrice = obj.BuyPrice,
+                Unit = obj.Unit.Id,
+                WareHouseStock = obj.WareHouseStock
+            };
+
+            return Ok(response);
+        }
 
         // DELETE api/<ObjectApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(Guid id) => _obj.delete(id);
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var obj = await _obj.DeleteAsync(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            var response = new ObjectDTO
+            {
+                Title = obj.Title,
+                Price = obj.Price,
+                BuyPrice = obj.BuyPrice,
+                Unit = obj.Unit.Id,
+                WareHouseStock = obj.WareHouseStock
+            };
+            return Ok(response);
+        }
     }
 }
