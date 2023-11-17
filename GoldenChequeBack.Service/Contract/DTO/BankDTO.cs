@@ -11,6 +11,6 @@ namespace GoldenChequeBack.Service.Contract.DTO
         public Guid Id { get; set; }
         public string Title { get; set; }
 
-      //  public Guid[] ShobeList { get; set; }
+        public List<ShobeDTO> ShobeList { get; set; }
     }
 }

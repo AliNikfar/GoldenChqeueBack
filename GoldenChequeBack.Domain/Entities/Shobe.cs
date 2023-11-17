@@ -9,9 +9,12 @@ namespace GoldenChequeBack.Domain.Entities
 {
     public class Shobe : BaseEntity
     {
-        public int Name { get; set; }
-        public int code { get; set; }
-        public Guid BankId { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Phone { get; set; }
+        public string Address { get; set; }
+        public string Details { get; set; }
+        public Bank Bank { get; set; }
 
     }
 }

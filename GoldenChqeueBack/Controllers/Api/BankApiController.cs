@@ -45,7 +45,17 @@ namespace GoldenChqeueBack.Controllers.Api
             var response = new BankDTO
             {
                 Id = existingBank.Id,
-                Title = existingBank.Title
+                Title = existingBank.Title,
+                ShobeList = existingBank.ShobeList.Select(s => new ShobeDTO
+                {
+                    Address = s.Address,
+                    Code = s.Code,
+                    Details = s.Details,
+                    Id = s.Id,
+                    Name = s.Name,
+                    Phone = s.Name
+
+                }).ToList()
             };
             return Ok(response);
         }

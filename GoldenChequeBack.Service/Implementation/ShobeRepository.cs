@@ -35,7 +35,7 @@ namespace GoldenChequeBack.Service.Implementation
 
         public async Task<IEnumerable<Shobe>> GetByBankId(Guid bankId)
         {
-            return await _ctx.Shobes.Where(p => p.BankId == bankId).ToListAsync();
+            return await _ctx.Shobes.Where(p => p.Bank.Id == bankId).ToListAsync();
         }
 
         public async Task<Shobe> GetById(Guid id)

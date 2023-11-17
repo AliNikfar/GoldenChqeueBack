@@ -10,15 +10,18 @@ namespace GoldenChqeueBack.Controllers.Api
     public class ShobeApiController : ControllerBase
     {
         private readonly IShobeRepository _shobe;
+        private readonly IBankRepository _bank;
 
-        public ShobeApiController(IShobeRepository shobe)
+        public ShobeApiController(IShobeRepository shobe,IBankRepository bank)
         {
             _shobe = shobe;
+            _bank = bank;
+
         }
         // GET: api/<ShobeApiController>
             [HttpGet]
-            [Route("{factorId:Guid}")]
-            public async Task<IActionResult> GetByBankId(Guid BankId)
+            [Route("{BankId:Guid}")]
+            public async Task<IActionResult> GetByBankId([FromRoute] Guid BankId)
             {
                 var shobe = await _shobe.GetByBankId(BankId);
 
@@ -29,7 +32,10 @@ namespace GoldenChqeueBack.Controllers.Api
                     response.Add(new ShobeDTO
                     {
                         Name = crnt.Name,
-                        code = crnt.code
+                        Code = crnt.Code,
+                        Address = crnt.Address,
+                        Phone = crnt.Phone,
+                        Details = crnt.Details
                     });
                 }
                 return Ok(response);
@@ -37,9 +43,9 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // GET api/<ShobeApiController>/5
         [HttpGet]
-        [Route("{id:Guid}")]
-        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        public async Task<IActionResult> GetById(Guid id,int lid)
         {
+            var a = lid;
             var existingShobe = await _shobe.GetById(id);
             if (existingShobe is null)
             {
@@ -48,23 +54,46 @@ namespace GoldenChqeueBack.Controllers.Api
             var response = new ShobeDTO
             {
                 Name = existingShobe.Name,
-                code = existingShobe.code
+                Code = existingShobe.Code,
+                Address = existingShobe.Address,
+                Phone = existingShobe.Phone,
+                Details = existingShobe.Details
             };
             return Ok(response);
         }
 
         // POST api/<ShobeApiController>
         [HttpPost]
-        public async Task<IActionResult> Post(ShobeDTO shobe)
+        public async Task<IActionResult> Post(CreateShobeRequestDTO shobe)
         {
             //Map DTO
             var shbe = new Shobe
             {
                 Name = shobe.Name,
-                code = shobe.code
+                Code = shobe.Code,
+                Address = shobe.Address,
+                Phone = shobe.Phone,
+                Details = shobe.Details,
+                LastChangeDate = DateTime.Now,
+                Visable = true,
+                RegisterDate = DateTime.Now,
+                RegisterUser = 1 ,
+                LastChangeUser = 1,
+                Bank = new Bank(),
+                Author = true,
             };
+            var ExistingBank = _bank.GetById(shobe.BankId);
+            if (ExistingBank is not null)
+            {
+                shbe.Bank = ExistingBank.Result;
+            }
+            else
+            {
+                return NotFound("اطلاعات بانک یافت نشد");
+            }
 
-            //foreach(var item in cheque.Shobe)
+
+            //foreach(var item in cheque.Shobe) 
             //{
             //var existing = await _ShobeRepository.GetById(cheque.Shobe);
             //}
@@ -72,7 +101,10 @@ namespace GoldenChqeueBack.Controllers.Api
             var response = new ShobeDTO
             {
                 Name = shbe.Name,
-                code = shbe.code
+                Code = shbe.Code,
+                Address = shbe.Address,
+                Phone = shbe.Phone,
+                Details = shbe.Details
             };
             return Ok(response);
         }
@@ -88,7 +120,10 @@ namespace GoldenChqeueBack.Controllers.Api
             {
                 Id = id,
                 Name = request.Name,
-                code = request.code
+                Code = request.Code,
+                Address = request.Address,
+                Phone = request.Phone,
+                Details = request.Details
             };
             shobe = await _shobe.UpdateAsync(shobe);
             if (shobe == null)
@@ -100,7 +135,10 @@ namespace GoldenChqeueBack.Controllers.Api
             {
                 Id = id,
                 Name = request.Name,
-                code = request.code
+                Code = request.Code,
+                Address = request.Address,
+                Phone = request.Phone,
+                Details = request.Details
             };
 
             return Ok(response);
@@ -120,7 +158,7 @@ namespace GoldenChqeueBack.Controllers.Api
             {
                 Id = shobe.Id,
                 Name = shobe.Name,
-                code = shobe.code
+                Code = shobe.Code
             };
             return Ok(response);
         }
