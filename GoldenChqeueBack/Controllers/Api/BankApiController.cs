@@ -53,7 +53,7 @@ namespace GoldenChqeueBack.Controllers.Api
                     Details = s.Details,
                     Id = s.Id,
                     Name = s.Name,
-                    Phone = s.Name
+                    Phone = s.Phone
 
                 }).ToList()
             };
@@ -62,7 +62,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // POST api/<BankApiController>
         [HttpPost]
-        public async Task<IActionResult> Post(BankDTO bank)
+        public async Task<IActionResult> Post(CreateBankRequestDTO bank)
         {
             //Map DTO
             var bnk = new Bank
@@ -75,7 +75,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
             };
             await _bank.InsertAsync(bnk);
-            var response = new BankDTO
+            var response = new CreateBankRequestDTO
             {
                 Title = bnk.Title
             };
