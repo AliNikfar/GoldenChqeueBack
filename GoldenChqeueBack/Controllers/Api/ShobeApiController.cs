@@ -31,6 +31,7 @@ namespace GoldenChqeueBack.Controllers.Api
                 {
                     response.Add(new ShobeDTO
                     {
+                        Id = crnt.Id,
                         Name = crnt.Name,
                         Code = crnt.Code,
                         Address = crnt.Address,
