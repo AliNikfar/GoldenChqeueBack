@@ -33,6 +33,7 @@ namespace GoldenChequeBack.Persistence
         public DbSet<State> States { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
     }
 }
