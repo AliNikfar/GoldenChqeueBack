@@ -60,18 +60,22 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // POST api/<UnitApiController>
         [HttpPost]
-        public async Task<IActionResult> Post(UnitDTO state)
+        public async Task<IActionResult> Post(CreateUnitRequestDTO state)
         {
             //Map DTO
             var st = new Unit
             {
                 Name = state.Name,
-                QuantityPerUnit = state.QuantityPerUnit
+                QuantityPerUnit = state.QuantityPerUnit,
+                RegisterDate = DateTime.Now,
+                LastChangeDate = DateTime.Now,
+                Visable = true
 
             };
             await _unit.InsertAsync(st);
             var response = new UnitDTO
             {
+                Id = st.Id,
                 Name = st.Name,
                 QuantityPerUnit = st.QuantityPerUnit
             };
