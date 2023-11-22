@@ -9,6 +9,6 @@ namespace GoldenChequeBack.Domain.Entities
     public class Category : BaseEntity
     {
         public string Title { get; set; }
-        public Guid ParentId { get; set; }
+        public Guid? ParentId { get; set; }
     }
 }

@@ -9,6 +9,43 @@ namespace GoldenChequeBack.Persistence
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            var Parent = Guid.NewGuid();
+            builder.Entity<Category>().HasData(new Category
+            {
+                Id = Parent,
+                Title = "محصولات",
+                ParentId = null,
+                Author = true,
+                LastChangeDate = DateTime.Now,
+                LastChangeUser = 1,
+                RegisterDate = DateTime.Now,
+                RegisterUser = 1,
+                Visable = true
+            });
+            builder.Entity<Category>().HasData(new Category
+            {
+                Id = Guid.NewGuid(),
+                Title = "الکترونیکی",
+                ParentId = Parent,
+                Author = true,
+                LastChangeDate = DateTime.Now,
+                LastChangeUser = 1,
+                RegisterDate = DateTime.Now,
+                RegisterUser = 1,
+                Visable = true
+            });
+            builder.Entity<Category>().HasData(new Category
+            {
+                Id = Guid.NewGuid(),
+                Title = "غذایی",
+                ParentId = Parent,
+                Author = true,
+                LastChangeDate = DateTime.Now,
+                LastChangeUser = 1,
+                RegisterDate = DateTime.Now,
+                RegisterUser = 1,
+                Visable = true
+            });
             base.OnModelCreating(builder);
         }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -18,6 +55,7 @@ namespace GoldenChequeBack.Persistence
 
 
         //}
+
 
         public DbSet<Bank> Banks { get; set; }
         public DbSet<BaseInfo> BaseInfoes { get; set; }

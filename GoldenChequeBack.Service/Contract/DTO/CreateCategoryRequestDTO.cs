@@ -9,6 +9,6 @@ namespace GoldenChequeBack.Service.Contract.DTO
     public  class CreateCategoryRequestDTO
     {
         public string Title { get; set; }
-        public Guid ParentId { get; set; }
+        public Guid? ParentId { get; set; }
     }
 }

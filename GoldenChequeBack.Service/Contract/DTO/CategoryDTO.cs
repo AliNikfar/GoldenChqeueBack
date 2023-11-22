@@ -10,6 +10,6 @@ namespace GoldenChequeBack.Service.Contract.DTO
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public Guid ParentId { get; set; }
+        public Guid? ParentId { get; set; }
     }
 }

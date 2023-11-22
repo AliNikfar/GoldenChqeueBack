@@ -25,7 +25,7 @@ namespace GoldenChqeueBack.Controllers.Api
             var response = new List<CategoryDTO>();
             foreach (var crnt in categories)
             {
-                response.Add(new CategoryDTO { Id = crnt.Id, Title = crnt.Title });
+                response.Add(new CategoryDTO { Id = crnt.Id, Title = crnt.Title , ParentId = crnt.ParentId });
             }
             return Ok(response);
         }
@@ -43,19 +43,21 @@ namespace GoldenChqeueBack.Controllers.Api
             var response = new CategoryDTO
             {
                 Id = existingcategory.Id,
-                Title = existingcategory.Title
+                Title = existingcategory.Title,
+                ParentId = existingcategory.ParentId
             };
             return Ok(response);
         }
 
         // POST api/<BankApiController>
         [HttpPost]
-        public async Task<IActionResult> Post(CreateBankRequestDTO category)
+        public async Task<IActionResult> Post(CreateCategoryRequestDTO category)
         {
             //Map DTO
             var cat = new Category
             {
                 Title = category.Title,
+                ParentId = category.ParentId,
                 RegisterDate = DateTime.Now,
                 LastChangeDate = DateTime.Now,
                 Visable = true
@@ -63,9 +65,10 @@ namespace GoldenChqeueBack.Controllers.Api
 
             };
             await _categ.InsertAsync(cat);
-            var response = new CreateBankRequestDTO
+            var response = new CreateCategoryRequestDTO
             {
-                Title = cat.Title
+                Title = cat.Title,
+                ParentId = cat.ParentId
             };
             return Ok(response);
         }
@@ -74,13 +77,14 @@ namespace GoldenChqeueBack.Controllers.Api
 
         [HttpPut]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateBankRequestDTO request)
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateCategoryRequestDTO request)
         {
             //convert DTO to Domain Model
             var category = new Category
             {
                 Id = id,
-                Title = request.Title
+                Title = request.Title,
+                ParentId = request.ParentId
             };
             category = await _categ.UpdateAsync(category);
             if (category == null)
@@ -91,7 +95,8 @@ namespace GoldenChqeueBack.Controllers.Api
             var response = new CategoryDTO
             {
                 Id = category.Id,
-                Title = category.Title
+                Title = category.Title,
+                ParentId = category.ParentId
             };
 
             return Ok(response);
@@ -110,7 +115,8 @@ namespace GoldenChqeueBack.Controllers.Api
             var response = new CategoryDTO
             {
                 Id = category.Id,
-                Title = category.Title
+                Title = category.Title,
+                ParentId = category.ParentId
             };
             return Ok(response);
         }

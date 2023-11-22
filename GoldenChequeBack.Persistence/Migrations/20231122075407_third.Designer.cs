@@ -4,6 +4,7 @@ using GoldenChequeBack.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoldenChequeBack.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231122075407_third")]
+    partial class third
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,43 +141,6 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("ed6113b4-0cc2-44fa-ae12-9e00699fffd2"),
-                            Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 22, 11, 40, 43, 133, DateTimeKind.Local).AddTicks(3483),
-                            LastChangeUser = 1,
-                            RegisterDate = new DateTime(2023, 11, 22, 11, 40, 43, 133, DateTimeKind.Local).AddTicks(3494),
-                            RegisterUser = 1,
-                            Title = "محصولات",
-                            Visable = true
-                        },
-                        new
-                        {
-                            Id = new Guid("c85092ac-d6e6-4c43-a9bf-1bb86949d285"),
-                            Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 22, 11, 40, 43, 133, DateTimeKind.Local).AddTicks(3526),
-                            LastChangeUser = 1,
-                            ParentId = new Guid("ed6113b4-0cc2-44fa-ae12-9e00699fffd2"),
-                            RegisterDate = new DateTime(2023, 11, 22, 11, 40, 43, 133, DateTimeKind.Local).AddTicks(3527),
-                            RegisterUser = 1,
-                            Title = "الکترونیکی",
-                            Visable = true
-                        },
-                        new
-                        {
-                            Id = new Guid("6f8694dc-3302-4df2-9303-2a172543cb39"),
-                            Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 22, 11, 40, 43, 133, DateTimeKind.Local).AddTicks(3540),
-                            LastChangeUser = 1,
-                            ParentId = new Guid("ed6113b4-0cc2-44fa-ae12-9e00699fffd2"),
-                            RegisterDate = new DateTime(2023, 11, 22, 11, 40, 43, 133, DateTimeKind.Local).AddTicks(3541),
-                            RegisterUser = 1,
-                            Title = "غذایی",
-                            Visable = true
-                        });
                 });
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Cheque", b =>
