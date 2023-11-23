@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GoldenChequeBack.Service.Contract.DTO
 {
-    public class ObjectDTO
+    public class ProductDTO
     {
         public Guid Id { get; set; }
         public string Title
@@ -25,7 +25,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
             set;
         }
 
-        public Guid Unit
+        public UnitDTO Unit
         {
             get;
             set;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GoldenChequeBack.Domain.Entities
 {
-    public class Object :BaseEntity
+    public class Product :BaseEntity
     {
         [Required]
         [MaxLength(100)]

@@ -66,7 +66,7 @@ namespace GoldenChequeBack.Persistence
         public DbSet<Factor> Factors { get; set; }
         public DbSet<FactorObjects> FactorObjects { get; set; }
         public DbSet<Ghest> Ghests { get; set; }
-        public DbSet<Domain.Entities.Object> Objects { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Shobe> Shobes { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<Unit> Units { get; set; }

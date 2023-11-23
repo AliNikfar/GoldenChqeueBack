@@ -2,7 +2,7 @@
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Mvc;
-using Object = GoldenChequeBack.Domain.Entities.Object;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,11 +10,11 @@ namespace GoldenChqeueBack.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ObjectApiController : ControllerBase
+    public class ProductApiController : ControllerBase
     {
-        private readonly IObjectRepository _obj;
+        private readonly IProductRepository _obj;
 
-        public ObjectApiController(IObjectRepository obj)
+        public ProductApiController(IProductRepository obj)
         {
             _obj = obj;
         }
@@ -22,19 +22,18 @@ namespace GoldenChqeueBack.Controllers.Api
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var objectt = await _obj.GetAllAsync();
+            var product = await _obj.GetAllAsync();
 
 
             // Map to DTO
-            var response = new List<ObjectDTO>();
-            foreach (var crnt in objectt)
+            var response = new List<ProductDTO>();
+            foreach (var crnt in product)
             {
-                response.Add(new ObjectDTO
+                response.Add(new ProductDTO
                 {
                     Title = crnt.Title,
                     Price = crnt.Price,
                     BuyPrice = crnt.BuyPrice,
-                    Unit = crnt.Unit.Id,
                     WareHouseStock = crnt.WareHouseStock
                 });
             }
@@ -51,12 +50,11 @@ namespace GoldenChqeueBack.Controllers.Api
             {
                 return NotFound();
             }
-            var response = new ObjectDTO
+            var response = new ProductDTO
             {
                 Title = existingObject.Title,
                 Price = existingObject.Price,
                 BuyPrice = existingObject.BuyPrice,
-                Unit = existingObject.Unit.Id,
                 WareHouseStock = existingObject.WareHouseStock
             };
             return Ok(response);
@@ -64,25 +62,23 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // POST api/<ObjectApiController>
         [HttpPost]
-        public async Task<IActionResult> Post(Object objectt)
+        public async Task<IActionResult> Post(Product product)
         {
             //Map DTO
-            var obj = new Object
+            var obj = new Product
             {
-                Title = objectt.Title,
-                Price = objectt.Price,
-                BuyPrice = objectt.BuyPrice,
-                //Unit = objectt.Unit.Id,
-                WareHouseStock = objectt.WareHouseStock
+                Title = product.Title,
+                Price = product.Price,
+                BuyPrice = product.BuyPrice,
+                WareHouseStock = product.WareHouseStock
 
             };
             await _obj.InsertAsync(obj);
-            var response = new ObjectDTO
+            var response = new ProductDTO
             {
                 Title = obj.Title,
                 Price = obj.Price,
                 BuyPrice = obj.BuyPrice,
-                Unit = obj.Unit.Id,
                 WareHouseStock = obj.WareHouseStock
             };
             return Ok(response);
@@ -90,10 +86,10 @@ namespace GoldenChqeueBack.Controllers.Api
         // PUT api/<ObjectApiController>/5
         [HttpPut]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateObjectRequestDTO request)
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateProductRequestDTO request)
         {
             //convert DTO to Domain Model
-            var obj = new Object
+            var obj = new Product
             {
                 Id = id,
                 Title = request.Title,
@@ -108,13 +104,12 @@ namespace GoldenChqeueBack.Controllers.Api
                 return NotFound();
             }
 
-            var response = new ObjectDTO
+            var response = new ProductDTO
             {
                 Id = obj.Id,
                 Title = obj.Title,
                 Price = obj.Price,
                 BuyPrice = obj.BuyPrice,
-                Unit = obj.Unit.Id,
                 WareHouseStock = obj.WareHouseStock
             };
 
@@ -131,12 +126,11 @@ namespace GoldenChqeueBack.Controllers.Api
             {
                 return NotFound();
             }
-            var response = new ObjectDTO
+            var response = new ProductDTO
             {
                 Title = obj.Title,
                 Price = obj.Price,
                 BuyPrice = obj.BuyPrice,
-                Unit = obj.Unit.Id,
                 WareHouseStock = obj.WareHouseStock
             };
             return Ok(response);

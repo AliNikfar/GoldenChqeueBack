@@ -5,52 +5,52 @@ using System.Linq;
 using System.Threading.Tasks;
 using GoldenChequeBack.Domain.Entities;
  
-using Object = GoldenChequeBack.Domain.Entities.Object;
+using Product = GoldenChequeBack.Domain.Entities.Product;
 using GoldenChequeBack.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoldenChequeBack.Service.Implementation
 {
-    public class ObjectRepository : IObjectRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly ApplicationDbContext _ctx;
-        public ObjectRepository(ApplicationDbContext ctx)
+        public ProductRepository(ApplicationDbContext ctx)
         {
             _ctx = ctx;
         }
 
-        public async Task<Object> DeleteAsync(Guid Id)
+        public async Task<Product> DeleteAsync(Guid Id)
         {
-            var existingObject = await _ctx.Objects.FirstOrDefaultAsync(p => p.Id == Id);
+            var existingObject = await _ctx.Products.FirstOrDefaultAsync(p => p.Id == Id);
             if (existingObject == null)
             {
                 return null;
             }
-            _ctx.Objects.Remove(existingObject);
+            _ctx.Products.Remove(existingObject);
             await _ctx.SaveChangesAsync();
             return existingObject;
         }
 
-        public async Task<IEnumerable<Object>> GetAllAsync()
+        public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await _ctx.Objects.ToListAsync(); ;
+            return await _ctx.Products.Include(p=>p.Unit).ToListAsync(); ;
         }
 
-        public async Task<Object> GetById(Guid id)
+        public async Task<Product> GetById(Guid id)
         {
-            return await _ctx.Objects.Where(p => p.Id == id).FirstOrDefaultAsync();
+            return await _ctx.Products.Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<Object> InsertAsync(Object objectt)
+        public async Task<Product> InsertAsync(Product objectt)
         {
-            await _ctx.Objects.AddAsync(objectt);
+            await _ctx.Products.AddAsync(objectt);
             await _ctx.SaveChangesAsync();
             return objectt;
         }
 
-        public async Task<Object> UpdateAsync(Object obj)
+        public async Task<Product> UpdateAsync(Product obj)
         {
-            var existingObject = await _ctx.Objects.FirstOrDefaultAsync(p => p.Id == obj.Id);
+            var existingObject = await _ctx.Products.FirstOrDefaultAsync(p => p.Id == obj.Id);
             if (existingObject != null)
             {
 

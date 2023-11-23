@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GoldenChequeBack.Service.Contract.DTO
 {
-    public  class UpdateObjectRequestDTO
+    public  class UpdateProductRequestDTO
     {
         public string Title
         {
