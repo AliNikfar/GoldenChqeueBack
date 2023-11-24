@@ -34,7 +34,8 @@ namespace GoldenChqeueBack.Controllers.Api
                     Title = crnt.Title,
                     Price = crnt.Price,
                     BuyPrice = crnt.BuyPrice,
-                    WareHouseStock = crnt.WareHouseStock
+                    WareHouseStock = crnt.WareHouseStock,
+                    Image
                 });
             }
             return Ok(response);

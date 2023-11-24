@@ -143,35 +143,35 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ed6113b4-0cc2-44fa-ae12-9e00699fffd2"),
+                            Id = new Guid("13e3a228-200c-41db-b9fe-1cb96edb46e2"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 22, 11, 40, 43, 133, DateTimeKind.Local).AddTicks(3483),
+                            LastChangeDate = new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9187),
                             LastChangeUser = 1,
-                            RegisterDate = new DateTime(2023, 11, 22, 11, 40, 43, 133, DateTimeKind.Local).AddTicks(3494),
+                            RegisterDate = new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9200),
                             RegisterUser = 1,
                             Title = "محصولات",
                             Visable = true
                         },
                         new
                         {
-                            Id = new Guid("c85092ac-d6e6-4c43-a9bf-1bb86949d285"),
+                            Id = new Guid("033ff71b-049b-4ce5-9120-ce2d8e8cf483"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 22, 11, 40, 43, 133, DateTimeKind.Local).AddTicks(3526),
+                            LastChangeDate = new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9248),
                             LastChangeUser = 1,
-                            ParentId = new Guid("ed6113b4-0cc2-44fa-ae12-9e00699fffd2"),
-                            RegisterDate = new DateTime(2023, 11, 22, 11, 40, 43, 133, DateTimeKind.Local).AddTicks(3527),
+                            ParentId = new Guid("13e3a228-200c-41db-b9fe-1cb96edb46e2"),
+                            RegisterDate = new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9250),
                             RegisterUser = 1,
                             Title = "الکترونیکی",
                             Visable = true
                         },
                         new
                         {
-                            Id = new Guid("6f8694dc-3302-4df2-9303-2a172543cb39"),
+                            Id = new Guid("c72cd428-c8b7-413e-8ffc-ba43205e8aef"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 22, 11, 40, 43, 133, DateTimeKind.Local).AddTicks(3540),
+                            LastChangeDate = new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9271),
                             LastChangeUser = 1,
-                            ParentId = new Guid("ed6113b4-0cc2-44fa-ae12-9e00699fffd2"),
-                            RegisterDate = new DateTime(2023, 11, 22, 11, 40, 43, 133, DateTimeKind.Local).AddTicks(3541),
+                            ParentId = new Guid("13e3a228-200c-41db-b9fe-1cb96edb46e2"),
+                            RegisterDate = new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9273),
                             RegisterUser = 1,
                             Title = "غذایی",
                             Visable = true
@@ -553,7 +553,7 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.ToTable("Ghests");
                 });
 
-            modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Object", b =>
+            modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -598,7 +598,7 @@ namespace GoldenChequeBack.Persistence.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("Objects");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Shobe", b =>
@@ -843,7 +843,7 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Navigation("Factor");
                 });
 
-            modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Object", b =>
+            modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Product", b =>
                 {
                     b.HasOne("GoldenChequeBack.Domain.Entities.Unit", "Unit")
                         .WithMany()

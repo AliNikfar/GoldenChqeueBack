@@ -39,5 +39,10 @@ namespace GoldenChequeBack.Domain.Entities
             get;
             set;
         }
+        public string ImageURL
+        {
+            get;
+            set;
+        }
     }
 }
