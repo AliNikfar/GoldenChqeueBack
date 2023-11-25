@@ -5,12 +5,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GoldenChequeBack.Persistence.Migrations
 {
-    public partial class forth : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Objects");
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RegisterUser = table.Column<int>(type: "int", nullable: false),
+                    LastChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastChangeUser = table.Column<int>(type: "int", nullable: false),
+                    Visable = table.Column<bool>(type: "bit", nullable: false),
+                    Author = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Products",
@@ -22,6 +41,7 @@ namespace GoldenChequeBack.Persistence.Migrations
                     BuyPrice = table.Column<int>(type: "int", nullable: false),
                     UnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WareHouseStock = table.Column<int>(type: "int", nullable: false),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RegisterUser = table.Column<int>(type: "int", nullable: false),
                     LastChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -43,17 +63,17 @@ namespace GoldenChequeBack.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Author", "LastChangeDate", "LastChangeUser", "ParentId", "RegisterDate", "RegisterUser", "Title", "Visable" },
-                values: new object[] { new Guid("033ff71b-049b-4ce5-9120-ce2d8e8cf483"), true, new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9248), 1, new Guid("13e3a228-200c-41db-b9fe-1cb96edb46e2"), new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9250), 1, "الکترونیکی", true });
+                values: new object[] { new Guid("3e6812a8-a937-46f8-8bb5-15e2c22ef6b2"), true, new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8618), 1, new Guid("d6c78b97-691c-4110-8f56-77ebdc82d1d0"), new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8619), 1, "الکترونیکی", true });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Author", "LastChangeDate", "LastChangeUser", "ParentId", "RegisterDate", "RegisterUser", "Title", "Visable" },
-                values: new object[] { new Guid("13e3a228-200c-41db-b9fe-1cb96edb46e2"), true, new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9187), 1, null, new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9200), 1, "محصولات", true });
+                values: new object[] { new Guid("d6c78b97-691c-4110-8f56-77ebdc82d1d0"), true, new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8559), 1, null, new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8577), 1, "محصولات", true });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Author", "LastChangeDate", "LastChangeUser", "ParentId", "RegisterDate", "RegisterUser", "Title", "Visable" },
-                values: new object[] { new Guid("c72cd428-c8b7-413e-8ffc-ba43205e8aef"), true, new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9271), 1, new Guid("13e3a228-200c-41db-b9fe-1cb96edb46e2"), new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9273), 1, "غذایی", true });
+                values: new object[] { new Guid("e4c4391f-60a1-488c-ac7d-8c78c4b99f76"), true, new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8629), 1, new Guid("d6c78b97-691c-4110-8f56-77ebdc82d1d0"), new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8630), 1, "غذایی", true });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_UnitId",
@@ -64,22 +84,10 @@ namespace GoldenChequeBack.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
                 name: "Products");
-
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("033ff71b-049b-4ce5-9120-ce2d8e8cf483"));
-
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("13e3a228-200c-41db-b9fe-1cb96edb46e2"));
-
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("c72cd428-c8b7-413e-8ffc-ba43205e8aef"));
 
             migrationBuilder.CreateTable(
                 name: "Objects",

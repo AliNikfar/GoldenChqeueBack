@@ -56,7 +56,6 @@ namespace GoldenChequeBack.Persistence
 
         //}
 
-
         public DbSet<Bank> Banks { get; set; }
         public DbSet<BaseInfo> BaseInfoes { get; set; }
         public DbSet<Cheque> Cheques { get; set; }

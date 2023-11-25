@@ -1,5 +1,6 @@
 ﻿
 using GoldenChequeBack.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace GoldenChequeBack.Service.Contract
 {
     public interface IProductRepository
     {
-        Task<Product> InsertAsync(Product objectt);
+        Task<Product>  InsertAsync(Product objectt, IFormFile file, string fileName);
 
         Task<Product?> UpdateAsync(Product bank);
 

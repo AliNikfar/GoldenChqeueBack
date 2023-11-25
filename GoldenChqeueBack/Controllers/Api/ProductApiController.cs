@@ -35,7 +35,7 @@ namespace GoldenChqeueBack.Controllers.Api
                     Price = crnt.Price,
                     BuyPrice = crnt.BuyPrice,
                     WareHouseStock = crnt.WareHouseStock,
-                    Image
+                    ImageExtention = crnt.ImageExtention
                 });
             }
             return Ok(response);
@@ -56,33 +56,70 @@ namespace GoldenChqeueBack.Controllers.Api
                 Title = existingObject.Title,
                 Price = existingObject.Price,
                 BuyPrice = existingObject.BuyPrice,
-                WareHouseStock = existingObject.WareHouseStock
+                WareHouseStock = existingObject.WareHouseStock,
+                ImageExtention = existingObject.ImageExtention
             };
             return Ok(response);
         }
 
         // POST api/<ObjectApiController>
         [HttpPost]
-        public async Task<IActionResult> Post(Product product)
+        public async Task<IActionResult> Post(CreateProductRequestDTO product,[FromForm] IFormFile file
+            ,[FromForm] string fileName)
         {
-            //Map DTO
-            var obj = new Product
+            ValidateUploadedFile(file);
+            if (ModelState.IsValid)
             {
-                Title = product.Title,
-                Price = product.Price,
-                BuyPrice = product.BuyPrice,
-                WareHouseStock = product.WareHouseStock
+                //Upload the file
 
-            };
-            await _obj.InsertAsync(obj);
-            var response = new ProductDTO
+                //Map DTO
+                var obj = new Product
+                {
+                    Title = product.Title,
+                    Price = product.Price,
+                    BuyPrice = product.BuyPrice,
+                    WareHouseStock = product.WareHouseStock,
+                    ImageExtention = Path.GetExtension(file.FileName).ToLower(),
+                    Author = true,
+                    LastChangeDate = DateTime.Now,
+                    Visable = true,
+                    LastChangeUser = 1 ,
+                    RegisterDate = DateTime.Now,
+                    RegisterUser = 1
+
+
+                };
+
+                await _obj.InsertAsync(obj,file, fileName);
+                var response = new ProductDTO
+                {
+                    Title = obj.Title,
+                    Price = obj.Price,
+                    BuyPrice = obj.BuyPrice,
+                    WareHouseStock = obj.WareHouseStock,
+                    ImageExtention = obj.ImageExtention
+                };
+                return Ok(response);
+            }
+            else
             {
-                Title = obj.Title,
-                Price = obj.Price,
-                BuyPrice = obj.BuyPrice,
-                WareHouseStock = obj.WareHouseStock
-            };
-            return Ok(response);
+                return BadRequest(ModelState);
+            }
+        }
+
+        private void ValidateUploadedFile(IFormFile file)
+        {
+            var allowedExtention = new string[] { ".jpg", ".jpeg", ".png" };
+            if (!allowedExtention.Contains(Path.GetExtension(file.FileName).ToLower())) ;
+            {
+                ModelState.AddModelError("file", "فایل ارسالی از نوع درست نیست");
+
+            }
+            if (file.Length>= 104876)
+            {
+                ModelState.AddModelError("file", "حجم فایل ارسالی نباید بیشتر از 1 مگابایت باشد");
+            }
+
         }
         // PUT api/<ObjectApiController>/5
         [HttpPut]
@@ -97,7 +134,8 @@ namespace GoldenChqeueBack.Controllers.Api
                 Price = request.Price,
                 BuyPrice = request.BuyPrice,
                 //Unit = request.Unit.Id,
-                WareHouseStock = request.WareHouseStock
+                WareHouseStock = request.WareHouseStock,
+                ImageExtention = request.ImageURL
             };
             obj = await _obj.UpdateAsync(obj);
             if (obj == null)
@@ -111,7 +149,8 @@ namespace GoldenChqeueBack.Controllers.Api
                 Title = obj.Title,
                 Price = obj.Price,
                 BuyPrice = obj.BuyPrice,
-                WareHouseStock = obj.WareHouseStock
+                WareHouseStock = obj.WareHouseStock,
+                ImageExtention = request.ImageURL
             };
 
             return Ok(response);
@@ -132,7 +171,8 @@ namespace GoldenChqeueBack.Controllers.Api
                 Title = obj.Title,
                 Price = obj.Price,
                 BuyPrice = obj.BuyPrice,
-                WareHouseStock = obj.WareHouseStock
+                WareHouseStock = obj.WareHouseStock,
+                ImageExtention = obj.ImageExtention
             };
             return Ok(response);
         }

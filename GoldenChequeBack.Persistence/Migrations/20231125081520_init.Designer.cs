@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoldenChequeBack.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231123192726_forth")]
-    partial class forth
+    [Migration("20231125081520_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -145,35 +145,35 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("13e3a228-200c-41db-b9fe-1cb96edb46e2"),
+                            Id = new Guid("d6c78b97-691c-4110-8f56-77ebdc82d1d0"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9187),
+                            LastChangeDate = new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8559),
                             LastChangeUser = 1,
-                            RegisterDate = new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9200),
+                            RegisterDate = new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8577),
                             RegisterUser = 1,
                             Title = "محصولات",
                             Visable = true
                         },
                         new
                         {
-                            Id = new Guid("033ff71b-049b-4ce5-9120-ce2d8e8cf483"),
+                            Id = new Guid("3e6812a8-a937-46f8-8bb5-15e2c22ef6b2"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9248),
+                            LastChangeDate = new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8618),
                             LastChangeUser = 1,
-                            ParentId = new Guid("13e3a228-200c-41db-b9fe-1cb96edb46e2"),
-                            RegisterDate = new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9250),
+                            ParentId = new Guid("d6c78b97-691c-4110-8f56-77ebdc82d1d0"),
+                            RegisterDate = new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8619),
                             RegisterUser = 1,
                             Title = "الکترونیکی",
                             Visable = true
                         },
                         new
                         {
-                            Id = new Guid("c72cd428-c8b7-413e-8ffc-ba43205e8aef"),
+                            Id = new Guid("e4c4391f-60a1-488c-ac7d-8c78c4b99f76"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9271),
+                            LastChangeDate = new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8629),
                             LastChangeUser = 1,
-                            ParentId = new Guid("13e3a228-200c-41db-b9fe-1cb96edb46e2"),
-                            RegisterDate = new DateTime(2023, 11, 23, 22, 57, 25, 746, DateTimeKind.Local).AddTicks(9273),
+                            ParentId = new Guid("d6c78b97-691c-4110-8f56-77ebdc82d1d0"),
+                            RegisterDate = new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8630),
                             RegisterUser = 1,
                             Title = "غذایی",
                             Visable = true
@@ -566,6 +566,10 @@ namespace GoldenChequeBack.Persistence.Migrations
 
                     b.Property<int>("BuyPrice")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastChangeDate")
                         .HasColumnType("datetime2");
