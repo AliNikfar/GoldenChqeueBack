@@ -31,6 +31,7 @@ using Microsoft.EntityFrameworkCore;
 using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Implementation;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -75,6 +76,11 @@ app.UseCors(options =>
 });
 
 //app.UseAuthorization();
+app.UseStaticFiles( new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+    RequestPath = "/Images"
+}  );
 app.MapControllers();
 //app.MapControllerRoute(
 //    name: "default",

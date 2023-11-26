@@ -4,8 +4,6 @@ using GoldenChequeBack.Service.Contract;
 using System.Linq;
 using System.Threading.Tasks;
 using GoldenChequeBack.Domain.Entities;
- 
-using Product = GoldenChequeBack.Domain.Entities.Product;
 using GoldenChequeBack.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +19,7 @@ namespace GoldenChequeBack.Service.Implementation
         public ProductRepository(ApplicationDbContext ctx,IWebHostEnvironment webHostEnvironment , IHttpContextAccessor httpContextAcc)
         {
             _ctx = ctx;
-             _webHostEnvironment = webHostEnvironment;
+            _webHostEnvironment = webHostEnvironment;
             _httpContextAcc = httpContextAcc;
     } 
 
