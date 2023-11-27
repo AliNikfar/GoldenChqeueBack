@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoldenChequeBack.Domain.Entities
+namespace GoldenChequeBack.Service.Contract.DTO
 {
-    public  class ImageSelector : BaseEntity
+    public  class ImageSelectorDTO
     {
+        public Guid Id { get; set; }
         public string FileName { get; set; }
         public string FileExtention { get; set; }
         public string Title { get; set; }

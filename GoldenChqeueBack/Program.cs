@@ -43,6 +43,7 @@ builder.Services.AddScoped<IShobeRepository, ShobeRepository>();
 builder.Services.AddScoped<IUnitsRepository, UnitsRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IImageSelectorRepository, ImageSelectorRepository>();
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

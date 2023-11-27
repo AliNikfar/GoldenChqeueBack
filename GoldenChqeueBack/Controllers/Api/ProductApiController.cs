@@ -67,7 +67,6 @@ namespace GoldenChqeueBack.Controllers.Api
         public async Task<IActionResult> Post(CreateProductRequestDTO product,[FromForm] IFormFile file
             ,[FromForm] string fileName)
         {
-            ValidateUploadedFile(file);
             if (ModelState.IsValid)
             {
                 //Upload the file
@@ -107,20 +106,6 @@ namespace GoldenChqeueBack.Controllers.Api
             }
         }
 
-        private void ValidateUploadedFile(IFormFile file)
-        {
-            var allowedExtention = new string[] { ".jpg", ".jpeg", ".png" };
-            if (!allowedExtention.Contains(Path.GetExtension(file.FileName).ToLower())) ;
-            {
-                ModelState.AddModelError("file", "فایل ارسالی از نوع درست نیست");
-
-            }
-            if (file.Length>= 104876)
-            {
-                ModelState.AddModelError("file", "حجم فایل ارسالی نباید بیشتر از 1 مگابایت باشد");
-            }
-
-        }
         // PUT api/<ObjectApiController>/5
         [HttpPut]
         [Route("{id:Guid}")]
