@@ -34,7 +34,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
             get;
             set;
         }
-        public string ImageURL
+        public Guid ImageId
         {
             get;
             set;

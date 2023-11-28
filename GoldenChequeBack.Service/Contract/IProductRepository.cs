@@ -11,7 +11,7 @@ namespace GoldenChequeBack.Service.Contract
 {
     public interface IProductRepository
     {
-        Task<Product>  InsertAsync(Product objectt, IFormFile file, string fileName);
+        Task<Product>  InsertAsync(Product objectt);
 
         Task<Product?> UpdateAsync(Product bank);
 

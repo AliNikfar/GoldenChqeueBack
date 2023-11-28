@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoldenChequeBack.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231125081520_init")]
+    [Migration("20231128132407_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,35 +145,35 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d6c78b97-691c-4110-8f56-77ebdc82d1d0"),
+                            Id = new Guid("259503b4-3e39-4fee-856a-a76b91fc7021"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8559),
+                            LastChangeDate = new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7613),
                             LastChangeUser = 1,
-                            RegisterDate = new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8577),
+                            RegisterDate = new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7622),
                             RegisterUser = 1,
                             Title = "محصولات",
                             Visable = true
                         },
                         new
                         {
-                            Id = new Guid("3e6812a8-a937-46f8-8bb5-15e2c22ef6b2"),
+                            Id = new Guid("8c948cf2-cf09-4368-bcd8-0733e195175e"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8618),
+                            LastChangeDate = new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7654),
                             LastChangeUser = 1,
-                            ParentId = new Guid("d6c78b97-691c-4110-8f56-77ebdc82d1d0"),
-                            RegisterDate = new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8619),
+                            ParentId = new Guid("259503b4-3e39-4fee-856a-a76b91fc7021"),
+                            RegisterDate = new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7655),
                             RegisterUser = 1,
                             Title = "الکترونیکی",
                             Visable = true
                         },
                         new
                         {
-                            Id = new Guid("e4c4391f-60a1-488c-ac7d-8c78c4b99f76"),
+                            Id = new Guid("0dd3c5eb-53f6-4af5-b025-76c3706f3d9f"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8629),
+                            LastChangeDate = new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7665),
                             LastChangeUser = 1,
-                            ParentId = new Guid("d6c78b97-691c-4110-8f56-77ebdc82d1d0"),
-                            RegisterDate = new DateTime(2023, 11, 25, 11, 45, 20, 186, DateTimeKind.Local).AddTicks(8630),
+                            ParentId = new Guid("259503b4-3e39-4fee-856a-a76b91fc7021"),
+                            RegisterDate = new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7666),
                             RegisterUser = 1,
                             Title = "غذایی",
                             Visable = true
@@ -555,6 +555,51 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.ToTable("Ghests");
                 });
 
+            modelBuilder.Entity("GoldenChequeBack.Domain.Entities.ImageSelector", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Author")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileExtention")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LastChangeUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RegisterDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RegisterUser")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Visable")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -567,7 +612,11 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Property<int>("BuyPrice")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageURL")
+                    b.Property<string>("ImageExtention")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

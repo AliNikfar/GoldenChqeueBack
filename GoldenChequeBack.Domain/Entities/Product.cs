@@ -39,12 +39,7 @@ namespace GoldenChequeBack.Domain.Entities
             get;
             set;
         }
-        public string ImageExtention
-        {
-            get;
-            set;
-        }
-        public string ImageName
+        public Guid ImageId
         {
             get;
             set;

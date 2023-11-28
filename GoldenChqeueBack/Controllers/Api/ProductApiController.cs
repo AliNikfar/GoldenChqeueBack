@@ -35,7 +35,7 @@ namespace GoldenChqeueBack.Controllers.Api
                     Price = crnt.Price,
                     BuyPrice = crnt.BuyPrice,
                     WareHouseStock = crnt.WareHouseStock,
-                    ImageExtention = crnt.ImageExtention
+                    ImageId = crnt.ImageId,
                 });
             }
             return Ok(response);
@@ -57,55 +57,38 @@ namespace GoldenChqeueBack.Controllers.Api
                 Price = existingObject.Price,
                 BuyPrice = existingObject.BuyPrice,
                 WareHouseStock = existingObject.WareHouseStock,
-                ImageExtention = existingObject.ImageExtention
+                ImageId=existingObject.ImageId,
             };
             return Ok(response);
         }
 
         // POST api/<ObjectApiController>
         [HttpPost]
-        public async Task<IActionResult> Post(CreateProductRequestDTO product,[FromForm] IFormFile file
-            ,[FromForm] string fileName)
+        public async Task<IActionResult> Post(CreateProductRequestDTO product)
         {
-            if (ModelState.IsValid)
+            //Map DTO
+            var obj = new Product
             {
-                //Upload the file
-
-                //Map DTO
-                var obj = new Product
-                {
-                    Title = product.Title,
-                    Price = product.Price,
-                    BuyPrice = product.BuyPrice,
-                    WareHouseStock = product.WareHouseStock,
-                    ImageExtention = Path.GetExtension(file.FileName).ToLower(),
-                    Author = true,
-                    LastChangeDate = DateTime.Now,
-                    Visable = true,
-                    LastChangeUser = 1 ,
-                    RegisterDate = DateTime.Now,
-                    RegisterUser = 1
+                Title = product.Title,
+                Price = product.Price,
+                BuyPrice = product.BuyPrice,
+                WareHouseStock = product.WareHouseStock,
+                ImageId=product.ImageId,
 
 
-                };
 
-                await _obj.InsertAsync(obj,file, fileName);
-                var response = new ProductDTO
-                {
-                    Title = obj.Title,
-                    Price = obj.Price,
-                    BuyPrice = obj.BuyPrice,
-                    WareHouseStock = obj.WareHouseStock,
-                    ImageExtention = obj.ImageExtention
-                };
-                return Ok(response);
-            }
-            else
+            };
+            await _obj.InsertAsync(obj);
+            var response = new ProductDTO
             {
-                return BadRequest(ModelState);
-            }
+                Title = obj.Title,
+                Price = obj.Price,
+                BuyPrice = obj.BuyPrice,
+                WareHouseStock = obj.WareHouseStock,
+                ImageId = obj.ImageId,
+            };
+            return Ok(response);
         }
-
         // PUT api/<ObjectApiController>/5
         [HttpPut]
         [Route("{id:Guid}")]
@@ -120,7 +103,7 @@ namespace GoldenChqeueBack.Controllers.Api
                 BuyPrice = request.BuyPrice,
                 //Unit = request.Unit.Id,
                 WareHouseStock = request.WareHouseStock,
-                ImageExtention = request.ImageURL
+                ImageId = request.ImageId,
             };
             obj = await _obj.UpdateAsync(obj);
             if (obj == null)
@@ -135,7 +118,7 @@ namespace GoldenChqeueBack.Controllers.Api
                 Price = obj.Price,
                 BuyPrice = obj.BuyPrice,
                 WareHouseStock = obj.WareHouseStock,
-                ImageExtention = request.ImageURL
+                ImageId = obj.ImageId,
             };
 
             return Ok(response);
@@ -157,7 +140,7 @@ namespace GoldenChqeueBack.Controllers.Api
                 Price = obj.Price,
                 BuyPrice = obj.BuyPrice,
                 WareHouseStock = obj.WareHouseStock,
-                ImageExtention = obj.ImageExtention
+                ImageId=obj.ImageId,
             };
             return Ok(response);
         }
