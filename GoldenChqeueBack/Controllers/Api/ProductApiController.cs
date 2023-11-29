@@ -13,10 +13,12 @@ namespace GoldenChqeueBack.Controllers.Api
     public class ProductApiController : ControllerBase
     {
         private readonly IProductRepository _obj;
+        private readonly IUnitsRepository _unit;
 
-        public ProductApiController(IProductRepository obj)
+        public ProductApiController(IProductRepository obj,IUnitsRepository unit)
         {
             _obj = obj;
+            _unit = unit;
         }
         // GET: api/<ObjectApiController>
         [HttpGet]
@@ -74,10 +76,25 @@ namespace GoldenChqeueBack.Controllers.Api
                 BuyPrice = product.BuyPrice,
                 WareHouseStock = product.WareHouseStock,
                 ImageId=product.ImageId,
-
-
-
+                RegisterDate = DateTime.Now,
+                LastChangeDate = DateTime.Now,
+                Visable = true,
+                LastChangeUser = 1 ,
+                Author = true,
+                RegisterUser = 1,
+                Unit = new Unit(),
             };
+            var exsistingUnit = _unit.GetById(product.UnitId);
+
+            if (exsistingUnit is not null)
+            {
+                obj.Unit = exsistingUnit.Result;
+            }
+            else
+            {
+                return NotFound("اطلاعات واحد کالا یافت نشد");
+            }
+
             await _obj.InsertAsync(obj);
             var response = new ProductDTO
             {
