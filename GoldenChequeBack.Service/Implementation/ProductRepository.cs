@@ -19,7 +19,7 @@ namespace GoldenChequeBack.Service.Implementation
 
         public async Task<Product> DeleteAsync(Guid Id)
         {
-            var existingObject = await _ctx.Products.FirstOrDefaultAsync(p => p.Id == Id);
+            var existingObject = await _ctx.Products.Include(p => p.Image).FirstOrDefaultAsync(p => p.Id == Id);
             if (existingObject == null)
             {
                 return null;
@@ -31,7 +31,7 @@ namespace GoldenChequeBack.Service.Implementation
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await _ctx.Products.Include(p => p.Unit).Include(c=>c.Category).Include(p=>p.Image).ToListAsync(); ;
+            return await _ctx.Products.Include(p => p.Unit).Include(c=>c.Category).Include(p=>p.Image).ToListAsync(); 
         }
         public async Task<bool> IsProductExsist(Product product)
         {
@@ -42,7 +42,7 @@ namespace GoldenChequeBack.Service.Implementation
 
         public async Task<Product> GetById(Guid id)
         {
-            return await _ctx.Products.Where(p => p.Id == id).FirstOrDefaultAsync();
+            return await _ctx.Products.Where(p => p.Id == id).Include(p => p.Unit).Include(c => c.Category).Include(p => p.Image).FirstOrDefaultAsync();
         }
 
         public async Task<Product> InsertAsync(Product objectt)

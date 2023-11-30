@@ -37,15 +37,17 @@ namespace GoldenChqeueBack.Controllers.Api
             {
                 response.Add(new ProductDTO
                 {
+                    Id = crnt.Id,
                     Title = crnt.Title,
                     Price = crnt.Price,
                     BuyPrice = crnt.BuyPrice,
                     WareHouseStock = crnt.WareHouseStock,
                     category =  new CategoryDTO {Id = crnt.Category.Id , Title = crnt.Category.Title },
                     Unit = new UnitDTO { Id = crnt.Unit.Id, Name = crnt.Unit.Name,QuantityPerUnit = crnt.Unit.QuantityPerUnit },
-                    Image = new ImageSelectorDTO {Id = crnt.Image.Id , FileExtention = crnt.Image.FileExtention 
+                    Image = crnt.Image is not null ? new ImageSelectorDTO {Id = crnt.Image.Id , FileExtention = crnt.Image.FileExtention 
                                                   , FileName = crnt.Image.FileName , Title = crnt.Image.Title ,
-                                                    Url = crnt.Image.Url}
+                                                    Url = crnt.Image.Url} : null
+
 
 
                 });
@@ -194,6 +196,10 @@ namespace GoldenChqeueBack.Controllers.Api
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var obj = await _obj.DeleteAsync(id);
+            if (obj.Image is not null)
+            {
+                var img = await _image.Delete(obj.Image);
+            }
             if (obj == null)
             {
                 return NotFound();

@@ -15,6 +15,34 @@ namespace GoldenChqeueBack.Controllers.Api
             _imageSelectorRepository = imageSelectorRepository;
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid imageName)
+        {
+            var image = await _imageSelectorRepository.GetByImageNameGuid( imageName);
+            if (image == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+             var delresult =   _imageSelectorRepository.Delete(image);
+                if (delresult.Result)
+                {
+                    var response = new ImageSelectorDTO
+                    {
+                        Id = image.Id,
+                        Title = image.Title,
+                        FileExtention = image.FileExtention,
+                        FileName = image.FileName,
+                        Url = image.Url
+                    };
+                    return Ok(response);
+                }
+                else
+                    return NotFound();
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> UploadImage([FromForm] IFormFile file ,
             [FromForm] string fileName , [FromForm] string title)
