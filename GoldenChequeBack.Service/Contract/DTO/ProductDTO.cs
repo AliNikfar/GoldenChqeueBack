@@ -30,13 +30,18 @@ namespace GoldenChequeBack.Service.Contract.DTO
             get;
             set;
         }
+        public CategoryDTO category
+        {
+            get;
+            set;
+        }
         public int WareHouseStock
         {
             get;
             set;
         }
         
-        public Guid ImageId
+        public ImageSelectorDTO Image
         {
             get;
             set;

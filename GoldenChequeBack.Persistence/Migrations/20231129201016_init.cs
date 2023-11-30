@@ -229,8 +229,7 @@ namespace GoldenChequeBack.Persistence.Migrations
                     BuyPrice = table.Column<int>(type: "int", nullable: false),
                     UnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WareHouseStock = table.Column<int>(type: "int", nullable: false),
-                    ImageExtention = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RegisterUser = table.Column<int>(type: "int", nullable: false),
                     LastChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -422,17 +421,17 @@ namespace GoldenChequeBack.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Author", "LastChangeDate", "LastChangeUser", "ParentId", "RegisterDate", "RegisterUser", "Title", "Visable" },
-                values: new object[] { new Guid("0dd3c5eb-53f6-4af5-b025-76c3706f3d9f"), true, new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7665), 1, new Guid("259503b4-3e39-4fee-856a-a76b91fc7021"), new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7666), 1, "غذایی", true });
+                values: new object[,]
+                {
+                    { new Guid("114998e2-6830-454a-95d9-8f87fc4c4a6e"), true, new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(606), 1, new Guid("f0d3a781-2901-4c75-a28b-17b0f45198ca"), new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(608), 1, "الکترونیکی", true },
+                    { new Guid("ac558e1c-b1e2-4be2-b98c-19f231c7a01c"), true, new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(627), 1, new Guid("f0d3a781-2901-4c75-a28b-17b0f45198ca"), new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(629), 1, "غذایی", true },
+                    { new Guid("f0d3a781-2901-4c75-a28b-17b0f45198ca"), true, new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(577), 1, null, new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(579), 1, "محصولات", true }
+                });
 
             migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Author", "LastChangeDate", "LastChangeUser", "ParentId", "RegisterDate", "RegisterUser", "Title", "Visable" },
-                values: new object[] { new Guid("259503b4-3e39-4fee-856a-a76b91fc7021"), true, new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7613), 1, null, new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7622), 1, "محصولات", true });
-
-            migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Author", "LastChangeDate", "LastChangeUser", "ParentId", "RegisterDate", "RegisterUser", "Title", "Visable" },
-                values: new object[] { new Guid("8c948cf2-cf09-4368-bcd8-0733e195175e"), true, new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7654), 1, new Guid("259503b4-3e39-4fee-856a-a76b91fc7021"), new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7655), 1, "الکترونیکی", true });
+                table: "Units",
+                columns: new[] { "Id", "Author", "LastChangeDate", "LastChangeUser", "Name", "QuantityPerUnit", "RegisterDate", "RegisterUser", "Visable" },
+                values: new object[] { new Guid("b221a4f1-645f-4d5d-8a2a-36d996973af8"), true, new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(353), 1, "بسته", 10, new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(367), 1, true });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cheques_FactorId",

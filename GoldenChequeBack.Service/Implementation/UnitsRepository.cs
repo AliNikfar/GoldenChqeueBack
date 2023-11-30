@@ -33,6 +33,12 @@ namespace GoldenChequeBack.Service.Implementation
         {
             return await _ctx.Units.ToListAsync();
         }
+        public async Task<bool> IsUnitExsist(Unit unit)
+        {
+            var isExist = _ctx.Units.Where(p => p.Name == unit.Name).Count();
+            return isExist > 0;
+
+        }
 
         public async Task<Unit> GetById(Guid id)
         {

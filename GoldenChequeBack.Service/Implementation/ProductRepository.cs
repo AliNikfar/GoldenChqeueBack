@@ -4,8 +4,6 @@ using GoldenChequeBack.Service.Contract;
 using System.Linq;
 using System.Threading.Tasks;
 using GoldenChequeBack.Domain.Entities;
-
-using Product = GoldenChequeBack.Domain.Entities.Product;
 using GoldenChequeBack.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,7 +31,13 @@ namespace GoldenChequeBack.Service.Implementation
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await _ctx.Products.Include(p => p.Unit).ToListAsync(); ;
+            return await _ctx.Products.Include(p => p.Unit).Include(c=>c.Category).Include(p=>p.Image).ToListAsync(); ;
+        }
+        public async Task<bool> IsProductExsist(Product product)
+        {
+            var isExist = _ctx.Products.Where(p => p.Title == product.Title).Count();
+            return isExist > 0;
+
         }
 
         public async Task<Product> GetById(Guid id)

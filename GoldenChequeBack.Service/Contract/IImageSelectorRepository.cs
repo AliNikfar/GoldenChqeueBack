@@ -11,5 +11,6 @@ namespace GoldenChequeBack.Service.Contract
     public interface IImageSelectorRepository
     {
         Task<ImageSelector> Upload(IFormFile file, ImageSelector image);
+        Task<ImageSelector> GetById(Guid? id);
     }
 }

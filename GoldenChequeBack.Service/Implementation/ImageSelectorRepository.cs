@@ -3,6 +3,7 @@ using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,11 @@ namespace GoldenChequeBack.Service.Implementation
             _webHostEnvirenment = webHostEnvironment;
             _contextAccessor = httpContextAccessor;
             _ctx = ctx;
+        }
+
+        public async Task<ImageSelector> GetById(Guid? id)
+        {
+            return await _ctx.Images.Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<ImageSelector> Upload(IFormFile file, ImageSelector image)

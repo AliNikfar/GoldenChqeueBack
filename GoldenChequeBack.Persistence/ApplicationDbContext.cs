@@ -9,6 +9,19 @@ namespace GoldenChequeBack.Persistence
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
+            builder.Entity<Unit>().HasData(new Unit
+            {
+                Id =  Guid.NewGuid(),
+                Name = "بسته",
+                QuantityPerUnit = 10,
+                Author =true,
+                LastChangeDate = DateTime.Now,
+                LastChangeUser = 1,
+                RegisterDate = DateTime.Now,
+                RegisterUser = 1 ,
+                Visable = true
+            });
             var Parent = Guid.NewGuid();
             builder.Entity<Category>().HasData(new Category
             {

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoldenChequeBack.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231128132407_init")]
+    [Migration("20231129201016_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,35 +145,35 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("259503b4-3e39-4fee-856a-a76b91fc7021"),
+                            Id = new Guid("f0d3a781-2901-4c75-a28b-17b0f45198ca"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7613),
+                            LastChangeDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(577),
                             LastChangeUser = 1,
-                            RegisterDate = new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7622),
+                            RegisterDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(579),
                             RegisterUser = 1,
                             Title = "محصولات",
                             Visable = true
                         },
                         new
                         {
-                            Id = new Guid("8c948cf2-cf09-4368-bcd8-0733e195175e"),
+                            Id = new Guid("114998e2-6830-454a-95d9-8f87fc4c4a6e"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7654),
+                            LastChangeDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(606),
                             LastChangeUser = 1,
-                            ParentId = new Guid("259503b4-3e39-4fee-856a-a76b91fc7021"),
-                            RegisterDate = new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7655),
+                            ParentId = new Guid("f0d3a781-2901-4c75-a28b-17b0f45198ca"),
+                            RegisterDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(608),
                             RegisterUser = 1,
                             Title = "الکترونیکی",
                             Visable = true
                         },
                         new
                         {
-                            Id = new Guid("0dd3c5eb-53f6-4af5-b025-76c3706f3d9f"),
+                            Id = new Guid("ac558e1c-b1e2-4be2-b98c-19f231c7a01c"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7665),
+                            LastChangeDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(627),
                             LastChangeUser = 1,
-                            ParentId = new Guid("259503b4-3e39-4fee-856a-a76b91fc7021"),
-                            RegisterDate = new DateTime(2023, 11, 28, 16, 54, 7, 280, DateTimeKind.Local).AddTicks(7666),
+                            ParentId = new Guid("f0d3a781-2901-4c75-a28b-17b0f45198ca"),
+                            RegisterDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(629),
                             RegisterUser = 1,
                             Title = "غذایی",
                             Visable = true
@@ -612,13 +612,8 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Property<int>("BuyPrice")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageExtention")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastChangeDate")
                         .HasColumnType("datetime2");
@@ -777,6 +772,20 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Units");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b221a4f1-645f-4d5d-8a2a-36d996973af8"),
+                            Author = true,
+                            LastChangeDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(353),
+                            LastChangeUser = 1,
+                            Name = "بسته",
+                            QuantityPerUnit = 10,
+                            RegisterDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(367),
+                            RegisterUser = 1,
+                            Visable = true
+                        });
                 });
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.User", b =>

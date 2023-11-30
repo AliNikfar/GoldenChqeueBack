@@ -24,7 +24,12 @@ namespace GoldenChequeBack.Service.Contract.DTO
             set;
         }
 
-        public Guid Unit
+        public Guid UnitId
+        {
+            get;
+            set;
+        }
+        public Guid CategoryId
         {
             get;
             set;
@@ -34,7 +39,7 @@ namespace GoldenChequeBack.Service.Contract.DTO
             get;
             set;
         }
-        public Guid ImageId
+        public Guid? ImageId
         {
             get;
             set;

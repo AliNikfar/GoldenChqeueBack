@@ -34,12 +34,18 @@ namespace GoldenChequeBack.Domain.Entities
             get;
             set;
         }
+
+        public Category Category
+        {
+            get;
+            set;
+        }
         public int WareHouseStock
         {
             get;
             set;
         }
-        public Guid ImageId
+        public ImageSelector? Image
         {
             get;
             set;

@@ -11,6 +11,8 @@ namespace GoldenChequeBack.Service.Contract
     {
         Task<Unit> InsertAsync(Unit units);
 
+        Task<bool> IsUnitExsist(Unit unit);
+
         Task<Unit?> UpdateAsync(Unit bank);
 
         Task<Unit?> DeleteAsync(Guid Id);

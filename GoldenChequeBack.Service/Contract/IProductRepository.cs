@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Product = GoldenChequeBack.Domain.Entities.Product;
 
 namespace GoldenChequeBack.Service.Contract
 {
@@ -20,5 +19,6 @@ namespace GoldenChequeBack.Service.Contract
         Task<IEnumerable<Product>> GetAllAsync();
 
         Task<Product?> GetById(Guid id);
+        Task<bool> IsProductExsist(Product product);
     }
 }

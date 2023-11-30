@@ -14,11 +14,15 @@ namespace GoldenChqeueBack.Controllers.Api
     {
         private readonly IProductRepository _obj;
         private readonly IUnitsRepository _unit;
+        private readonly ICategoryRepository _category;
+        private readonly IImageSelectorRepository _image;
 
-        public ProductApiController(IProductRepository obj,IUnitsRepository unit)
+        public ProductApiController(IProductRepository obj,IImageSelectorRepository image,IUnitsRepository unit , ICategoryRepository category )
         {
             _obj = obj;
             _unit = unit;
+            _category = category;
+            _image = image;
         }
         // GET: api/<ObjectApiController>
         [HttpGet]
@@ -37,8 +41,15 @@ namespace GoldenChqeueBack.Controllers.Api
                     Price = crnt.Price,
                     BuyPrice = crnt.BuyPrice,
                     WareHouseStock = crnt.WareHouseStock,
-                    ImageId = crnt.ImageId,
+                    category =  new CategoryDTO {Id = crnt.Category.Id , Title = crnt.Category.Title },
+                    Unit = new UnitDTO { Id = crnt.Unit.Id, Name = crnt.Unit.Name,QuantityPerUnit = crnt.Unit.QuantityPerUnit },
+                    Image = new ImageSelectorDTO {Id = crnt.Image.Id , FileExtention = crnt.Image.FileExtention 
+                                                  , FileName = crnt.Image.FileName , Title = crnt.Image.Title ,
+                                                    Url = crnt.Image.Url}
+
+
                 });
+
             }
             return Ok(response);
         }
@@ -58,8 +69,7 @@ namespace GoldenChqeueBack.Controllers.Api
                 Title = existingObject.Title,
                 Price = existingObject.Price,
                 BuyPrice = existingObject.BuyPrice,
-                WareHouseStock = existingObject.WareHouseStock,
-                ImageId=existingObject.ImageId,
+                WareHouseStock = existingObject.WareHouseStock
             };
             return Ok(response);
         }
@@ -75,7 +85,8 @@ namespace GoldenChqeueBack.Controllers.Api
                 Price = product.Price,
                 BuyPrice = product.BuyPrice,
                 WareHouseStock = product.WareHouseStock,
-                ImageId=product.ImageId,
+                Image= new ImageSelector(),
+                Category = new Category(),
                 RegisterDate = DateTime.Now,
                 LastChangeDate = DateTime.Now,
                 Visable = true,
@@ -83,28 +94,66 @@ namespace GoldenChqeueBack.Controllers.Api
                 Author = true,
                 RegisterUser = 1,
                 Unit = new Unit(),
+                
             };
-            var exsistingUnit = _unit.GetById(product.UnitId);
-
-            if (exsistingUnit is not null)
+            var exsistProduct = _obj.IsProductExsist(obj);
+            if (exsistProduct.Result)
             {
-                obj.Unit = exsistingUnit.Result;
+                return NotFound("کالا با این نام قبلا ثبت شده است");
+               
             }
             else
             {
-                return NotFound("اطلاعات واحد کالا یافت نشد");
-            }
+                var exsistingUnit = _unit.GetById(product.UnitId);
 
-            await _obj.InsertAsync(obj);
-            var response = new ProductDTO
-            {
-                Title = obj.Title,
-                Price = obj.Price,
-                BuyPrice = obj.BuyPrice,
-                WareHouseStock = obj.WareHouseStock,
-                ImageId = obj.ImageId,
-            };
-            return Ok(response);
+                if (exsistingUnit is not null)
+                {
+                    obj.Unit = exsistingUnit.Result;
+                }
+                else
+                {
+                    return NotFound("اطلاعات واحد کالا یافت نشد");
+                }
+                var exsistingcategory = _category.GetById(product.CategoryId);
+
+                if (exsistingcategory is not null)
+                {
+                    obj.Category = exsistingcategory.Result;
+                }
+                else
+                {
+                    return NotFound("اطلاعات واحد کالا یافت نشد");
+                }
+                if (product.ImageId is not null)
+                {
+                    var exsistingImage = _image.GetById(product.ImageId);
+
+                    if (exsistingImage is not null)
+                    {
+                        obj.Image = exsistingImage.Result;
+                    }
+                    else
+                    {
+                        return NotFound("تصویر یافت نشد");
+                    }
+                }
+                else
+                {
+                    obj.Image = null;
+                }
+
+
+                await _obj.InsertAsync(obj);
+                var response = new ProductDTO
+                {
+                    Title = obj.Title,
+                    Price = obj.Price,
+                    BuyPrice = obj.BuyPrice,
+                    WareHouseStock = obj.WareHouseStock
+                };
+                return Ok(response);
+
+            }
         }
         // PUT api/<ObjectApiController>/5
         [HttpPut]
@@ -119,8 +168,7 @@ namespace GoldenChqeueBack.Controllers.Api
                 Price = request.Price,
                 BuyPrice = request.BuyPrice,
                 //Unit = request.Unit.Id,
-                WareHouseStock = request.WareHouseStock,
-                ImageId = request.ImageId,
+                WareHouseStock = request.WareHouseStock
             };
             obj = await _obj.UpdateAsync(obj);
             if (obj == null)
@@ -134,8 +182,7 @@ namespace GoldenChqeueBack.Controllers.Api
                 Title = obj.Title,
                 Price = obj.Price,
                 BuyPrice = obj.BuyPrice,
-                WareHouseStock = obj.WareHouseStock,
-                ImageId = obj.ImageId,
+                WareHouseStock = obj.WareHouseStock
             };
 
             return Ok(response);
@@ -156,8 +203,7 @@ namespace GoldenChqeueBack.Controllers.Api
                 Title = obj.Title,
                 Price = obj.Price,
                 BuyPrice = obj.BuyPrice,
-                WareHouseStock = obj.WareHouseStock,
-                ImageId=obj.ImageId,
+                WareHouseStock = obj.WareHouseStock
             };
             return Ok(response);
         }

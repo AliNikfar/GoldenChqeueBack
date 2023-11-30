@@ -29,12 +29,17 @@ namespace GoldenChequeBack.Service.Contract.DTO
             get;
             set;
         }
+        public Guid CategoryId
+        {
+            get;
+            set;
+        }
         public int WareHouseStock
         {
             get;
             set;
         }
-        public Guid ImageId
+        public Guid? ImageId
         {
             get;
             set;
