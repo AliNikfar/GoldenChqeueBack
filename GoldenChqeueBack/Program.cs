@@ -33,6 +33,9 @@ using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Implementation;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -56,6 +59,37 @@ builder.Services
     .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("CodePulse")
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 8;
+    options.Password.RequiredUniqueChars = 1;
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            AuthenticationType = "Jwt",
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwd:Issuer"],
+            ValidAudience = builder.Configuration["Jwd:Audience"],
+            IssuerSigningKey =
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwd:Key"]))
+
+        };
+    });
+
+
+
 
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
@@ -88,8 +122,8 @@ app.UseCors(options =>
    options.AllowAnyOrigin();
    options.AllowAnyMethod();
 });
-
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseStaticFiles( new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Images")),
