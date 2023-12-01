@@ -32,18 +32,31 @@ using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Implementation;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 //Sql Dependency Injection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDbContext<AuthDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 builder.Services.AddScoped<IBankRepository, BankRepository>();
 builder.Services.AddScoped<IShobeRepository, ShobeRepository>();
 builder.Services.AddScoped<IUnitsRepository, UnitsRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IImageSelectorRepository, ImageSelectorRepository>();
+
+builder.Services
+    .AddIdentityCore<IdentityUser>()
+    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("CodePulse")
+    .AddEntityFrameworkStores<AuthDbContext>()
+    .AddDefaultTokenProviders();
+
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
