@@ -56,7 +56,8 @@ builder.Services.AddScoped<IImageSelectorRepository, ImageSelectorRepository>();
 
 builder.Services
     .AddIdentityCore<IdentityUser>()
-    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("CodePulse")
+    .AddRoles<IdentityRole>()
+    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("GoldCHQ")
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders();
 
@@ -103,7 +104,11 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 //builder.Services.AddScoped<ICustomService<Resultss>, ResultService>();
 //builder.Services.AddScoped<ICustomService<Departments>, DepartmentsService>();
 //builder.Services.AddScoped<ICustomService<SubjectGpas>, SubjectGpasService>();
-builder.Services.AddSwaggerGen();
+
+
+//CommentAttribute for Error add annotation to swagger
+//builder.Services.AddSwaggerGen(c => { c.EnableAnnotations(); });
+
 #endregion
 var app = builder.Build();
 // Configure the HTTP request pipeline.
