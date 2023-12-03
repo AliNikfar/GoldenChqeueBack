@@ -1,4 +1,5 @@
-﻿using GoldenChequeBack.Service.Contract.DTO;
+﻿using GoldenChequeBack.Service.Contract;
+using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,12 @@ namespace GoldenChqeueBack.Controllers.Api
     public class AuthController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ITokenRepository _tokenRepository;
 
-        public AuthController( UserManager<IdentityUser> userManager)
+        public AuthController( UserManager<IdentityUser> userManager,ITokenRepository tokenRepository)
         {
             this._userManager = userManager;
+            this._tokenRepository = tokenRepository;
         }
         [HttpPost]
         [Route("login")]
@@ -27,12 +30,14 @@ namespace GoldenChqeueBack.Controllers.Api
                 if (checkPasswordResult)
                 {
                     var roles = await _userManager.GetRolesAsync(identityUser);
+
+                    var jwtToken = _tokenRepository.CreateJWTToken(identityUser, roles.ToList());
                     // create a token and response
                     var response = new LoginResponseDTO()
                     {
                         Email = request.Email,
                         Roles = roles.ToList(),
-                        Token = "TOKEN"
+                        Token = jwtToken
                     };
 
                     return Ok(response);

@@ -101,6 +101,7 @@ builder.Services.AddSwaggerGen();
 //builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IBankRepository, BankRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 //builder.Services.AddScoped<ICustomService<Resultss>, ResultService>();
 //builder.Services.AddScoped<ICustomService<Departments>, DepartmentsService>();
 //builder.Services.AddScoped<ICustomService<SubjectGpas>, SubjectGpasService>();
