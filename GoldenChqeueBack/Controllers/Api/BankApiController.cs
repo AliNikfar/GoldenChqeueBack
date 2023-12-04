@@ -10,7 +10,7 @@ namespace GoldenChqeueBack.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class BankApiController : ControllerBase
     {
         private readonly IBankRepository _bank;
@@ -21,7 +21,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
 
         // GET: api/<BankApiController>
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
@@ -68,7 +68,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // POST api/<BankApiController>
         [HttpPost]
-        [Authorize(Roles = "Writer")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> Post(CreateBankRequestDTO bank)
         {
             //Map DTO
@@ -119,7 +119,7 @@ namespace GoldenChqeueBack.Controllers.Api
         // DELETE api/<BankApiController>/5
         [HttpDelete]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Writer")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var bank = await _bank.DeleteAsync(id);
