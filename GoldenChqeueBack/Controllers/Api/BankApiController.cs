@@ -27,7 +27,6 @@ namespace GoldenChqeueBack.Controllers.Api
         {
             var banks = await _bank.GetAllAsync();
 
-
             // Map to DTO
             var response = new List<BankDTO>();
             foreach(var crnt in banks)

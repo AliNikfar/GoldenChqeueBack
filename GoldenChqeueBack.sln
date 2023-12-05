@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenChqeueBack", "GoldenChqeueBack\GoldenChqeueBack.csproj", "{C338C83A-E471-4546-AE2A-94DED55B1D29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoldenChqeueBack", "GoldenChqeueBack\GoldenChqeueBack.csproj", "{C338C83A-E471-4546-AE2A-94DED55B1D29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenChequeBack.Domain", "GoldenChequeBack.Domain\GoldenChequeBack.Domain.csproj", "{EBDF17FE-4249-4126-A24F-E6C2BBE9BB07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoldenChequeBack.Domain", "GoldenChequeBack.Domain\GoldenChequeBack.Domain.csproj", "{EBDF17FE-4249-4126-A24F-E6C2BBE9BB07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenChequeBack.Infrastructure", "GoldenChequeBack.Infrastructure\GoldenChequeBack.Infrastructure.csproj", "{80895726-27B5-408D-8B1A-9A5CCF6DEEB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoldenChequeBack.Infrastructure", "GoldenChequeBack.Infrastructure\GoldenChequeBack.Infrastructure.csproj", "{80895726-27B5-408D-8B1A-9A5CCF6DEEB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenChequeBack.Persistence", "GoldenChequeBack.Persistence\GoldenChequeBack.Persistence.csproj", "{D37396E1-6DAD-4601-B1A1-166EC2A50174}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoldenChequeBack.Persistence", "GoldenChequeBack.Persistence\GoldenChequeBack.Persistence.csproj", "{D37396E1-6DAD-4601-B1A1-166EC2A50174}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenChequeBack.Service", "GoldenChequeBack.Service\GoldenChequeBack.Service.csproj", "{9B95E75E-AADF-4E15-89EB-92CD034C18AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoldenChequeBack.Service", "GoldenChequeBack.Service\GoldenChequeBack.Service.csproj", "{9B95E75E-AADF-4E15-89EB-92CD034C18AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

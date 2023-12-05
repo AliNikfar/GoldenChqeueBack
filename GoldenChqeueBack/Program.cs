@@ -28,6 +28,7 @@
 #region MyConfig
 
 using Microsoft.EntityFrameworkCore;
+using GoldenChequeBack.Infrastructure.Extension;
 using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Implementation;
@@ -46,13 +47,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
-builder.Services.AddScoped<IBankRepository, BankRepository>();
-builder.Services.AddScoped<IShobeRepository, ShobeRepository>();
-builder.Services.AddScoped<IUnitsRepository, UnitsRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IImageSelectorRepository, ImageSelectorRepository>();
+builder.Services.AddScopedServices();
 
 builder.Services
     .AddIdentityCore<IdentityUser>()
@@ -115,11 +110,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
-    });
+    app.ConfigureSwagger();
 }
 app.UseHttpsRedirection();
 app.UseCors(options =>
