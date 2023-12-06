@@ -43,7 +43,7 @@ namespace GoldenChequeBack.Infrastructure.Extension
 
         public static void AddScopedServices(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<ApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+           // serviceCollection.AddScoped<ApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
 
 

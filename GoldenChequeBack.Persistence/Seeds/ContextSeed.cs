@@ -1,4 +1,5 @@
 ﻿using GoldenChequeBack.Domain.Auth;
+using GoldenChequeBack.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -7,13 +8,13 @@ namespace GoldenChequeBack.Persistence.Seeds
 {
     public static class ContextSeed
     {
-        public static void Seed(this ModelBuilder modelBuilder)
+        public static void Seed(this ModelBuilder builder)
         {
-            CreateRoles(modelBuilder);
+            CreateRoles(builder);
 
-            CreateBasicUsers(modelBuilder);
+            CreateBasicUsers(builder);
 
-            MapUserRole(modelBuilder);
+            MapUserRole(builder);        
         }
 
         private static void CreateRoles(ModelBuilder modelBuilder)

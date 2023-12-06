@@ -98,9 +98,9 @@ namespace GoldenChequeBack.Persistence.Migrations.Identity
                     b.HasData(
                         new
                         {
-                            Id = "97c1f6d7-9509-4e88-b2bf-ca98c4b778c5",
+                            Id = "16f7d6ad-e9c2-4490-a2a0-c1eb7e2b506c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ccff205b-25b2-4ffb-bf4b-c470839bca7e",
+                            ConcurrencyStamp = "7f55d01e-d837-40d7-9c84-c32043880d9b",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "admin",
@@ -108,17 +108,17 @@ namespace GoldenChequeBack.Persistence.Migrations.Identity
                             LockoutEnabled = false,
                             NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                             NormalizedUserName = "SUPERADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMYq7xgeT/TAiZJbKJxUB5a8kTUzEofRJRVwA5lotKYC/x6X6gPnC4DIKEPmhXDgkA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBOP4lxdSOOA5M1YGumr8QgCeCRbSw1qudwGXIDubFYnj4maiKElyVrK69LWCCEY8g==",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "5f6ee05f-e78e-4153-bdbb-572ca5d91f63",
+                            SecurityStamp = "518bf665-169c-4fe3-aea7-0601990582d5",
                             TwoFactorEnabled = false,
                             UserName = "superadmin"
                         },
                         new
                         {
-                            Id = "f6bba890-bc8c-40a2-9d62-c63ea9d07575",
+                            Id = "c878f0ea-9874-4af6-a004-a4b030ac5368",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c3d82ff6-ca03-4453-8324-b6e76e1adab9",
+                            ConcurrencyStamp = "5780f3ee-e4e0-4c2e-9d5f-ee67f7eb5cfb",
                             Email = "basicuser@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Basic",
@@ -126,9 +126,9 @@ namespace GoldenChequeBack.Persistence.Migrations.Identity
                             LockoutEnabled = false,
                             NormalizedEmail = "BASICUSER@GMAIL.COM",
                             NormalizedUserName = "BASICUSER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKv1N9JwjWHMCXFros6WgdT7tbitwCjy+79H35uOOohppabv4SvV9Ideg7h6xNndUg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFx6bto5CX2j0DPa4L8nFya98PF58WAoyoRP+6LKFVRDfOUq3TtzvYwFKHU4z081dQ==",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "51be463b-3447-4c4f-b75d-89eb03ba8ba6",
+                            SecurityStamp = "55aa20a9-3fee-4e10-912a-ce64dcc5d032",
                             TwoFactorEnabled = false,
                             UserName = "basicuser"
                         });
@@ -206,29 +206,29 @@ namespace GoldenChequeBack.Persistence.Migrations.Identity
                     b.HasData(
                         new
                         {
-                            Id = "f02dee94-84de-412a-96b2-157533f1a254",
-                            ConcurrencyStamp = "4613a75b-79cb-4246-9ebc-3d7aa4903aae",
+                            Id = "48e1f90a-06be-4aba-b2aa-7fd190ea91c8",
+                            ConcurrencyStamp = "6c85f7da-04f5-4687-a64a-36934aa5f584",
                             Name = "SuperAdmin",
                             NormalizedName = "SuperAdmin"
                         },
                         new
                         {
-                            Id = "ace0e147-f0b1-43a9-baf4-b4be1f158dca",
-                            ConcurrencyStamp = "26e1875f-3c7c-4560-892f-4347123ac8a6",
+                            Id = "f71a3652-f930-4224-b2ce-f0596004f703",
+                            ConcurrencyStamp = "0395e077-676c-4403-952a-99193dd94b09",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "458f1ac1-7dfa-4394-9190-6a1111371b77",
-                            ConcurrencyStamp = "da8819f2-cd01-4863-9063-a92c367c7ae0",
+                            Id = "5134d9e2-0dac-4b82-aecc-1ed74bd0aa06",
+                            ConcurrencyStamp = "8c6a2735-1bfa-4056-a4d0-e812142eb221",
                             Name = "Moderator",
                             NormalizedName = "Moderator"
                         },
                         new
                         {
-                            Id = "edc9fe9d-6f2f-4e48-8b98-dad404c31fe7",
-                            ConcurrencyStamp = "4d2a464c-ea0d-491b-9472-1396e614ae12",
+                            Id = "465a00a8-e9d6-430a-b1c3-c070a3b25b2b",
+                            ConcurrencyStamp = "c3365df1-e5d3-431f-b419-e5457610f0a5",
                             Name = "Basic",
                             NormalizedName = "Basic"
                         });
@@ -323,28 +323,28 @@ namespace GoldenChequeBack.Persistence.Migrations.Identity
                     b.HasData(
                         new
                         {
-                            UserId = "f6bba890-bc8c-40a2-9d62-c63ea9d07575",
-                            RoleId = "edc9fe9d-6f2f-4e48-8b98-dad404c31fe7"
+                            UserId = "c878f0ea-9874-4af6-a004-a4b030ac5368",
+                            RoleId = "465a00a8-e9d6-430a-b1c3-c070a3b25b2b"
                         },
                         new
                         {
-                            UserId = "97c1f6d7-9509-4e88-b2bf-ca98c4b778c5",
-                            RoleId = "f02dee94-84de-412a-96b2-157533f1a254"
+                            UserId = "16f7d6ad-e9c2-4490-a2a0-c1eb7e2b506c",
+                            RoleId = "48e1f90a-06be-4aba-b2aa-7fd190ea91c8"
                         },
                         new
                         {
-                            UserId = "97c1f6d7-9509-4e88-b2bf-ca98c4b778c5",
-                            RoleId = "ace0e147-f0b1-43a9-baf4-b4be1f158dca"
+                            UserId = "16f7d6ad-e9c2-4490-a2a0-c1eb7e2b506c",
+                            RoleId = "f71a3652-f930-4224-b2ce-f0596004f703"
                         },
                         new
                         {
-                            UserId = "97c1f6d7-9509-4e88-b2bf-ca98c4b778c5",
-                            RoleId = "458f1ac1-7dfa-4394-9190-6a1111371b77"
+                            UserId = "16f7d6ad-e9c2-4490-a2a0-c1eb7e2b506c",
+                            RoleId = "5134d9e2-0dac-4b82-aecc-1ed74bd0aa06"
                         },
                         new
                         {
-                            UserId = "97c1f6d7-9509-4e88-b2bf-ca98c4b778c5",
-                            RoleId = "edc9fe9d-6f2f-4e48-8b98-dad404c31fe7"
+                            UserId = "16f7d6ad-e9c2-4490-a2a0-c1eb7e2b506c",
+                            RoleId = "465a00a8-e9d6-430a-b1c3-c070a3b25b2b"
                         });
                 });
 

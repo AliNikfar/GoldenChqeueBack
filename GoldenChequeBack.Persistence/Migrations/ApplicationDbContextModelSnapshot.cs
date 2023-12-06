@@ -143,35 +143,35 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("95a04c7c-781c-4eaf-a713-5f923dd6ed09"),
+                            Id = new Guid("46953399-1684-4ef1-8799-5d3d72eb0462"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 30, 4, 7, 27, 949, DateTimeKind.Local).AddTicks(5271),
+                            LastChangeDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9929),
                             LastChangeUser = 1,
-                            RegisterDate = new DateTime(2023, 11, 30, 4, 7, 27, 949, DateTimeKind.Local).AddTicks(5274),
+                            RegisterDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9930),
                             RegisterUser = 1,
                             Title = "محصولات",
                             Visable = true
                         },
                         new
                         {
-                            Id = new Guid("13109421-3994-4530-9aea-3094046fb63e"),
+                            Id = new Guid("cbbbf9ff-95c2-4168-960e-7b7e9555a816"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 30, 4, 7, 27, 949, DateTimeKind.Local).AddTicks(5307),
+                            LastChangeDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9944),
                             LastChangeUser = 1,
-                            ParentId = new Guid("95a04c7c-781c-4eaf-a713-5f923dd6ed09"),
-                            RegisterDate = new DateTime(2023, 11, 30, 4, 7, 27, 949, DateTimeKind.Local).AddTicks(5310),
+                            ParentId = new Guid("46953399-1684-4ef1-8799-5d3d72eb0462"),
+                            RegisterDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9945),
                             RegisterUser = 1,
                             Title = "الکترونیکی",
                             Visable = true
                         },
                         new
                         {
-                            Id = new Guid("8f8c943e-6031-4721-8b47-7bab4216bb0e"),
+                            Id = new Guid("f2d04a49-4321-4c21-8b17-d74c70936e65"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 30, 4, 7, 27, 949, DateTimeKind.Local).AddTicks(5334),
+                            LastChangeDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9955),
                             LastChangeUser = 1,
-                            ParentId = new Guid("95a04c7c-781c-4eaf-a713-5f923dd6ed09"),
-                            RegisterDate = new DateTime(2023, 11, 30, 4, 7, 27, 949, DateTimeKind.Local).AddTicks(5335),
+                            ParentId = new Guid("46953399-1684-4ef1-8799-5d3d72eb0462"),
+                            RegisterDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9956),
                             RegisterUser = 1,
                             Title = "غذایی",
                             Visable = true
@@ -781,13 +781,13 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("20732e16-ffc9-44be-bb82-6df798ca7296"),
+                            Id = new Guid("563de9b4-ebf4-4054-a9ee-a5157b6d55b3"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 30, 4, 7, 27, 949, DateTimeKind.Local).AddTicks(5004),
+                            LastChangeDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9802),
                             LastChangeUser = 1,
                             Name = "بسته",
                             QuantityPerUnit = 10,
-                            RegisterDate = new DateTime(2023, 11, 30, 4, 7, 27, 949, DateTimeKind.Local).AddTicks(5020),
+                            RegisterDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9811),
                             RegisterUser = 1,
                             Visable = true
                         });

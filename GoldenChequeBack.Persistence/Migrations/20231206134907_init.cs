@@ -228,8 +228,9 @@ namespace GoldenChequeBack.Persistence.Migrations
                     Price = table.Column<int>(type: "int", nullable: false),
                     BuyPrice = table.Column<int>(type: "int", nullable: false),
                     UnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WareHouseStock = table.Column<int>(type: "int", nullable: false),
-                    ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RegisterUser = table.Column<int>(type: "int", nullable: false),
                     LastChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -240,6 +241,17 @@ namespace GoldenChequeBack.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_Images_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Products_Units_UnitId",
                         column: x => x.UnitId,
@@ -423,15 +435,15 @@ namespace GoldenChequeBack.Persistence.Migrations
                 columns: new[] { "Id", "Author", "LastChangeDate", "LastChangeUser", "ParentId", "RegisterDate", "RegisterUser", "Title", "Visable" },
                 values: new object[,]
                 {
-                    { new Guid("114998e2-6830-454a-95d9-8f87fc4c4a6e"), true, new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(606), 1, new Guid("f0d3a781-2901-4c75-a28b-17b0f45198ca"), new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(608), 1, "الکترونیکی", true },
-                    { new Guid("ac558e1c-b1e2-4be2-b98c-19f231c7a01c"), true, new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(627), 1, new Guid("f0d3a781-2901-4c75-a28b-17b0f45198ca"), new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(629), 1, "غذایی", true },
-                    { new Guid("f0d3a781-2901-4c75-a28b-17b0f45198ca"), true, new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(577), 1, null, new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(579), 1, "محصولات", true }
+                    { new Guid("46953399-1684-4ef1-8799-5d3d72eb0462"), true, new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9929), 1, null, new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9930), 1, "محصولات", true },
+                    { new Guid("cbbbf9ff-95c2-4168-960e-7b7e9555a816"), true, new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9944), 1, new Guid("46953399-1684-4ef1-8799-5d3d72eb0462"), new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9945), 1, "الکترونیکی", true },
+                    { new Guid("f2d04a49-4321-4c21-8b17-d74c70936e65"), true, new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9955), 1, new Guid("46953399-1684-4ef1-8799-5d3d72eb0462"), new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9956), 1, "غذایی", true }
                 });
 
             migrationBuilder.InsertData(
                 table: "Units",
                 columns: new[] { "Id", "Author", "LastChangeDate", "LastChangeUser", "Name", "QuantityPerUnit", "RegisterDate", "RegisterUser", "Visable" },
-                values: new object[] { new Guid("b221a4f1-645f-4d5d-8a2a-36d996973af8"), true, new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(353), 1, "بسته", 10, new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(367), 1, true });
+                values: new object[] { new Guid("563de9b4-ebf4-4054-a9ee-a5157b6d55b3"), true, new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9802), 1, "بسته", 10, new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9811), 1, true });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cheques_FactorId",
@@ -479,6 +491,16 @@ namespace GoldenChequeBack.Persistence.Migrations
                 column: "FactorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_ImageId",
+                table: "Products",
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_UnitId",
                 table: "Products",
                 column: "UnitId");
@@ -495,9 +517,6 @@ namespace GoldenChequeBack.Persistence.Migrations
                 name: "BaseInfoes");
 
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
                 name: "Cheques");
 
             migrationBuilder.DropTable(
@@ -505,9 +524,6 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ghests");
-
-            migrationBuilder.DropTable(
-                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Products");
@@ -520,6 +536,12 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Factors");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Units");

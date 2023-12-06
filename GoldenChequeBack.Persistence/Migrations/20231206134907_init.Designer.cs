@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoldenChequeBack.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231129201016_init")]
+    [Migration("20231206134907_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,35 +145,35 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f0d3a781-2901-4c75-a28b-17b0f45198ca"),
+                            Id = new Guid("46953399-1684-4ef1-8799-5d3d72eb0462"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(577),
+                            LastChangeDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9929),
                             LastChangeUser = 1,
-                            RegisterDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(579),
+                            RegisterDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9930),
                             RegisterUser = 1,
                             Title = "محصولات",
                             Visable = true
                         },
                         new
                         {
-                            Id = new Guid("114998e2-6830-454a-95d9-8f87fc4c4a6e"),
+                            Id = new Guid("cbbbf9ff-95c2-4168-960e-7b7e9555a816"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(606),
+                            LastChangeDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9944),
                             LastChangeUser = 1,
-                            ParentId = new Guid("f0d3a781-2901-4c75-a28b-17b0f45198ca"),
-                            RegisterDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(608),
+                            ParentId = new Guid("46953399-1684-4ef1-8799-5d3d72eb0462"),
+                            RegisterDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9945),
                             RegisterUser = 1,
                             Title = "الکترونیکی",
                             Visable = true
                         },
                         new
                         {
-                            Id = new Guid("ac558e1c-b1e2-4be2-b98c-19f231c7a01c"),
+                            Id = new Guid("f2d04a49-4321-4c21-8b17-d74c70936e65"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(627),
+                            LastChangeDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9955),
                             LastChangeUser = 1,
-                            ParentId = new Guid("f0d3a781-2901-4c75-a28b-17b0f45198ca"),
-                            RegisterDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(629),
+                            ParentId = new Guid("46953399-1684-4ef1-8799-5d3d72eb0462"),
+                            RegisterDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9956),
                             RegisterUser = 1,
                             Title = "غذایی",
                             Visable = true
@@ -612,7 +612,10 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.Property<int>("BuyPrice")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ImageId")
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ImageId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastChangeDate")
@@ -645,6 +648,10 @@ namespace GoldenChequeBack.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("UnitId");
 
@@ -776,13 +783,13 @@ namespace GoldenChequeBack.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b221a4f1-645f-4d5d-8a2a-36d996973af8"),
+                            Id = new Guid("563de9b4-ebf4-4054-a9ee-a5157b6d55b3"),
                             Author = true,
-                            LastChangeDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(353),
+                            LastChangeDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9802),
                             LastChangeUser = 1,
                             Name = "بسته",
                             QuantityPerUnit = 10,
-                            RegisterDate = new DateTime(2023, 11, 29, 23, 40, 15, 725, DateTimeKind.Local).AddTicks(367),
+                            RegisterDate = new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9811),
                             RegisterUser = 1,
                             Visable = true
                         });
@@ -909,11 +916,25 @@ namespace GoldenChequeBack.Persistence.Migrations
 
             modelBuilder.Entity("GoldenChequeBack.Domain.Entities.Product", b =>
                 {
+                    b.HasOne("GoldenChequeBack.Domain.Entities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GoldenChequeBack.Domain.Entities.ImageSelector", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
                     b.HasOne("GoldenChequeBack.Domain.Entities.Unit", "Unit")
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Image");
 
                     b.Navigation("Unit");
                 });

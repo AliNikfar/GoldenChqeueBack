@@ -12,21 +12,20 @@ namespace GoldenChequeBack.Persistence
         }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            //ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
             builder.Entity<Unit>().HasData(new Unit
             {
-                Id =  Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 Name = "بسته",
                 QuantityPerUnit = 10,
-                Author =true,
+                Author = true,
                 LastChangeDate = DateTime.Now,
                 LastChangeUser = 1,
                 RegisterDate = DateTime.Now,
-                RegisterUser = 1 ,
+                RegisterUser = 1,
                 Visable = true
             });
             var Parent = Guid.NewGuid();
