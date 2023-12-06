@@ -1,4 +1,5 @@
-﻿using GoldenChequeBack.Service.Contract;
+﻿using GoldenChequeBack.Domain.Auth;
+using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +12,12 @@ namespace GoldenChqeueBack.Controllers.Api
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ITokenRepository _tokenRepository;
+        private readonly IAccountService _accountService;
 
-        public AuthController( UserManager<IdentityUser> userManager,ITokenRepository tokenRepository)
+        public AuthController( ITokenRepository tokenRepository, IAccountService accountService)
         {
-            this._userManager = userManager;
             this._tokenRepository = tokenRepository;
+            this._accountService = accountService;
         }
         [HttpPost]
         [Route("login")]
@@ -49,50 +51,52 @@ namespace GoldenChqeueBack.Controllers.Api
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequestDTO request)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            //create IdentityUser object
-            var user = new IdentityUser
-            {
-                UserName = request.Email?.Trim(),
-                Email = request.Email?.Trim()
-            };
-            //create user
-            var identityResult = await _userManager.CreateAsync(user,request.Password);
-            if(identityResult.Succeeded)
-            {
-                //add Role to User("reader")
-                identityResult =  await _userManager.AddToRoleAsync(user, "Reader");
-                if (identityResult.Succeeded)
-                {
-                    return Ok();
-                }
-                else
-                {
-                    if (identityResult.Errors.Any())
-                    {
-                        foreach (var error in identityResult.Errors)
-                        {
-                            ModelState.AddModelError("", error.Description);
-                        }
+            var origin = Request.Headers["origin"];
+            return Ok(await _accountService.RegisterAsync(request, origin));
+            ////create IdentityUser object
+            //var user = new IdentityUser
+            //{
+            //    UserName = request.Email?.Trim(),
+            //    Email = request.Email?.Trim()
+            //};
+            ////create user
+            //var identityResult = await _userManager.CreateAsync(user,request.Password);
+            //if(identityResult.Succeeded)
+            //{
+            //    //add Role to User("reader")
+            //    identityResult =  await _userManager.AddToRoleAsync(user, "Reader");
+            //    if (identityResult.Succeeded)
+            //    {
+            //        return Ok();
+            //    }
+            //    else
+            //    {
+            //        if (identityResult.Errors.Any())
+            //        {
+            //            foreach (var error in identityResult.Errors)
+            //            {
+            //                ModelState.AddModelError("", error.Description);
+            //            }
 
-                    }
+            //        }
 
-                }
-            }
-            else
-            {
-                if (identityResult.Errors.Any())
-                {
-                    foreach (var error in identityResult.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
+            //    }
+            //}
+            //else
+            //{
+            //    if (identityResult.Errors.Any())
+            //    {
+            //        foreach (var error in identityResult.Errors)
+            //        {
+            //            ModelState.AddModelError("", error.Description);
+            //        }
 
-                }
+            //    }
 
-            }
-            return ValidationProblem(ModelState);
+            //}
+            //return ValidationProblem(ModelState);
         }
 
     }

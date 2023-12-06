@@ -1,30 +1,4 @@
 
-#region Last Program
-//var builder = WebApplication.CreateBuilder(args);
-
-//// Add services to the container.
-//builder.Services.AddControllersWithViews();
-
-//var app = builder.Build();
-
-//// Configure the HTTP request pipeline.
-//if (!app.Environment.IsDevelopment())
-//{
-//    app.UseExceptionHandler("/Home/Error");
-//}
-//app.UseStaticFiles();
-
-//app.UseRouting();
-
-//app.UseAuthorization();
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-//app.Run();
-#endregion
-
 #region MyConfig
 
 using Microsoft.EntityFrameworkCore;
@@ -37,69 +11,38 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using GoldenChequeBack.Service;
+using Microsoft.FeatureManagement;
+using Microsoft.FeatureManagement.FeatureFilters;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
-//Sql Dependency Injection
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddDbContext<AuthDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddScopedServices();
-
-builder.Services
-    .AddIdentityCore<IdentityUser>()
-    .AddRoles<IdentityRole>()
-    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("GoldCHQ")
-    .AddEntityFrameworkStores<AuthDbContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    options.Password.RequireDigit = false;
-    options.Password.RequireLowercase = false;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequireUppercase = false;
-    options.Password.RequiredLength = 8;
-    options.Password.RequiredUniqueChars = 1;
-});
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            AuthenticationType = "Jwt",
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey =
-            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-
-        };
-    });
 
 
+
+
+
+var configuration = builder.Configuration;
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
 
 
 builder.Services.AddControllers();
+builder.Services.AddDbContext(configuration, builder.Configuration);
+builder.Services.AddIdentityService(configuration);
+//builder.Services.AddAutoMapper();
+builder.Services.AddScopedServices();
+builder.Services.AddTransientServices();
+builder.Services.AddSingleton<IConfiguration>(configuration).AddFeatureManagement().AddFeatureFilter<PercentageFilter>();
+
+
+
 builder.Services.AddHttpContextAccessor();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMailSetting(configuration);
+
+builder.Services.AddServiceLayer();
 #region Service Injected
-//builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IBankRepository, BankRepository>();
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<ITokenRepository, TokenRepository>();
-//builder.Services.AddScoped<ICustomService<Resultss>, ResultService>();
-//builder.Services.AddScoped<ICustomService<Departments>, DepartmentsService>();
-//builder.Services.AddScoped<ICustomService<SubjectGpas>, SubjectGpasService>();
 
 
 //CommentAttribute for Error add annotation to swagger

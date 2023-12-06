@@ -6,7 +6,14 @@ namespace GoldenChequeBack.Persistence
 {
     public  class ApplicationDbContext  :DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext()
+        {
+
+        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
@@ -61,13 +68,19 @@ namespace GoldenChequeBack.Persistence
             });
             base.OnModelCreating(builder);
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(@"Data Source=.;Initial Catalog=GoldenCheque;Integrated Security=True");
-        //    base.OnConfiguring(optionsBuilder);
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder
+                .UseSqlServer(@"Data Source=DPK-158\\SQL2019;Initial Catalog=GoldenCheque;User ID=sa;Password=Dpk@12345");
+            }
 
-
-        //}
+        }
+        public async Task<int> SaveChangesAsync()
+        {
+            return await base.SaveChangesAsync();
+        }
         public DbSet<ImageSelector> Images { get; set; }
         public DbSet<Bank> Banks { get; set; }
         public DbSet<BaseInfo> BaseInfoes { get; set; }

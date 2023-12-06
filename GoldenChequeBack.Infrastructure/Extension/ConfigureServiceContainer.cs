@@ -25,7 +25,7 @@ namespace GoldenChequeBack.Infrastructure.Extension
              IConfiguration configuration, IConfigurationRoot configRoot)
         {
             serviceCollection.AddDbContext<ApplicationDbContext>(options =>
-                   options.UseSqlServer(configuration.GetConnectionString("Data Source=DPK-158\\SQL2019;Initial Catalog=GoldenCheque;User ID=sa;Password=Dpk@12345") ?? configRoot["DefaultConnection"]
+                   options.UseSqlServer(configuration.GetConnectionString("OnionArchConn") ?? configRoot["DefaultConnection"]
                 , b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
 
@@ -43,22 +43,32 @@ namespace GoldenChequeBack.Infrastructure.Extension
 
         public static void AddScopedServices(this IServiceCollection serviceCollection)
         {
-            //serviceCollection.AddScoped<ApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            serviceCollection.AddScoped<ApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
 
 
+            serviceCollection.AddScoped<ITokenRepository, TokenRepository>();
+
+
+            serviceCollection.AddScoped<ICustomerRepository, CustomerRepository>();
             serviceCollection.AddScoped<IBankRepository, BankRepository>();
             serviceCollection.AddScoped<IShobeRepository, ShobeRepository>();
             serviceCollection.AddScoped<IUnitsRepository, UnitsRepository>();
             serviceCollection.AddScoped<ICategoryRepository, CategoryRepository>();
             serviceCollection.AddScoped<IProductRepository, ProductRepository>();
             serviceCollection.AddScoped<IImageSelectorRepository, ImageSelectorRepository>();
+            
+
 
 
         }
         public static void AddTransientServices(this IServiceCollection serviceCollection)
         {
-            //serviceCollection.AddTransient<IDateTimeService, DateTimeService>();
+            // temprory using singletone here
+
+            //
+            serviceCollection.AddTransient<IDateTimeService, DateTimeService>();
+            serviceCollection.AddTransient<IAccountService, AccountService>();
         }
 
 
