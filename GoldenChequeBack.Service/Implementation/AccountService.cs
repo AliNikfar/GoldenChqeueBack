@@ -17,6 +17,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace GoldenChequeBack.Service.Implementation
 {
@@ -101,7 +102,7 @@ namespace GoldenChequeBack.Service.Implementation
 
                     if (await _featureManager.IsEnabledAsync(nameof(FeatureManagement.EnableEmailService)))
                     {
-                        await _emailService.SendEmailAsync(new MailRequest() { From = "ali.nikfar2000@gmail.com", ToEmail = user.Email, Body = $"خواهشمند است از طریق این لینک حساب کاربری خود را فعال نمایید {verificationUri}", Subject = "تایید فعالسازی حساب" });
+                        await _emailService.SendEmailAsync(new MailRequest() { From = "goldenchq.gmail.com", ToEmail = user.Email, Body = $"خواهشمند است از طریق این لینک حساب کاربری خود را فعال نمایید {verificationUri}", Subject = "تایید فعالسازی حساب" });
                     }
                     return new Response<string>(user.Id, message: $"نام کاربری ایجاد شد. خواهشمند است برای تایید و فعالسازی ایمیل از طریق لینک زیر اقدام کنید {verificationUri}");
                 }
