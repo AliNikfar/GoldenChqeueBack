@@ -435,15 +435,15 @@ namespace GoldenChequeBack.Persistence.Migrations
                 columns: new[] { "Id", "Author", "LastChangeDate", "LastChangeUser", "ParentId", "RegisterDate", "RegisterUser", "Title", "Visable" },
                 values: new object[,]
                 {
-                    { new Guid("46953399-1684-4ef1-8799-5d3d72eb0462"), true, new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9929), 1, null, new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9930), 1, "محصولات", true },
-                    { new Guid("cbbbf9ff-95c2-4168-960e-7b7e9555a816"), true, new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9944), 1, new Guid("46953399-1684-4ef1-8799-5d3d72eb0462"), new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9945), 1, "الکترونیکی", true },
-                    { new Guid("f2d04a49-4321-4c21-8b17-d74c70936e65"), true, new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9955), 1, new Guid("46953399-1684-4ef1-8799-5d3d72eb0462"), new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9956), 1, "غذایی", true }
+                    { new Guid("48ecb5fd-d805-451e-a92d-31a5b96ae942"), true, new DateTime(2023, 12, 11, 10, 32, 24, 984, DateTimeKind.Local).AddTicks(4112), 1, new Guid("b2c4adc5-4ddf-4458-b4de-f471acf3fa89"), new DateTime(2023, 12, 11, 10, 32, 24, 984, DateTimeKind.Local).AddTicks(4112), 1, "غذایی", true },
+                    { new Guid("b2c4adc5-4ddf-4458-b4de-f471acf3fa89"), true, new DateTime(2023, 12, 11, 10, 32, 24, 984, DateTimeKind.Local).AddTicks(4089), 1, null, new DateTime(2023, 12, 11, 10, 32, 24, 984, DateTimeKind.Local).AddTicks(4090), 1, "محصولات", true },
+                    { new Guid("d5fe20a4-5718-4592-b51b-85c5ae58e8e5"), true, new DateTime(2023, 12, 11, 10, 32, 24, 984, DateTimeKind.Local).AddTicks(4102), 1, new Guid("b2c4adc5-4ddf-4458-b4de-f471acf3fa89"), new DateTime(2023, 12, 11, 10, 32, 24, 984, DateTimeKind.Local).AddTicks(4103), 1, "الکترونیکی", true }
                 });
 
             migrationBuilder.InsertData(
                 table: "Units",
                 columns: new[] { "Id", "Author", "LastChangeDate", "LastChangeUser", "Name", "QuantityPerUnit", "RegisterDate", "RegisterUser", "Visable" },
-                values: new object[] { new Guid("563de9b4-ebf4-4054-a9ee-a5157b6d55b3"), true, new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9802), 1, "بسته", 10, new DateTime(2023, 12, 6, 17, 19, 6, 904, DateTimeKind.Local).AddTicks(9811), 1, true });
+                values: new object[] { new Guid("ef81d444-9062-496c-a641-c26d21ac7833"), true, new DateTime(2023, 12, 11, 10, 32, 24, 984, DateTimeKind.Local).AddTicks(3913), 1, "بسته", 10, new DateTime(2023, 12, 11, 10, 32, 24, 984, DateTimeKind.Local).AddTicks(3923), 1, true });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cheques_FactorId",

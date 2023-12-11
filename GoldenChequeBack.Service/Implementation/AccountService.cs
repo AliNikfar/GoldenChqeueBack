@@ -68,6 +68,7 @@ namespace GoldenChequeBack.Service.Implementation
             response.Id = user.Id;
             response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
             response.Email = user.Email;
+            response.FirstName = user.FirstName;
             response.UserName = user.UserName;
             var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
             response.Roles = rolesList.ToList();
@@ -102,9 +103,9 @@ namespace GoldenChequeBack.Service.Implementation
 
                     if (await _featureManager.IsEnabledAsync(nameof(FeatureManagement.EnableEmailService)))
                     {
-                        await _emailService.SendEmailAsync(new MailRequest() { From = "goldenchq.gmail.com", ToEmail = user.Email, Body = $"خواهشمند است از طریق این لینک حساب کاربری خود را فعال نمایید {verificationUri}", Subject = "تایید فعالسازی حساب" });
+                        await _emailService.SendEmailAsync(new MailRequest() { From = "goldenchq@gmail.com", ToEmail = user.Email, Body = $"خواهشمند است از طریق این لینک حساب کاربری خود را فعال نمایید {verificationUri}", Subject = "تایید فعالسازی حساب" });
                     }
-                    return new Response<string>(user.Id, message: $"نام کاربری ایجاد شد. خواهشمند است برای تایید و فعالسازی ایمیل از طریق لینک زیر اقدام کنید {verificationUri}");
+                        return new Response<string>(user.Id, message: $"User Registered. Please confirm your account by visiting this URL {verificationUri}");
                 }
                 else
                 {
