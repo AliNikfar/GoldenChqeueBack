@@ -104,8 +104,12 @@ namespace GoldenChequeBack.Service.Implementation
                     if (await _featureManager.IsEnabledAsync(nameof(FeatureManagement.EnableEmailService)))
                     {
                         await _emailService.SendEmailAsync(new MailRequest() { From = "goldenchq@gmail.com", ToEmail = user.Email, Body = $"خواهشمند است از طریق این لینک حساب کاربری خود را فعال نمایید {verificationUri}", Subject = "تایید فعالسازی حساب" });
+                        return new Response<string>("حساب شما ایجاد شد ، لطفا با مراجعه به ایمیل و  صندوق دریافت با کلیلک روی لینک ارسالی حساب کاربری خودتون رو فعال کنید.", message: "Create Complete");
                     }
-                        return new Response<string>(user.Id, message: $"User Registered. Please confirm your account by visiting this URL {verificationUri}");
+                    else
+                    {
+                        return new Response<string>(verificationUri, message: $"User Registered. Please confirm your account by visiting this URL {verificationUri}");
+                    }
                 }
                 else
                 {
@@ -168,7 +172,7 @@ namespace GoldenChequeBack.Service.Implementation
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var route = "api/account/confirm-email/";
+            var route = "guest/confirmMail/";
             var _enpointUri = new Uri(string.Concat($"{origin}/", route));
             var verificationUri = QueryHelpers.AddQueryString(_enpointUri.ToString(), "userId", user.Id);
             verificationUri = QueryHelpers.AddQueryString(verificationUri, "code", code);

@@ -39,7 +39,7 @@ namespace GoldenChqeueBack.Controllers.Api
         // GET api/<BankApiController>/5
         [HttpGet]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         { 
             var existingBank =  await _bank.GetById(id);
@@ -67,7 +67,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
         // POST api/<BankApiController>
         [HttpPost]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> Post(CreateBankRequestDTO bank)
         {
             //Map DTO
@@ -92,7 +92,7 @@ namespace GoldenChqeueBack.Controllers.Api
 
         [HttpPut]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Writer")]
+        //[Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateAsync([FromRoute] Guid id,UpdateBankRequestDTO request)
         {
             //convert DTO to Domain Model
@@ -118,7 +118,7 @@ namespace GoldenChqeueBack.Controllers.Api
         // DELETE api/<BankApiController>/5
         [HttpDelete]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var bank = await _bank.DeleteAsync(id);
