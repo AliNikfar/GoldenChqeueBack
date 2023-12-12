@@ -106,11 +106,13 @@ namespace GoldenChequeBack.Service.Implementation
                     if (await _featureManager.IsEnabledAsync(nameof(FeatureManagement.EnableEmailService)))
                     {
                         await _emailService.SendEmailAsync(new MailRequest() { From = "goldenchq@gmail.com", ToEmail = user.Email, Body = $"خواهشمند است از طریق این لینک حساب کاربری خود را فعال نمایید {verificationUri}", Subject = "تایید فعالسازی حساب" });
-                        return new Response<string>("حساب شما ایجاد شد ، لطفا با مراجعه به ایمیل و  صندوق دریافت با کلیلک روی لینک ارسالی حساب کاربری خودتون رو فعال کنید.", message: "Create Complete");
+                        var a = new Response<string>("حساب شما ایجاد شد ، لطفا با مراجعه به ایمیل و  صندوق دریافت با کلیلک روی لینک ارسالی حساب کاربری خودتون رو فعال کنید.", message: Activate.Email.ToString());
+                        return a;
                     }
                     else
                     {
-                        return new Response<string>(verificationUri);
+                        var a = new Response<string>(verificationUri, message: Activate.Link.ToString());
+                        return a;
                         //return new Response<string>(verificationUri, message: $"User Registered. Please confirm your account by visiting this URL {verificationUri}");
                     }
                 }
