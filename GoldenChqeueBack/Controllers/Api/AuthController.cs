@@ -34,7 +34,11 @@ namespace GoldenChqeueBack.Controllers.Api
         public async Task<IActionResult> ConfirmEmailAsync([FromQuery] string userId, [FromQuery] string code)
         {
             var origin = Request.Headers["origin"];
-            return Ok(await _accountService.ConfirmEmailAsync(userId, code));
+            var result = await _accountService.ConfirmEmailAsync(userId, code);
+            if (result.Succeeded)
+            return Ok("فعالسازی با موفقیت انجام شد ");
+            else 
+                return NotFound("مشکلی پیش آمده! لطفا با پشتیبان تماس بگیرید ");
         }
 
         [HttpPost("forgot-password")]

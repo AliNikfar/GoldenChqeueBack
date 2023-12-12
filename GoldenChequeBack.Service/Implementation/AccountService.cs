@@ -4,8 +4,10 @@ using GoldenChequeBack.Domain.Enum;
 using GoldenChequeBack.Domain.Setting;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 using Microsoft.IdentityModel.Tokens;
@@ -108,7 +110,8 @@ namespace GoldenChequeBack.Service.Implementation
                     }
                     else
                     {
-                        return new Response<string>(verificationUri, message: $"User Registered. Please confirm your account by visiting this URL {verificationUri}");
+                        return new Response<string>(verificationUri);
+                        //return new Response<string>(verificationUri, message: $"User Registered. Please confirm your account by visiting this URL {verificationUri}");
                     }
                 }
                 else
@@ -172,7 +175,8 @@ namespace GoldenChequeBack.Service.Implementation
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var route = "guest/confirmMail/";
+            var route = "api/Auth/confirm-email";
+            origin = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("Properties")["ApplicationRunAddress"];
             var _enpointUri = new Uri(string.Concat($"{origin}/", route));
             var verificationUri = QueryHelpers.AddQueryString(_enpointUri.ToString(), "userId", user.Id);
             verificationUri = QueryHelpers.AddQueryString(verificationUri, "code", code);
