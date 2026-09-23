@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +13,12 @@ namespace GoldenChqeueBack.Controllers.Api
     public class FactorApiController : ControllerBase
     {
         private readonly IFactorRepository _factor;
+        private readonly ICustomerRepository _customer;
 
-        public FactorApiController(IFactorRepository factor)
+        public FactorApiController(IFactorRepository factor, ICustomerRepository customer)
         {
             _factor = factor;
+            _customer = customer;
         }
         // GET: api/<FactorApiController>
         [HttpGet]
@@ -32,7 +34,7 @@ namespace GoldenChqeueBack.Controllers.Api
                 response.Add(new FactorDTO
                 {
                     Id = crnt.Id,
-                    PersonCode = crnt.Customer.Id,
+                    PersonCode = crnt.CustomerId,
                     FactorSumPrice = crnt.FactorSumPrice,
                     FactorSodDarsad = crnt.FactorSodDarsad,
                     FactorKharidDate = crnt.FactorKharidDate,
@@ -59,7 +61,7 @@ namespace GoldenChqeueBack.Controllers.Api
             var response = new FactorDTO
             {
                 Id = existingfactor.Id,
-                PersonCode = existingfactor.Customer.Id,
+                PersonCode = existingfactor.CustomerId,
                 FactorSumPrice = existingfactor.FactorSumPrice,
                 FactorSodDarsad = existingfactor.FactorSodDarsad,
                 FactorKharidDate = existingfactor.FactorKharidDate,
@@ -79,7 +81,6 @@ namespace GoldenChqeueBack.Controllers.Api
             //Map DTO
             var fct = new Factor
             {
-                //CustomerId = factor.CustomerId,
                 FactorSumPrice = factor.FactorSumPrice,
                 FactorSodDarsad = factor.FactorSodDarsad,
                 FactorKharidDate = factor.FactorKharidDate,
@@ -90,10 +91,19 @@ namespace GoldenChqeueBack.Controllers.Api
                 //GhestList = factor.GhestList
 
             };
+
+            var existingCustomer = await _customer.GetById(factor.PersonCode);
+            if (existingCustomer is null)
+            {
+                return NotFound("مشتری یافت نشد");
+            }
+            fct.Customer = existingCustomer;
+
             await _factor.InsertAsync(fct);
             var response = new FactorDTO
             {
-                //CustomerId = fct.CustomerId,
+                Id = fct.Id,
+                PersonCode = fct.CustomerId,
                 FactorSumPrice = fct.FactorSumPrice,
                 FactorSodDarsad = fct.FactorSodDarsad,
                 FactorKharidDate = fct.FactorKharidDate,
@@ -159,7 +169,7 @@ namespace GoldenChqeueBack.Controllers.Api
             var response = new FactorDTO
             {
                 Id = factor.Id,
-                //CustomerId = factor.CustomerId,
+                PersonCode = factor.CustomerId,
                 FactorSumPrice = factor.FactorSumPrice,
                 FactorSodDarsad = factor.FactorSodDarsad,
                 FactorKharidDate = factor.FactorKharidDate,

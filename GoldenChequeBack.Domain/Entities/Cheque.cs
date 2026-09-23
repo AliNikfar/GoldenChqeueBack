@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,6 +12,11 @@ namespace GoldenChequeBack.Domain.Entities
         public int Kind { get; set; }
         public int ShomareHesab { get; set; }
         public int ShomareChek { get; set; }
+        // Foreign keys (mapped to the existing FK columns)
+        public Guid SahabChequeId { get; set; }
+        public Guid ShobeId { get; set; }
+        public Guid? FactorId { get; set; }
+
         public Customer SahabCheque { get; set; }
         public Shobe  Shobe { get; set; }
         public DateTime ChequeDate { get; set; }

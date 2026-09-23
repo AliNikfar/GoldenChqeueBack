@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,6 +9,9 @@ namespace GoldenChequeBack.Domain.Entities
 {
     public class Factor : BaseEntity
     {
+        // Foreign key (mapped to the existing FK column)
+        public Guid CustomerId { get; set; }
+
         public Customer Customer { get; set; }
         public Int64 FactorSumPrice { get; set; }
         public int FactorSodDarsad { get; set; }

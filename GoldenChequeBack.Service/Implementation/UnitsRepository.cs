@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using GoldenChequeBack.Service.Contract;
 using System.Linq;
@@ -59,7 +59,7 @@ namespace GoldenChequeBack.Service.Implementation
             {
 
                 _ctx.Entry(existingUnit).CurrentValues.SetValues(unit);
-                _ctx.SaveChangesAsync();
+                await _ctx.SaveChangesAsync();
                 return unit;
             }
             return null;

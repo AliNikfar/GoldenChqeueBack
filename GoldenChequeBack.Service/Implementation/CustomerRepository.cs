@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +33,11 @@ namespace GoldenChequeBack.Service.Implementation
             return await _ctx.Customers.ToListAsync(); ;
         }
 
+        public async Task<Customer?> GetByCityIdAsync(Guid cityId)
+        {
+            return await _ctx.Customers.FirstOrDefaultAsync(c => c.CityId == cityId);
+        }
+
         public async Task<Customer> GetById(Guid id)
         {
             return await _ctx.Customers.Where(p => p.Id == id).FirstOrDefaultAsync();
@@ -53,7 +58,7 @@ namespace GoldenChequeBack.Service.Implementation
             {
 
                 _ctx.Entry(existingCustomer).CurrentValues.SetValues(bank);
-                _ctx.SaveChangesAsync();
+                await _ctx.SaveChangesAsync();
                 return bank;
             }
             return null;

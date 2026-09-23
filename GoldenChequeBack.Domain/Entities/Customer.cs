@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -57,6 +57,10 @@ namespace GoldenChequeBack.Domain.Entities
             get;
             set;
         }
+        // Foreign keys (mapped to the existing FK columns)
+        public Guid CityId { get; set; }
+        public Guid CustomerRateId { get; set; }
+
         [Required]
         public City City
         {

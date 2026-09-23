@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +12,12 @@ namespace GoldenChqeueBack.Controllers.Api
     public class CityApiController : ControllerBase
     {
         private readonly ICityRepository _city;
-        public CityApiController(ICityRepository city)
+        private readonly IStateRepository _state;
+
+        public CityApiController(ICityRepository city, IStateRepository state)
         {
             _city = city;
+            _state = state;
         }
         // GET: api/<CityApiController>
         [HttpGet]
@@ -29,8 +32,10 @@ namespace GoldenChqeueBack.Controllers.Api
             {
                 response.Add(new CityDTO
                 {
+                    Id = crnt.Id,
                     CityCode = crnt.CityCode,
-                    Name = crnt.Name
+                    Name = crnt.Name,
+                    Ostan = crnt.OstanId
                     
                 });
             }
@@ -48,8 +53,10 @@ namespace GoldenChqeueBack.Controllers.Api
             }
             var response = new CityDTO
             {
+                Id = existingcity.Id,
                 CityCode = existingcity.CityCode,
-                Name = existingcity.Name
+                Name = existingcity.Name,
+                Ostan = existingcity.OstanId
             };
             return Ok(response);
         }
@@ -64,15 +71,22 @@ namespace GoldenChqeueBack.Controllers.Api
             {
                 Name = city.Name,
                 CityCode = city.CityCode,
-                //Ostan = city.Ostan
-
             };
+
+            var existingState = await _state.GetById(city.Ostan);
+            if (existingState is null)
+            {
+                return NotFound("استان یافت نشد");
+            }
+            ct.Ostan = existingState;
+
             await _city.InsertAsync(ct);
             var response = new CityDTO
             {
+                Id = ct.Id,
                 Name = ct.Name,
                 CityCode = ct.CityCode,
-                //Ostan = ct.Ostan
+                Ostan = ct.OstanId
             };
             return Ok(response);
         }

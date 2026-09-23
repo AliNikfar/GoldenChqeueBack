@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -79,13 +79,12 @@ namespace GoldenChqeueBack.Controllers.Api
                 RegisterDate = DateTime.Now,
                 RegisterUser = 1 ,
                 LastChangeUser = 1,
-                Bank = new Bank(),
                 Author = true,
             };
-            var ExistingBank = _bank.GetById(shobe.BankId);
+            var ExistingBank = await _bank.GetById(shobe.BankId);
             if (ExistingBank is not null)
             {
-                shbe.Bank = ExistingBank.Result;
+                shbe.Bank = ExistingBank;
             }
             else
             {

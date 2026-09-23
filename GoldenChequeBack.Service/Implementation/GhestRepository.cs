@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using GoldenChequeBack.Service.Contract;
 using System.Linq;
@@ -34,7 +34,7 @@ namespace GoldenChequeBack.Service.Implementation
         }
         public async Task<IEnumerable<Ghest>> GetByFactorId(Guid Factorid)
         {
-            return await _ctx.Ghests.Where(p => p.Factor.Id == Factorid).ToListAsync(); ;
+            return await _ctx.Ghests.Where(p => p.FactorId == Factorid).ToListAsync(); ;
         }
 
         public async Task<Ghest> GetById(Guid id)
@@ -64,12 +64,12 @@ namespace GoldenChequeBack.Service.Implementation
 
         public async Task<Ghest> UpdateAsync(Ghest ghest)
         {
-            var existingGhest = await _ctx.Banks.FirstOrDefaultAsync(p => p.Id == ghest.Id);
+            var existingGhest = await _ctx.Ghests.FirstOrDefaultAsync(p => p.Id == ghest.Id);
             if (existingGhest != null)
             {
 
                 _ctx.Entry(existingGhest).CurrentValues.SetValues(ghest);
-                _ctx.SaveChangesAsync();
+                await _ctx.SaveChangesAsync();
                 return ghest;
             }
             return null;
