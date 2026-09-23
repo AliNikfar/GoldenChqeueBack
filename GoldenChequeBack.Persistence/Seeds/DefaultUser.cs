@@ -1,8 +1,8 @@
-﻿using GoldenChequeBack.Domain.Auth;
+using GoldenChequeBack.Domain.Auth;
 using GoldenChequeBack.Domain.Enum;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace GoldenChequeBack.Persistence.Seeds
@@ -11,35 +11,39 @@ namespace GoldenChequeBack.Persistence.Seeds
     {
         public static List<ApplicationUser> IdentityBasicUserList()
         {
-            return new List<ApplicationUser>()
+            var superAdmin = new ApplicationUser
             {
-                new ApplicationUser
-                {
-                    Id = Constants.SuperAdminUser,
-                    UserName = "superadmin",
-                    Email = "superadmin@gmail.com",
-                    FirstName = "admin",
-                    LastName = "user",
-                    EmailConfirmed = true,
-                    PhoneNumberConfirmed = true,
-                    PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(new IdentityUser(),"Admin@12345"),
-                    NormalizedEmail = "SUPERADMIN@GMAIL.COM",
-                    NormalizedUserName="SUPERADMIN"
-                },
-                new ApplicationUser
-                {
-                    Id = Constants.BasicUser,
-                    UserName = "basicuser",
-                    Email = "basicuser@gmail.com",
-                    FirstName = "Basic",
-                    LastName = "User",
-                    EmailConfirmed = true,
-                    PhoneNumberConfirmed = true,
-                    PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(new IdentityUser(),"basicuser@12345"),
-                    NormalizedEmail= "BASICUSER@GMAIL.COM",
-                    NormalizedUserName="BASICUSER"
-                },
+                Id = Constants.SuperAdminUser,
+                UserName = "superadmin",
+                Email = "superadmin@gmail.com",
+                FirstName = "admin",
+                LastName = "user",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                NormalizedEmail = "SUPERADMIN@GMAIL.COM",
+                NormalizedUserName = "SUPERADMIN",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString()
             };
+            superAdmin.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(superAdmin, "Admin@12345");
+
+            var basicUser = new ApplicationUser
+            {
+                Id = Constants.BasicUser,
+                UserName = "basicuser",
+                Email = "basicuser@gmail.com",
+                FirstName = "Basic",
+                LastName = "User",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                NormalizedEmail = "BASICUSER@GMAIL.COM",
+                NormalizedUserName = "BASICUSER",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            };
+            basicUser.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(basicUser, "basicuser@12345");
+
+            return new List<ApplicationUser> { superAdmin, basicUser };
         }
     }
 }

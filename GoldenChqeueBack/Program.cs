@@ -75,6 +75,12 @@ using (var scope = app.Services.CreateScope())
         {
             identityDb.Database.Migrate();
             logger.LogInformation("IdentityContext: database created/updated and seed data (Roles, Users superadmin/basicuser) applied.");
+
+            // Fix sign-in failures (System.FormatException from PasswordHasher) caused by
+            // corrupted PasswordHash rows that exist in older local databases:
+            // seeded users get a fresh, valid hash for the documented default passwords.
+            await GoldenChequeBack.Persistence.Seeds.IdentityStartupRepair
+                .RepairSeededUsersAsync(identityDb, logger);
         }
     }
     catch (Exception ex)
