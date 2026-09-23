@@ -108,6 +108,7 @@ npm start
 
 | مشکل | راه‌حل |
 |---|---|
+| لاگین خطای `Cannot POST /api/...` یا `404` می‌دهد | dev-server بدون proxy اجرا شده. سرور فرانت را `Ctrl+C` کنید و دوباره `npm start` بزنید (proxy حالا داخل angular.json است و با هر `ng serve` اعمال می‌شود) |
 | `403 Forbidden` موقع باز کردن لینک preview | مخصوص لینک ابری است؛ روی localhost چنین مشکلی نیست |
 | خطای اتصال SQL | connection string را در `appsettings.Development.json` چک کنید؛ `TrustServerCertificate=True` را فراموش نکنید |
 | پورت 5082 اشغال | در `Properties/launchSettings.json` تغییر دهید و `proxy.conf.json` فرانت را هم همان کنید |
