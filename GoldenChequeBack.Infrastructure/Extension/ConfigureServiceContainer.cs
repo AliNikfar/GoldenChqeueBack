@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using GoldenChequeBack.Domain.Setting;
 using GoldenChequeBack.Domain.Settings;
 using GoldenChequeBack.Infrastructure.Mapping;
@@ -57,10 +57,15 @@ namespace GoldenChequeBack.Infrastructure.Extension
             serviceCollection.AddScoped<ICategoryRepository, CategoryRepository>();
             serviceCollection.AddScoped<IProductRepository, ProductRepository>();
             serviceCollection.AddScoped<IImageSelectorRepository, ImageSelectorRepository>();
-            
-
-
-
+            serviceCollection.AddScoped<IChequeRepository, ChequeRepository>();
+            serviceCollection.AddScoped<IFactorRepository, FactorRepository>();
+            serviceCollection.AddScoped<IGhestRepository, GhestRepository>();
+            serviceCollection.AddScoped<ICityRepository, CityRepository>();
+            serviceCollection.AddScoped<IStateRepository, StateRepository>();
+            serviceCollection.AddScoped<ICustomerRateRepository, CustomerRateRepository>();
+            serviceCollection.AddScoped<IBaseInfoRepository, BaseInfoRepository>();
+            serviceCollection.AddScoped<IUsersRepository, UserRepository>();
+            serviceCollection.AddScoped<IFactorObjectsRepository, FactorObjectsRepository>();
         }
         public static void AddTransientServices(this IServiceCollection serviceCollection)
         {

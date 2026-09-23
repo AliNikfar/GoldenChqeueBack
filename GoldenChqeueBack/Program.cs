@@ -22,7 +22,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 var configuration = builder.Configuration;
-builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
+// NOTE: appsettings.json, appsettings.Development.json, user-secrets and environment
+// variables are already loaded by the default host builder in the correct precedence
+// order. Do NOT re-add appsettings.json here: it would be appended AFTER
+// appsettings.Development.json and its empty "Jwt:Key"/ConnectionStrings values
+// would override the local developer overrides.
 
 
 builder.Services.AddControllers();
@@ -50,6 +54,37 @@ builder.Services.AddServiceLayer();
 
 #endregion
 var app = builder.Build();
+
+// Apply EF Core migrations automatically at startup.
+// Migrate() creates the database if it does not exist and the migrations
+// themselves contain the seed data (HasData -> InsertData), so on a fresh
+// machine the databases are created and seeded without any manual step.
+using (var scope = app.Services.CreateScope())
+{
+    var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>()
+        .CreateLogger("GoldenCheque.DatabaseStartup");
+
+    try
+    {
+        var appDb = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        appDb.Database.Migrate();
+        logger.LogInformation("ApplicationDbContext: database created/updated and seed data (Units, Categories) applied.");
+
+        var identityDb = scope.ServiceProvider.GetRequiredService<IdentityContext>();
+        if (identityDb.Database.IsRelational())
+        {
+            identityDb.Database.Migrate();
+            logger.LogInformation("IdentityContext: database created/updated and seed data (Roles, Users superadmin/basicuser) applied.");
+        }
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex,
+            "Database migration/seeding failed. Check ConnectionStrings (OnionArchConn / IdentityConnection) in appsettings.Development.json and make sure SQL Server is running.");
+        throw;
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

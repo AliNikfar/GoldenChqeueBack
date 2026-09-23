@@ -26,11 +26,9 @@ GoldenCheque-full
 
 ---
 
-## ۲) راه‌اندازی دیتابیس
+## ۲) تنظیمات و ساخت خودکار دیتابیس
 
-الف) یک دیتابیس خالی بسازید (مثلاً `GoldenCheque`).
-
-ب) مقادیر اتصال را **بدون کامیت در گیت** از طریق متغیر محیطی بدهید. راحت‌ترین راه، ساخت فایل `GoldenChqeueBack/appsettings.Development.json` است (این فایل را به .gitignore اضافه کنید):
+الف) مقادیر اتصال را **بدون کامیت در گیت** از طریق فایل `GoldenChqeueBack/appsettings.Development.json` بدهید (این فایل را به .gitignore اضافه کنید):
 
 ```json
 {
@@ -47,7 +45,16 @@ GoldenCheque-full
 }
 ```
 
-ج) مایگریشن‌ها را اعمال کنید:
+ب) همین!
+
+از نسخه فعلی، برنامه هنگام اجرا به‌صورت **خودکار** دیتابیس‌ها را می‌سازد:
+- اگر دیتابیس وجود نداشته باشد، ساخته می‌شود (`Database.Migrate` روی هر دو کانتکست).
+- مایگریشن‌ها اعمال و دیتای Seed (نقش‌ها، کاربر superadmin/basicuser، واحد «بسته» و دسته‌بندی‌ها) درج می‌شود.
+- اگر خطای اتصال رخ دهد، برنامه با پیام واضح لاگ متوقف می‌شود تا مشکل connection string رفع شود.
+
+پیش‌نیاز: فقط SQL Server باید در حال اجرا باشد؛ لازم نیست دیتابیس خالی بسازید.
+
+اگر خواستید مایگریشن‌ها را دستی اعمال کنید (مثلاً برای عیب‌یابی):
 
 ```bash
 dotnet ef database update --project GoldenChequeBack.Persistence --startup-project GoldenChqeueBack --context ApplicationDbContext
@@ -56,7 +63,7 @@ dotnet ef database update --project GoldenChequeBack.Persistence --startup-proje
 
 > اگر ابزار ef ندارید: `dotnet tool install --global dotnet-ef`
 
-دیتابیس به‌صورت خودکار seed می‌شود:
+دیتای Seed پیش‌فرض:
 - کاربر: `superadmin@gmail.com` / رمز: `Admin@12345`
 - واحد پیش‌فرض «بسته» و دسته‌بندی‌های «الکترونیکی/غذایی»
 
