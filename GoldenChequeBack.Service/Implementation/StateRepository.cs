@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
 using Microsoft.EntityFrameworkCore;
@@ -39,11 +39,11 @@ namespace GoldenChequeBack.Service.Implementation
             return await _ctx.States.Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<State> InsertAsync(State State)
+        public async Task<State?> InsertAsync(State state)
         {
-            await _ctx.States.AddAsync(State);
+            await _ctx.States.AddAsync(state);
             await _ctx.SaveChangesAsync();
-            return State;
+            return state;
         }
 
 
@@ -54,7 +54,7 @@ namespace GoldenChequeBack.Service.Implementation
             {
 
                 _ctx.Entry(existingState).CurrentValues.SetValues(state);
-                _ctx.SaveChangesAsync();
+                await _ctx.SaveChangesAsync();
                 return state;
             }
             return null;

@@ -1,4 +1,4 @@
-﻿
+
 using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
@@ -54,7 +54,7 @@ namespace GoldenChequeBack.Service.Implementation
             {
 
                 _ctx.Entry(existingBank).CurrentValues.SetValues(user);
-                _ctx.SaveChangesAsync();
+                await _ctx.SaveChangesAsync();
                 return user;
             }
             return null;

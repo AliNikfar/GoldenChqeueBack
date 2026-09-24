@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GoldenChqeueBack.Controllers.Api
 {
     [Route("api/[controller]")]
+    [Route("api/Product")]
     [ApiController]
     public class ProductApiController : ControllerBase
     {
@@ -87,52 +88,49 @@ namespace GoldenChqeueBack.Controllers.Api
                 Price = product.Price,
                 BuyPrice = product.BuyPrice,
                 WareHouseStock = product.WareHouseStock,
-                Image= new ImageSelector(),
-                Category = new Category(),
                 RegisterDate = DateTime.Now,
                 LastChangeDate = DateTime.Now,
                 Visable = true,
                 LastChangeUser = 1 ,
                 Author = true,
                 RegisterUser = 1,
-                Unit = new Unit(),
-                
+
             };
-            var exsistProduct = _obj.IsProductExsist(obj);
-            if (exsistProduct.Result)
+            var exsistProduct = await _obj.IsProductExsist(obj);
+            if (exsistProduct)
             {
                 return NotFound("کالا با این نام قبلا ثبت شده است");
                
             }
             else
             {
-                var exsistingUnit = _unit.GetById(product.UnitId);
+                var exsistingUnit = await _unit.GetById(product.UnitId);
 
                 if (exsistingUnit is not null)
                 {
-                    obj.Unit = exsistingUnit.Result;
+                    obj.Unit = exsistingUnit;
                 }
                 else
                 {
                     return NotFound("اطلاعات واحد کالا یافت نشد");
                 }
-                var exsistingcategory = _category.GetById(product.CategoryId);
+                var exsistingcategory = await _category.GetById(product.CategoryId);
 
                 if (exsistingcategory is not null)
                 {
-                    obj.Category = exsistingcategory.Result;
+                    obj.Category = exsistingcategory;
                 }
                 else
                 {
-                    return NotFound("اطلاعات واحد کالا یافت نشد");
+                    return NotFound("اطلاعات دسته‌بندی کالا یافت نشد");
                 }
                 if (product.ImageId is not null)
                 {
-                    var exsistingImage = _image.GetById(product.ImageId);
+                    var exsistingImage = await _image.GetById(product.ImageId);
 
                     if (exsistingImage is not null)
                     {
-                        obj.Image = exsistingImage.Result;
+                        obj.Image = exsistingImage;
                     }
                     else
                     {
@@ -196,13 +194,13 @@ namespace GoldenChqeueBack.Controllers.Api
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var obj = await _obj.DeleteAsync(id);
-            if (obj.Image is not null)
-            {
-                var img = await _image.Delete(obj.Image);
-            }
             if (obj == null)
             {
                 return NotFound();
+            }
+            if (obj.Image is not null)
+            {
+                await _image.Delete(obj.Image);
             }
             var response = new ProductDTO
             {

@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
 using Microsoft.EntityFrameworkCore;
@@ -54,7 +54,7 @@ namespace GoldenChequeBack.Service.Implementation
             {
 
                 _ctx.Entry(existingCat).CurrentValues.SetValues(categ);
-                _ctx.SaveChangesAsync();
+                await _ctx.SaveChangesAsync();
                 return categ;
             }
             return null;

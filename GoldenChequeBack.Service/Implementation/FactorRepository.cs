@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using GoldenChequeBack.Service.Contract;
 using System.Linq;
@@ -53,7 +53,7 @@ namespace GoldenChequeBack.Service.Implementation
             {
 
                 _ctx.Entry(existingFactor).CurrentValues.SetValues(fctr);
-                _ctx.SaveChangesAsync();
+                await _ctx.SaveChangesAsync();
                 return fctr;
             }
             return null;

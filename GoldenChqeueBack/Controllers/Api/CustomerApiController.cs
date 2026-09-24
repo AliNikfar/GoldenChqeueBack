@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -8,14 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace GoldenChqeueBack.Controllers.Api
 {
     [Route("api/[controller]")]
+    [Route("api/Customer")]
     [ApiController]
     public class CustomerApiController : ControllerBase
     {
         private readonly ICustomerRepository _customer;
+        private readonly ICityRepository _cityRepository;
+        private readonly ICustomerRateRepository _customerRateRepository;
 
-        public CustomerApiController(ICustomerRepository customer)
+        public CustomerApiController(ICustomerRepository customer, ICityRepository cityRepository, ICustomerRateRepository customerRateRepository)
         {
             _customer = customer;
+            _cityRepository = cityRepository;
+            _customerRateRepository = customerRateRepository;
         }
         // GET: api/<CustomerApiController>
         [HttpGet]
@@ -34,11 +39,11 @@ namespace GoldenChqeueBack.Controllers.Api
                     Name = crnt.Name,
                     Address = crnt.Address,
                     BirthDate = crnt.BirthDate,
-                    //City = crnt.City.Id,
+                    City = crnt.CityId,
                     Code = crnt.Code,
-                    //CustomerRate = crnt.CustomerRate.Id,
+                    CustomerRate = crnt.CustomerRateId,
                     Details = crnt.Details,
-                    FatherName = crnt.Details,
+                    FatherName = crnt.FatherName,
                     LastName = crnt.LastName,
                     MaxBuyPrice = crnt.MaxBuyPrice,
                     Mob1 = crnt.Mob1 , 
@@ -67,11 +72,11 @@ namespace GoldenChqeueBack.Controllers.Api
                 Name = existingcustomer.Name,
                 Address = existingcustomer.Address,
                 BirthDate = existingcustomer.BirthDate,
-                City = existingcustomer.City.Id,
+                City = existingcustomer.CityId,
                 Code = existingcustomer.Code,
-                CustomerRate = existingcustomer.CustomerRate.Id,
+                CustomerRate = existingcustomer.CustomerRateId,
                 Details = existingcustomer.Details,
-                FatherName = existingcustomer.Details,
+                FatherName = existingcustomer.FatherName,
                 LastName = existingcustomer.LastName,
                 MaxBuyPrice = existingcustomer.MaxBuyPrice,
                 Mob1 = existingcustomer.Mob1,
@@ -97,16 +102,29 @@ namespace GoldenChqeueBack.Controllers.Api
                 PhoneNum = customer.PhoneNum,
                 Mob1 = customer.Mob1,
                 Mob2 = customer.Mob2,   
-                Mob3 = customer.Mob3,   
-                //City = customer.City,
+                Mob3 = customer.Mob3,
                 Address = customer.Address,
                 PostalCode = customer.PostalCode,
                 Details = customer.Details,
                 MaxBuyPrice = customer.MaxBuyPrice,
                 BirthDate = customer.BirthDate,
-                //CustomerRate = customer.CustomerRate
 
             };
+
+            var existingCity = await _cityRepository.GetById(customer.City);
+            if (existingCity is null)
+            {
+                return NotFound("شهر یافت نشد");
+            }
+            cus.City = existingCity;
+
+            var existingRate = await _customerRateRepository.GetById(customer.CustomerRate);
+            if (existingRate is null)
+            {
+                return NotFound("رتبه مشتری یافت نشد");
+            }
+            cus.CustomerRate = existingRate;
+
             await _customer.InsertAsync(cus);
             var response = new CustomerDTO
             {
@@ -118,13 +136,13 @@ namespace GoldenChqeueBack.Controllers.Api
                 Mob1 = cus.Mob1,
                 Mob2 = cus.Mob2,
                 Mob3 = cus.Mob3,
-                //City = cus.City,
+                City = cus.CityId,
                 Address = cus.Address,
                 PostalCode = cus.PostalCode,
                 Details = cus.Details,
                 MaxBuyPrice = cus.MaxBuyPrice,
                 BirthDate = cus.BirthDate,
-                //CustomerRate = cus.CustomerRate
+                CustomerRate = cus.CustomerRateId
             };
             return Ok(response);
         }
@@ -146,13 +164,13 @@ namespace GoldenChqeueBack.Controllers.Api
                 Mob1 = request.Mob1,
                 Mob2 = request.Mob2,
                 Mob3 = request.Mob3,
-                //City = request.City.Id,
                 Address = request.Address,
                 PostalCode = request.PostalCode,
                 Details = request.Details,
                 MaxBuyPrice = request.MaxBuyPrice,
                 BirthDate = request.BirthDate,
-                //CustomerRate = request.CustomerRate.Id
+                CityId = request.City,
+                CustomerRateId = request.CustomerRate
             };
             cust = await _customer.UpdateAsync(cust);
             if (cust == null)
@@ -171,13 +189,13 @@ namespace GoldenChqeueBack.Controllers.Api
                 Mob1 = cust.Mob1,
                 Mob2 = cust.Mob2,
                 Mob3 = cust.Mob3,
-                City = cust.City.Id,
+                City = cust.CityId,
                 Address = cust.Address,
                 PostalCode = cust.PostalCode,
                 Details = cust.Details,
                 MaxBuyPrice = cust.MaxBuyPrice,
                 BirthDate = cust.BirthDate,
-                CustomerRate = cust.CustomerRate.Id
+                CustomerRate = cust.CustomerRateId
             };
 
             return Ok(response);
@@ -204,13 +222,13 @@ namespace GoldenChqeueBack.Controllers.Api
                 Mob1 = cust.Mob1,
                 Mob2 = cust.Mob2,
                 Mob3 = cust.Mob3,
-                City = cust.City.Id,
+                City = cust.CityId,
                 Address = cust.Address,
                 PostalCode = cust.PostalCode,
                 Details = cust.Details,
                 MaxBuyPrice = cust.MaxBuyPrice,
                 BirthDate = cust.BirthDate,
-                CustomerRate = cust.CustomerRate.Id
+                CustomerRate = cust.CustomerRateId
             };
             return Ok(response);
         }

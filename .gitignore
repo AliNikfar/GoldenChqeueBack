@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Local developer secrets (connection strings, JWT key, SMTP pass)
+GoldenChqeueBack/appsettings.Development.json
+appsettings.Development.json

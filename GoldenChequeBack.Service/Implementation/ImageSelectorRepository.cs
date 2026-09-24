@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Persistence;
 using GoldenChequeBack.Service.Contract;
 using Microsoft.AspNetCore.Hosting;
@@ -49,8 +49,8 @@ namespace GoldenChequeBack.Service.Implementation
                 var httpRequest = _contextAccessor.HttpContext.Request;
                 var urlPath = $"{httpRequest.Scheme}://{httpRequest.Host}{httpRequest.PathBase}/Images/{image.FileName}{image.FileExtention}";
                 image.Url = urlPath;
-                _ctx.Images.AddAsync(image);
-                _ctx.SaveChangesAsync();
+                await _ctx.Images.AddAsync(image);
+                await _ctx.SaveChangesAsync();
                 return image;
 
             }
@@ -73,7 +73,7 @@ namespace GoldenChequeBack.Service.Implementation
                 if (isImageExsists is not null)
                 {
                     _ctx.Images.Remove(image);
-                    _ctx.SaveChangesAsync();
+                    await _ctx.SaveChangesAsync();
                 }
                 return true;
             }

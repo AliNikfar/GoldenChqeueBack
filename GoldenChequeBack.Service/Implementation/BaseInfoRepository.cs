@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using GoldenChequeBack.Service.Contract;
 using System.Linq;
@@ -45,8 +45,8 @@ namespace GoldenChequeBack.Service.Implementation
         {
             //try
             //{
-                _ctx.BaseInfoes.AddAsync(baseInfo);
-                _ctx.SaveChangesAsync();
+                await _ctx.BaseInfoes.AddAsync(baseInfo);
+                await _ctx.SaveChangesAsync();
                 return baseInfo;
             //}
             //catch (Exception ex)
@@ -62,7 +62,7 @@ namespace GoldenChequeBack.Service.Implementation
             {
 
                 _ctx.Entry(existingbasinfo).CurrentValues.SetValues(basinfo);
-                _ctx.SaveChangesAsync();
+                await _ctx.SaveChangesAsync();
                 return basinfo;
             }
             return null;

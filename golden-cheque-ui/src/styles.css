@@ -1,0 +1,205 @@
+/* ================= GoldenCheque Design System ================= */
+:root {
+  --gold-50: #fbf7ec;
+  --gold-100: #f5ecd3;
+  --gold-200: #ead8a6;
+  --gold-300: #ddbe72;
+  --gold-400: #d2a94e;
+  --gold-500: #c7922f;
+  --gold-600: #ab7526;
+  --gold-700: #885a21;
+  --gold-800: #6f4922;
+  --gold-900: #5e3d20;
+
+  --night-700: #24252b;
+  --night-800: #1c1d23;
+  --night-900: #141519;
+  --night-950: #0e0f12;
+
+  --ink-100: #f4f4f5;
+  --ink-200: #e4e4e7;
+  --ink-300: #d4d4d8;
+  --ink-400: #a1a1aa;
+  --ink-500: #71717a;
+  --ink-600: #52525b;
+  --ink-700: #3f3f46;
+
+  --green-500: #16a34a;
+  --red-500: #dc2626;
+  --amber-500: #d97706;
+  --blue-500: #2563eb;
+
+  --bg: #f6f4ee;
+  --surface: #ffffff;
+  --text: var(--night-800);
+  --text-muted: var(--ink-500);
+  --border: var(--ink-200);
+  --primary: var(--gold-600);
+  --primary-strong: var(--gold-700);
+  --sidebar-bg: var(--night-900);
+  --shadow-sm: 0 1px 2px rgba(20, 21, 25, .06);
+  --shadow-md: 0 6px 18px -6px rgba(20, 21, 25, .12);
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4 { margin: 0; font-weight: 700; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- form controls ---------- */
+label { display: block; font-weight: 500; font-size: 13px; color: var(--ink-600); margin-bottom: 4px; }
+
+input, select, textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font: inherit;
+  background: #fff;
+  color: var(--text);
+  transition: border-color .15s, box-shadow .15s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 3px rgba(199, 146, 47, .15);
+}
+
+.field { margin-bottom: 14px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
+@media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border: none;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, transform .05s, box-shadow .15s;
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--gold-600); color: #fff; box-shadow: var(--shadow-sm); }
+.btn-primary:hover { background: var(--gold-700); }
+.btn-ghost { background: transparent; color: var(--ink-600); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--ink-100); }
+.btn-danger { background: #fee2e2; color: var(--red-500); }
+.btn-danger:hover { background: #fecaca; }
+.btn-sm { padding: 5px 12px; font-size: 12.5px; border-radius: 8px; }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+
+/* ---------- cards / tables ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
+}
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+thead th {
+  background: var(--gold-50);
+  color: var(--gold-800);
+  font-weight: 600;
+  text-align: right;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--gold-200);
+  white-space: nowrap;
+}
+tbody td { padding: 11px 14px; border-bottom: 1px solid var(--ink-100); }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #faf9f5; }
+
+/* ---------- badges ---------- */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.badge-green { background: #dcfce7; color: var(--green-500); }
+.badge-red { background: #fee2e2; color: var(--red-500); }
+.badge-amber { background: #fef3c7; color: var(--amber-500); }
+.badge-gray { background: var(--ink-100); color: var(--ink-600); }
+.badge-gold { background: var(--gold-100); color: var(--gold-800); }
+
+/* ---------- page head ---------- */
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.page-head h2 { font-size: 20px; }
+.page-head .sub { color: var(--text-muted); font-size: 13px; margin-top: 2px; }
+
+/* ---------- alerts ---------- */
+.alert { padding: 11px 14px; border-radius: 10px; font-size: 13.5px; margin-bottom: 14px; }
+.alert-error { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.alert-success { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+.alert-info { background: var(--gold-50); color: var(--gold-800); border: 1px solid var(--gold-200); }
+
+/* ---------- empty state ---------- */
+.empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--text-muted);
+}
+.empty .icon { font-size: 34px; margin-bottom: 8px; opacity: .6; }
+
+/* ---------- login ---------- */
+.auth-wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(1200px 500px at 85% -10%, rgba(199,146,47,.18), transparent 60%),
+    radial-gradient(900px 500px at 10% 110%, rgba(199,146,47,.12), transparent 60%),
+    var(--night-950);
+  padding: 16px;
+}
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 36px 32px;
+  box-shadow: 0 25px 60px -15px rgba(0,0,0,.5);
+}
+.auth-logo {
+  width: 64px; height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--gold-400), var(--gold-600));
+  color: #fff;
+  display: grid; place-items: center;
+  font-size: 30px;
+  margin: 0 auto 14px;
+  box-shadow: 0 10px 24px -8px rgba(171,117,38,.6);
+}
+.auth-title { text-align: center; font-size: 22px; margin-bottom: 2px; }
+.auth-sub { text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 22px; }

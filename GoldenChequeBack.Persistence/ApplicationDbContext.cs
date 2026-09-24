@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -69,10 +69,16 @@ namespace GoldenChequeBack.Persistence
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // SECURITY: do not hardcode credentials here.
+            // The connection string is injected by DI from appsettings / environment variables
+            // (see GoldenChequeBack.Infrastructure.Extension.ConfigureServiceContainer.AddDbContext).
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder
-                .UseSqlServer(@"Data Source=DPK-158\\SQL2019;Initial Catalog=GoldenCheque;User ID=sa;Password=Dpk@12345");
+                var conn = Environment.GetEnvironmentVariable("ConnectionStrings__OnionArchConn");
+                if (!string.IsNullOrWhiteSpace(conn))
+                {
+                    optionsBuilder.UseSqlServer(conn);
+                }
             }
 
         }

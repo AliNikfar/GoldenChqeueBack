@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -8,16 +8,21 @@ using Microsoft.AspNetCore.Mvc;
 namespace GoldenChqeueBack.Controllers.Api
 {
     [Route("api/[controller]")]
+    [Route("api/Cheque")]
     [ApiController]
     public class ChequeApiController : ControllerBase
     {
         private readonly IChequeRepository _cheque;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IShobeRepository _shobeRepository;
+        private readonly IFactorRepository _factorRepository;
 
-        public IShobeRepository _ShobeRepository { get; }
-
-        public ChequeApiController(IChequeRepository cheque)
+        public ChequeApiController(IChequeRepository cheque, ICustomerRepository customerRepository, IShobeRepository shobeRepository, IFactorRepository factorRepository)
         {
             _cheque = cheque;
+            _customerRepository = customerRepository;
+            _shobeRepository = shobeRepository;
+            _factorRepository = factorRepository;
         }
         // GET: api/<ChequeApiController>
         [HttpGet]
@@ -37,11 +42,11 @@ namespace GoldenChqeueBack.Controllers.Api
                     ChequePrice = crnt.ChequePrice,
                     ChequeStatus =  crnt.ChequeStatus,
                     Detail = crnt.Detail,
-                    FactorID = crnt.Factor.Id,
+                    FactorID = crnt.FactorId ?? Guid.Empty,
                     Kind = crnt.Kind,   
                     PassDate = crnt.PassDate,
-                    SahabCheque = crnt.SahabCheque.Id,
-                    Shobe = crnt.Shobe.Id,
+                    SahabCheque = crnt.SahabChequeId,
+                    Shobe = crnt.ShobeId,
                     ShomareChek = crnt.ShomareChek,
                     ShomareHesab = crnt.ShomareHesab
                 });
@@ -66,11 +71,11 @@ namespace GoldenChqeueBack.Controllers.Api
                 ChequePrice = existingCheque.ChequePrice,
                 ChequeStatus = existingCheque.ChequeStatus,
                 Detail = existingCheque.Detail,
-                FactorID = existingCheque.Factor.Id,
+                FactorID = existingCheque.FactorId ?? Guid.Empty,
                 Kind = existingCheque.Kind,
                 PassDate = existingCheque.PassDate,
-                SahabCheque = existingCheque.SahabCheque.Id,
-                Shobe = existingCheque.Shobe.Id,
+                SahabCheque = existingCheque.SahabChequeId,
+                Shobe = existingCheque.ShobeId,
                 ShomareChek = existingCheque.ShomareChek,
                 ShomareHesab = existingCheque.ShomareHesab
             };
@@ -81,30 +86,48 @@ namespace GoldenChqeueBack.Controllers.Api
         [HttpPost]
         public async Task<IActionResult> Post(ChequeDTO cheque)
         {
-            //Map DTO
+            //Map DTO - resolve relationships from the database instead of creating empty rows
             var chq = new Cheque
             {
                 Kind = cheque.Kind,
                 ShomareHesab = cheque.ShomareHesab,
                 ShomareChek = cheque.ShomareChek,
-                SahabCheque = new Customer(),
-                Shobe = new Shobe(),
                 ChequeDate = cheque.ChequeDate,
                 ChequeStatus = cheque.ChequeStatus,
                 PassDate = cheque.PassDate,
                 Detail = cheque.Detail,
-                Factor = new Factor(),
                 Visable = cheque.Visable,
                 ChequePrice = cheque.ChequePrice
             };
-            
-            //foreach(var item in cheque.Shobe)
-            //{
-                //var existing = await _ShobeRepository.GetById(cheque.Shobe);
-            //}
+
+            var existingCustomer = await _customerRepository.GetById(cheque.SahabCheque);
+            if (existingCustomer is null)
+            {
+                return NotFound("مشتری صادرکننده چک یافت نشد");
+            }
+            chq.SahabCheque = existingCustomer;
+
+            var existingShobe = await _shobeRepository.GetById(cheque.Shobe);
+            if (existingShobe is null)
+            {
+                return NotFound("شعبه یافت نشد");
+            }
+            chq.Shobe = existingShobe;
+
+            if (cheque.FactorID != Guid.Empty)
+            {
+                var existingFactor = await _factorRepository.GetById(cheque.FactorID);
+                if (existingFactor is null)
+                {
+                    return NotFound("فاکتور یافت نشد");
+                }
+                chq.Factor = existingFactor;
+            }
+
             await _cheque.InsertAsync(chq);
             var response = new ChequeDTO
             {
+                Id = chq.Id,
                 Kind = chq.Kind,
                 ShomareHesab = chq.ShomareHesab,
                 ShomareChek = chq.ShomareChek,
@@ -114,7 +137,7 @@ namespace GoldenChqeueBack.Controllers.Api
                 ChequeStatus = chq.ChequeStatus,
                 PassDate = chq.PassDate,
                 Detail = chq.Detail,
-                FactorID = chq.Factor.Id,
+                FactorID = chq.FactorId ?? Guid.Empty,
                 Visable = chq.Visable,
                 ChequePrice = chq.ChequePrice
             };
@@ -133,13 +156,10 @@ namespace GoldenChqeueBack.Controllers.Api
                 Kind = request.Kind,
                 ShomareHesab = request.ShomareHesab,
                 ShomareChek = request.ShomareChek,
-                //SahabCheque = request.SahabCheque.Id,
-                //Shobe = request.Shobe.Id,
                 ChequeDate = request.ChequeDate,
                 ChequeStatus = request.ChequeStatus,
                 PassDate = request.PassDate,
                 Detail = request.Detail,
-                //FactorID = chq.Factor.Id,
                 Visable = request.Visable,
                 ChequePrice = request.ChequePrice
             };
@@ -155,13 +175,13 @@ namespace GoldenChqeueBack.Controllers.Api
                 Kind = chq.Kind,
                 ShomareHesab = chq.ShomareHesab,
                 ShomareChek = chq.ShomareChek,
-                SahabCheque = chq.SahabCheque.Id,
-                Shobe = chq.Shobe.Id,
+                SahabCheque = chq.SahabChequeId,
+                Shobe = chq.ShobeId,
                 ChequeDate = chq.ChequeDate,
                 ChequeStatus = chq.ChequeStatus,
                 PassDate = chq.PassDate,
                 Detail = chq.Detail,
-                FactorID = chq.Factor.Id,
+                FactorID = chq.FactorId ?? Guid.Empty,
                 Visable = chq.Visable,
                 ChequePrice = chq.ChequePrice
             };
@@ -185,13 +205,13 @@ namespace GoldenChqeueBack.Controllers.Api
                 Kind = chq.Kind,
                 ShomareHesab = chq.ShomareHesab,
                 ShomareChek = chq.ShomareChek,
-                SahabCheque = chq.SahabCheque.Id,
-                Shobe = chq.Shobe.Id,
+                SahabCheque = chq.SahabChequeId,
+                Shobe = chq.ShobeId,
                 ChequeDate = chq.ChequeDate,
                 ChequeStatus = chq.ChequeStatus,
                 PassDate = chq.PassDate,
                 Detail = chq.Detail,
-                FactorID = chq.Factor.Id,
+                FactorID = chq.FactorId ?? Guid.Empty,
                 Visable = chq.Visable,
                 ChequePrice = chq.ChequePrice
             };

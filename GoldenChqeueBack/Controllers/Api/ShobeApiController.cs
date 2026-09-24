@@ -1,51 +1,74 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GoldenChqeueBack.Controllers.Api
+namespace GoldenChequeBack.Controllers.Api
 {
     [Route("api/[controller]")]
+    [Route("api/Shobe")]
     [ApiController]
     public class ShobeApiController : ControllerBase
     {
         private readonly IShobeRepository _shobe;
         private readonly IBankRepository _bank;
 
-        public ShobeApiController(IShobeRepository shobe,IBankRepository bank)
+        public ShobeApiController(IShobeRepository shobe, IBankRepository bank)
         {
             _shobe = shobe;
             _bank = bank;
-
         }
-        // GET: api/<ShobeApiController>
-            [HttpGet]
-            [Route("{BankId:Guid}")]
-            public async Task<IActionResult> GetByBankId([FromRoute] Guid BankId)
-            {
-                var shobe = await _shobe.GetByBankId(BankId);
 
-                // Map to DTO
-                var response = new List<ShobeDTO>();
-                foreach (var crnt in shobe)
-                {
-                    response.Add(new ShobeDTO
-                    {
-                        Name = crnt.Name,
-                        Code = crnt.Code,
-                        Address = crnt.Address,
-                        Phone = crnt.Phone,
-                        Details = crnt.Details
-                    });
-                }
-                return Ok(response);
-            }
-
-        // GET api/<ShobeApiController>/5
+        // GET: api/Shobe  (all branches)
         [HttpGet]
-        public async Task<IActionResult> GetById(Guid id,int lid)
+        public async Task<IActionResult> GetAllAsync()
         {
-            var a = lid;
+            var shobe = await _shobe.GetAllAsync();
+
+            var response = new List<ShobeDTO>();
+            foreach (var crnt in shobe)
+            {
+                response.Add(new ShobeDTO
+                {
+                    Id = crnt.Id,
+                    Name = crnt.Name,
+                    Code = crnt.Code,
+                    Address = crnt.Address,
+                    Phone = crnt.Phone,
+                    Details = crnt.Details,
+                    BankId = crnt.Bank?.Id
+                });
+            }
+            return Ok(response);
+        }
+
+        // GET: api/Shobe/bank/{bankId}  (branches of one bank)
+        [HttpGet("bank/{bankId:Guid}")]
+        public async Task<IActionResult> GetByBankId([FromRoute] Guid bankId)
+        {
+            var shobe = await _shobe.GetByBankId(bankId);
+
+            var response = new List<ShobeDTO>();
+            foreach (var crnt in shobe)
+            {
+                response.Add(new ShobeDTO
+                {
+                    Id = crnt.Id,
+                    Name = crnt.Name,
+                    Code = crnt.Code,
+                    Address = crnt.Address,
+                    Phone = crnt.Phone,
+                    Details = crnt.Details,
+                    BankId = crnt.Bank?.Id
+                });
+            }
+            return Ok(response);
+        }
+
+        // GET api/Shobe/{id}
+        [HttpGet("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
             var existingShobe = await _shobe.GetById(id);
             if (existingShobe is null)
             {
@@ -53,101 +76,99 @@ namespace GoldenChqeueBack.Controllers.Api
             }
             var response = new ShobeDTO
             {
+                Id = existingShobe.Id,
                 Name = existingShobe.Name,
                 Code = existingShobe.Code,
                 Address = existingShobe.Address,
                 Phone = existingShobe.Phone,
-                Details = existingShobe.Details
+                Details = existingShobe.Details,
+                BankId = existingShobe.Bank?.Id
             };
             return Ok(response);
         }
 
-        // POST api/<ShobeApiController>
+        // POST api/Shobe
         [HttpPost]
-        public async Task<IActionResult> Post(CreateShobeRequestDTO shobe)
+        public async Task<IActionResult> Post(ShobeDTO shobe)
         {
-            //Map DTO
-            var shbe = new Shobe
+            // resolve the parent bank from the database (never create a fake Bank row)
+            var bank = await _bank.GetById(shobe.BankId ?? Guid.Empty);
+            if (bank is null)
+            {
+                return NotFound("بانک یافت نشد");
+            }
+
+            var st = new Shobe
             {
                 Name = shobe.Name,
                 Code = shobe.Code,
                 Address = shobe.Address,
                 Phone = shobe.Phone,
                 Details = shobe.Details,
-                LastChangeDate = DateTime.Now,
-                Visable = true,
-                RegisterDate = DateTime.Now,
-                RegisterUser = 1 ,
-                LastChangeUser = 1,
-                Bank = new Bank(),
-                Author = true,
+                Bank = bank
             };
-            var ExistingBank = _bank.GetById(shobe.BankId);
-            if (ExistingBank is not null)
-            {
-                shbe.Bank = ExistingBank.Result;
-            }
-            else
-            {
-                return NotFound("اطلاعات بانک یافت نشد");
-            }
+            await _shobe.InsertAsync(st);
 
-
-            //foreach(var item in cheque.Shobe) 
-            //{
-            //var existing = await _ShobeRepository.GetById(cheque.Shobe);
-            //}
-            await _shobe.InsertAsync(shbe);
             var response = new ShobeDTO
             {
-                Name = shbe.Name,
-                Code = shbe.Code,
-                Address = shbe.Address,
-                Phone = shbe.Phone,
-                Details = shbe.Details
+                Id = st.Id,
+                Name = st.Name,
+                Code = st.Code,
+                Address = st.Address,
+                Phone = st.Phone,
+                Details = st.Details,
+                BankId = st.Bank.Id
             };
             return Ok(response);
         }
 
-
-        // PUT api/<ShobeApiController>/5
-        [HttpPut]
-        [Route("{id:Guid}")]
-        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, UpdateShobeRequestDTO request)
+        // PUT api/Shobe/{id}
+        [HttpPut("{id:Guid}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, ShobeDTO request)
         {
-            //convert DTO to Domain Model
-            var shobe = new Shobe
+            var existingShobe = await _shobe.GetById(id);
+            if (existingShobe is null)
             {
-                Id = id,
-                Name = request.Name,
-                Code = request.Code,
-                Address = request.Address,
-                Phone = request.Phone,
-                Details = request.Details
-            };
-            shobe = await _shobe.UpdateAsync(shobe);
-            if (shobe == null)
+                return NotFound();
+            }
+
+            existingShobe.Name = request.Name;
+            existingShobe.Code = request.Code;
+            existingShobe.Address = request.Address;
+            existingShobe.Phone = request.Phone;
+            existingShobe.Details = request.Details;
+            if (request.BankId.HasValue && request.BankId.Value != existingShobe.Bank?.Id)
+            {
+                var bank = await _bank.GetById(request.BankId.Value);
+                if (bank is null)
+                {
+                    return NotFound("بانک یافت نشد");
+                }
+                existingShobe.Bank = bank;
+            }
+
+            var updated = await _shobe.UpdateAsync(existingShobe);
+            if (updated is null)
             {
                 return NotFound();
             }
 
             var response = new ShobeDTO
             {
-                Id = id,
-                Name = request.Name,
-                Code = request.Code,
-                Address = request.Address,
-                Phone = request.Phone,
-                Details = request.Details
+                Id = updated.Id,
+                Name = updated.Name,
+                Code = updated.Code,
+                Address = updated.Address,
+                Phone = updated.Phone,
+                Details = updated.Details,
+                BankId = updated.Bank?.Id
             };
-
             return Ok(response);
         }
 
-        // DELETE api/<ShobeApiController>/5
-        [HttpDelete]
-        [Route("{id:Guid}")]
-        public async Task<IActionResult> DeleteAsync(Guid id)
+        // DELETE api/Shobe/{id}
+        [HttpDelete("{id:Guid}")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
         {
             var shobe = await _shobe.DeleteAsync(id);
             if (shobe == null)
@@ -158,7 +179,11 @@ namespace GoldenChqeueBack.Controllers.Api
             {
                 Id = shobe.Id,
                 Name = shobe.Name,
-                Code = shobe.Code
+                Code = shobe.Code,
+                Address = shobe.Address,
+                Phone = shobe.Phone,
+                Details = shobe.Details,
+                BankId = shobe.Bank?.Id
             };
             return Ok(response);
         }

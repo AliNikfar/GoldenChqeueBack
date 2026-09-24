@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +18,7 @@ namespace GoldenChequeBack.Service.Contract
         Task<IEnumerable<Customer>> GetAllAsync();
 
         Task<Customer?> GetById(Guid id);
+
+        Task<Customer?> GetByCityIdAsync(Guid cityId);
     }
 }
