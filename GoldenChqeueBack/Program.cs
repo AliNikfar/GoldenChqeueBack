@@ -55,6 +55,17 @@ builder.Services.AddServiceLayer();
 #endregion
 var app = builder.Build();
 
+// Fail fast with a clear message instead of a cryptic IDX10653 error at login time.
+// HMAC-SHA256 (used for JWT signing) requires a key of at least 128 bits;
+// we enforce 32+ characters (256 bits) as a sensible minimum.
+var jwtKey = configuration["Jwt:Key"];
+if (string.IsNullOrWhiteSpace(jwtKey) || Encoding.UTF8.GetByteCount(jwtKey) < 32)
+{
+    throw new InvalidOperationException(
+        "Jwt:Key is missing or too short (must be at least 32 characters for HS256 signing). " +
+        "Set a long random value for \"Jwt:Key\" in appsettings.Development.json (or appsettings.json for local dev), e.g. \"GC#2026!local_dev_secret_min_32_chars\".");
+}
+
 // Apply EF Core migrations automatically at startup.
 // Migrate() creates the database if it does not exist and the migrations
 // themselves contain the seed data (HasData -> InsertData), so on a fresh

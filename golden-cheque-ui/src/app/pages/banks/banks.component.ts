@@ -64,7 +64,7 @@ import { Bank, Shobe } from '../../core/models';
               <tr>
                 <td>{{ s.name }}</td>
                 <td>{{ s.code }}</td>
-                <td>—</td>
+                <td>{{ bankTitle(s.bankId) }}</td>
                 <td class="actions">
                   <button class="btn btn-danger btn-sm" (click)="removeShobe(s)">حذف</button>
                 </td>
@@ -129,6 +129,10 @@ export class BanksComponent implements OnInit {
   removeShobe(s: Shobe): void {
     if (!confirm(`حذف شعبه «${s.name}»؟`)) return;
     this.shobeApi.delete(s.id).subscribe({ next: () => this.reload() });
+  }
+
+  bankTitle(id?: string | null): string {
+    return this.banks().find(b => b.id === id)?.title ?? '—';
   }
 
   private reload(): void {

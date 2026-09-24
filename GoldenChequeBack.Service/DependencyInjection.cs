@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Auth;
+using GoldenChequeBack.Domain.Auth;
 using GoldenChequeBack.Domain.Common;
 using GoldenChequeBack.Domain.Setting;
 using GoldenChequeBack.Domain.Settings;
@@ -73,10 +73,14 @@ namespace GoldenChequeBack.Service
                 {
                     OnAuthenticationFailed = c =>
                     {
-                        c.NoResult();
-                        c.Response.StatusCode = 500;
-                        c.Response.ContentType = "text/plain";
-                        return c.Response.WriteAsync(c.Exception.ToString());
+                        // SECURITY FIX: never write to the HTTP response from this event.
+                        // Writing here starts the response before MVC runs, which corrupts
+                        // the connection (the browser saw "500 Internal Server Error" for
+                        // every API call once the 20-minute JWT expired, while Postman —
+                        // sending no token — kept working). The failure is recorded on the
+                        // context; [Authorize] endpoints then flow into OnChallenge below
+                        // and answer with a clean 401 JSON that the SPA can act upon.
+                        return Task.CompletedTask;
                     },
                     OnChallenge = context =>
                     {

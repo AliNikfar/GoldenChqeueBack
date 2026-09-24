@@ -1,4 +1,4 @@
-﻿using GoldenChequeBack.Domain.Entities;
+using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Contract.DTO;
 using GoldenChequeBack.Service.Implementation;
@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GoldenChqeueBack.Controllers.Api
 {
     [Route("api/[controller]")]
+    [Route("api/Unit")]
     [ApiController]
     public class UnitApiController : ControllerBase
     {

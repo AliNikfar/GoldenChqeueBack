@@ -41,6 +41,7 @@ export interface Shobe extends BaseModel {
   phone?: string;
   address?: string;
   details?: string;
+  bankId?: string | null;
 }
 
 export interface Product extends BaseModel {

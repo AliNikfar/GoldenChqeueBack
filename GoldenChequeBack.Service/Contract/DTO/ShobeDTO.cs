@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace GoldenChequeBack.Service.Contract.DTO
 {
@@ -14,6 +10,6 @@ namespace GoldenChequeBack.Service.Contract.DTO
         public string Phone { get; set; }
         public string Address { get; set; }
         public string Details { get; set; }
-        //public Bank Bank { get; set; }
+        public Guid? BankId { get; set; }
     }
 }

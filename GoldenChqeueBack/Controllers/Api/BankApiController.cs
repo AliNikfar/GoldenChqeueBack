@@ -1,4 +1,4 @@
-﻿ using GoldenChequeBack.Domain.Entities;
+ using GoldenChequeBack.Domain.Entities;
 using GoldenChequeBack.Service.Contract;
 using GoldenChequeBack.Service.Contract.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GoldenChqeueBack.Controllers.Api
 {
     [Route("api/[controller]")]
+    [Route("api/Bank")]
     [ApiController]
     //[Authorize]
     public class BankApiController : ControllerBase

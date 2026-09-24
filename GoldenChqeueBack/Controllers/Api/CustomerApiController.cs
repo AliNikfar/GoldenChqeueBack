@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GoldenChqeueBack.Controllers.Api
 {
     [Route("api/[controller]")]
+    [Route("api/Customer")]
     [ApiController]
     public class CustomerApiController : ControllerBase
     {

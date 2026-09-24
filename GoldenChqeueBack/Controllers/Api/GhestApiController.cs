@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GoldenChqeueBack.Controllers.Api
 {
     [Route("api/[controller]")]
+    [Route("api/Ghest")]
     [ApiController]
     public class GhestApiController : ControllerBase
     {
